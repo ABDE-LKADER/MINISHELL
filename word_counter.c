@@ -40,7 +40,7 @@ int	parentheses_counter(char *s, char c, int *i, int *counter)
 	int	level;
 
 	level = 0;
-	if (s[*i] == '(')
+	if (s[*i] && s[*i] == '(')
 	{
 		level++;
 		(*i)++;

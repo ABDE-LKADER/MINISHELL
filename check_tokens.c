@@ -19,10 +19,23 @@ int	check_quotes(char *s, int *j, char *quotes)
 
 int	check_parentheses(char *s, int *j)
 {
-	if (*(s + *j) == '(')
+	int	level;
+
+	level = 0;
+	if (s && *(s + *j) == '(')
 	{
-		while (*(s + *j) && *(s + *j) != ')')
+		level++;
+		(*j)++;
+		while (s && *(s + *j))
+		{
+			if (s && *(s + *j) == '(')
+				level++;
+			if (s && *(s + *j) == ')')
+				level--;
 			(*j)++;
+			if (level == 0)
+				break ;
+		}
 		return (1);
 	}
 	return (0);
@@ -30,7 +43,7 @@ int	check_parentheses(char *s, int *j)
 
 int	check_operators(char *s, int *j)
 {
-	if (*(s + *j) && *(s + *j + 1) && cmp_operators(*(s + *j))
+	if (s && *(s + *j) && *(s + *j + 1) && cmp_operators(*(s + *j))
 		&& cmp_operators(*(s + *j + 1)))
 	{
 		(*j) += 2;

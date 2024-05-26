@@ -14,7 +14,21 @@ typedef struct s_inject_data
 	char	quotes;
 }			t_inject_data;
 
+// typedef enum	s_operator_type
+// {
+//     OP_AND,
+//     OP_OR
+// } 				operator_type_t;
+
+// typedef struct s_logical_exp_node
+// {
+//     t_operator_type	operator;
+//     void			*left;
+//     void			*right;
+// }				logical_exp_node_t;
+
 size_t	ft_strlen(const char *str);
+int		ft_strncmp(const char *s1, const char *s2, size_t n);
 
 int		cmp_operators(char c);
 void	tokenize_operators(char *s, int *j, char **arr, int w);
