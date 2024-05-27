@@ -8,7 +8,7 @@ int	check_quotes(char *s, int *j, char *quotes)
 		(*j)++;
 		return (1);
 	}
-	else if (*quotes == -1 && *(s + *j) == '\"' || *(s + *j) == '\'')
+	else if (*quotes == -1 && (*(s + *j) == '\"' || *(s + *j) == '\''))
 	{
 		*quotes = *(s + *j);
 		(*j)++;

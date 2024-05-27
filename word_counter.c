@@ -20,7 +20,7 @@ void	check_quotes_counting(char *s, int *i, int *counter, char quotes_type)
 		(*counter)++;
 }
 
-int	quotes_counter(char *s, char c, int *i, int *counter)
+int	quotes_counter(char *s, int *i, int *counter)
 {
 	if (s[*i] == '\'')
 	{
@@ -35,7 +35,7 @@ int	quotes_counter(char *s, char c, int *i, int *counter)
 	return (0);
 }
 
-int	parentheses_counter(char *s, char c, int *i, int *counter)
+int	parentheses_counter(char *s, int *i, int *counter)
 {
 	int	level;
 
@@ -72,9 +72,9 @@ int	words_counter(const char *s, char c)
 	(1) && (i = 0, counter = 0);
 	while (s[i])
 	{
-		if (quotes_counter(s, c, &i, &counter))
+		if (quotes_counter((char *)s, &i, &counter))
 			;
-		else if (parentheses_counter(s, c, &i, &counter))
+		else if (parentheses_counter((char *)s, &i, &counter))
 			;
 		else if ((s[i] != c) && (s[i + 1] == c || s[i + 1] == '\0'))
 			counter++;

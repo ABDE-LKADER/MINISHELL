@@ -20,8 +20,8 @@ int	count_op(char *s)
 		if (s[i] == '\0')
 			break ;
 		if (quotes == -1 && i != 0 && cmp_operators(s[i])
-			&& (s[i - 1] && (s[i - 1] != ' ' && !cmp_operators(s[i - 1])))
-			|| (s[i + 1] != ' ' && !cmp_operators(s[i + 1])))
+			&& ((s[i - 1] && (s[i - 1] != ' ' && !cmp_operators(s[i - 1])))
+			|| (s[i + 1] != ' ' && !cmp_operators(s[i + 1]))))
 			space_counter++;
 		i++;
 	}
@@ -66,47 +66,44 @@ void	copy_and_inject_spaces(t_inject_data *data, char *s, char *str)
 		(1) && (str[data->j] = s[data->i], data->j++, data->i++);
 }
 
-char	*inject_spaces(char *s)
+char	*inject_spaces(t_minishell *ms, char *s)
 {
-	int				len;
 	char			*str;
-	t_inject_data	data;
+	t_inject_data	*data;
 
-	(1) && (data.len = ft_strlen(s), data.len += count_op(s),
-	data.i = 0, data.j = 0, data.quotes = -1);
-	str = malloc(data.len + 1);
+	(TRUE) && (data = &ms->data, data->len = ft_strlen(s), data->len += count_op(s),
+	data->i = 0, data->j = 0, data->quotes = -1);
+	str = allocate(&ms->leaks, data->len + 1, sizeof(char));
 	if (!str)
 		return (NULL);
-	while (s[data.i])
-		copy_and_inject_spaces(&data, s, str);
-	str[data.j] = '\0';
+	while (s[data->i])
+		copy_and_inject_spaces(data, s, str);
+	str[data->j] = '\0';
 	return (str);
 }
 
+void	lk(){system("leaks minishell");}
 int	main(void)
 {
-	char	*str;
-	char	**splitted_by_space;
-	char	*injected_spaces;
-	int		i;
+	t_minishell		ms;
+	char			*str;
+	char			*injected_spaces;
+	char			**splitted_by_space;
+	int				i;
 
+	atexit(lk);
+	ft_bzero(&ms, sizeof(t_minishell));
 	while (1)
 	{
 		str = readline("Minishell >$ ");
 		if (!str)
 			break ;
-		injected_spaces = inject_spaces(str);
-		splitted_by_space = ft_split(injected_spaces, ' ');
-		free(injected_spaces);
+		injected_spaces = inject_spaces(&ms, str);
+		splitted_by_space = ft_split_op(&ms.leaks, injected_spaces, ' ');
 		i = 0;
 		while (splitted_by_space[i])
-		{
-			printf("token: %s\n", splitted_by_space[i]);
-			free(splitted_by_space[i]);
-			i++;
-		}
-		free(splitted_by_space);
-		free(str);
+			printf("token: %s\n", splitted_by_space[i++]);
 	}
+	cleanup(&ms.leaks);
 	return (0);
 }

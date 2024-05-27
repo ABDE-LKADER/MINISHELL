@@ -1,32 +1,72 @@
-NAME= minishell
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/01/19 17:23:22 by abadouab          #+#    #+#              #
+#    Updated: 2024/05/26 22:21:02 by abadouab         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-SRCS= check_tokens.c  ft_split.c minishell.c  word_counter.c utils.c
+NAME		=	minishell
 
-OBJS=$(SRCS:.c=.o)
+SRCS		=	minishell.c \
+				check_tokens.c word_counter.c \
+				ft_split_op.c
 
-HEADER= minishell.h
+OBJS		=	$(SRCS:.c=.o)
+HEADER		=	minishell.h
 
-CC=cc
+MYLB		=	MYLIB
+MYAR		=	MYLIB/libar.a
 
-CFLAGS= -Wall -Wextra -g -fsanitize=address
+CC			=	cc
+FLAGS		=	-Wall -Wextra -Werror
+SHORT		=	-L$(MYLB) -lar -lreadline
+RM			=	rm -fr
 
-RM= rm -rf
+GREEN		=	"\033[1;32m"
+YELOW 		=	"\033[1;33m"
+REDCL 		=	"\033[1;31m"
+RESET 		=	"\033[0m"
 
-$(NAME) : $(OBJS) $(HEADER)
-			$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -lreadline
+all: start $(MYLB) $(NAME) finish
 
-$(OBJS): %.o : %.c $(HEADER)
-		$(CC) $(CFLAGS) -c $< -o $@
+start:
+	@printf "\n"
+	@echo $(GREEN)"Starting build..."
+	@sleep 1
+	@printf "Loading [ "
 
-all: $(NAME)
+finish:
+	@echo $(GREEN) ] 100%$(RESET)
+	@echo $(GREEN)Project built.$(RESET)
+	@printf "\n"
 
-clean: 
-		$(RM) $(OBJS)
+$(MYLB):
+	@make -C $(MYLB) --no-print-directory
+
+$(NAME): $(OBJS)
+	@$(CC) $(FLAGS) $^ $(SHORT) -o $(NAME)
+
+$(OBJS): %.o: %.c $(HEADER) $(MYAR)
+	@$(CC) $(FLAGS) -c -I $(MYLB) $< -o $@
+	@printf $(GREEN)"."$(RESET)
+
+clean:
+	@$(RM) $(OBJS)
+	@$(RM) $(OBJS_BONUS)
+	@make clean -C $(MYLB) --no-print-directory
+	@echo $(YELOW)Cleaning up 🧹💫$(RESET)
 
 fclean: clean
-		$(RM) $(NAME)
+	@$(RM) $(NAME)
+	@$(RM) $(NAME_BONUS)
+	@make fclean -C $(MYLB) --no-print-directory
+	@echo $(REDCL)Purging all files 🗑️$(RESET)
 
 re: fclean all
 
-run: re 
-	 clear && ./$(NAME)
+.PHONY: $(MYLB)
