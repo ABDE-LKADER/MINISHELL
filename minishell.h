@@ -15,7 +15,8 @@ typedef struct s_inject_data
 	char	quotes;
 }			t_inject_data;
 
-// This structure holds the main state and configurations for the M1N15H3LL program.
+// This structure holds the main state
+//	and configurations for the M1N15H3LL program.
 
 typedef struct s_minishell
 {

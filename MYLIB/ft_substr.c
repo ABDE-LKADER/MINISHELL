@@ -6,13 +6,14 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 17:35:42 by abadouab          #+#    #+#             */
-/*   Updated: 2024/05/23 10:03:04 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/05/27 10:20:29 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mylib.h"
 
-char	*ft_substr(t_allocate **alloc, char const *s, unsigned int start, size_t len)
+char	*ft_substr(t_allocate **alloc, char const *s, unsigned int start,
+	size_t len)
 {
 	size_t	slen;
 	char	*str;

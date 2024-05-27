@@ -6,13 +6,14 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 20:38:16 by abadouab          #+#    #+#             */
-/*   Updated: 2024/05/23 10:44:44 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/05/27 10:20:20 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mylib.h"
 
-char	*ft_strmapi(t_allocate **alloc, char const *s, char (*f)(unsigned int, char))
+char	*ft_strmapi(t_allocate **alloc, char const *s,
+	char (*f)(unsigned int, char))
 {
 	int		len;
 	char	*str;

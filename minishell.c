@@ -21,7 +21,7 @@ int	count_op(char *s)
 			break ;
 		if (quotes == -1 && i != 0 && cmp_operators(s[i])
 			&& ((s[i - 1] && (s[i - 1] != ' ' && !cmp_operators(s[i - 1])))
-			|| (s[i + 1] != ' ' && !cmp_operators(s[i + 1]))))
+				|| (s[i + 1] != ' ' && !cmp_operators(s[i + 1]))))
 			space_counter++;
 		i++;
 	}
@@ -71,7 +71,8 @@ char	*inject_spaces(t_minishell *ms, char *s)
 	char			*str;
 	t_inject_data	*data;
 
-	(TRUE) && (data = &ms->data, data->len = ft_strlen(s), data->len += count_op(s),
+	(TRUE) && (data = &ms->data, data->len = ft_strlen(s),
+		data->len += count_op(s),
 	data->i = 0, data->j = 0, data->quotes = -1);
 	str = allocate(&ms->leaks, data->len + 1, sizeof(char));
 	if (!str)

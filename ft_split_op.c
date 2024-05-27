@@ -20,7 +20,7 @@ int	cmp_operators(char c)
 	return (0);
 }
 
-static char	**fill_in(t_allocate **leaks,  char **arr, char *s, char c)
+static char	**fill_in(t_allocate **leaks, char **arr, char *s, char c)
 {
 	int		j;
 	int		i;

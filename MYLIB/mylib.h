@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 17:45:48 by abadouab          #+#    #+#             */
-/*   Updated: 2024/05/23 10:53:12 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/05/27 10:22:16 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,14 @@ char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 int		ft_atoi(const char *str);
 char	*ft_strdup(t_allocate **alloc, const char *s1);
 
-char	*ft_substr(t_allocate **alloc, char const *s, unsigned int start, size_t len);
+char	*ft_substr(t_allocate **alloc, char const *s, unsigned int start,
+			size_t len);
 char	*ft_strjoin(t_allocate **alloc, char const *s1, char const *s2);
 char	*ft_strtrim(t_allocate **alloc, char const *s1, char const *set);
 char	**ft_split(t_allocate **alloc, char const *s, char c);
 char	*ft_itoa(t_allocate **alloc, int n);
-char	*ft_strmapi(t_allocate **alloc, char const *s, char (*f)(unsigned int, char));
+char	*ft_strmapi(t_allocate **alloc, char const *s,
+			char (*f)(unsigned int, char));
 void	ft_striteri(char *s, void (*f)(unsigned int, char *));
 void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);

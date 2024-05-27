@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 14:27:59 by abadouab          #+#    #+#             */
-/*   Updated: 2024/05/27 09:45:22 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/05/27 10:20:56 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ static size_t	count_words(char const *s, char c)
 	return (count);
 }
 
-static char	**split_words(t_allocate **alloc, char	**str, char const *s, char c)
+static char	**split_words(t_allocate **alloc, char	**str,
+	char const *s, char c)
 {
 	size_t	i;
 	size_t	j;
