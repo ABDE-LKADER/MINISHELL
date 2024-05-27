@@ -72,8 +72,6 @@ void	get_tokens(char *s, int *j, char *quotes)
 	{
 		if (check_quotes(s, j, quotes))
 			;
-		else if (check_parentheses(s, j))
-			;
 		else
 			(*j)++;
 	}

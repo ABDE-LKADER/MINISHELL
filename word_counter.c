@@ -35,34 +35,34 @@ int	quotes_counter(char *s, int *i, int *counter)
 	return (0);
 }
 
-int	parentheses_counter(char *s, int *i, int *counter)
-{
-	int	level;
+// int	parentheses_counter(char *s, int *i, int *counter)
+// {
+// 	int	level;
 
-	level = 0;
-	if (s[*i] && s[*i] == '(')
-	{
-		level++;
-		(*i)++;
-		while (s[*i])
-		{
-			if (s[*i] && s[*i] == '(')
-				level++;
-			if (s[*i] && s[*i] == ')')
-				level--;
-			(*i)++;
-			if (level == 0)
-				break ;
-		}
-		if (s[*i] == ')')
-			(*i)++;
-		if (cmp_operators(s[*i]))
-			;
-		(*counter)++;
-		return (1);
-	}
-	return (0);
-}
+// 	level = 0;
+// 	if (s[*i] && s[*i] == '(')
+// 	{
+// 		level++;
+// 		(*i)++;
+// 		while (s[*i])
+// 		{
+// 			if (s[*i] && s[*i] == '(')
+// 				level++;
+// 			if (s[*i] && s[*i] == ')')
+// 				level--;
+// 			(*i)++;
+// 			if (level == 0)
+// 				break ;
+// 		}
+// 		if (s[*i] == ')')
+// 			(*i)++;
+// 		if (cmp_operators(s[*i]))
+// 			;
+// 		(*counter)++;
+// 		return (1);
+// 	}
+// 	return (0);
+// }
 
 int	words_counter(const char *s, char c)
 {
@@ -73,8 +73,6 @@ int	words_counter(const char *s, char c)
 	while (s[i])
 	{
 		if (quotes_counter((char *)s, &i, &counter))
-			;
-		else if (parentheses_counter((char *)s, &i, &counter))
 			;
 		else if ((s[i] != c) && (s[i + 1] == c || s[i + 1] == '\0'))
 			counter++;

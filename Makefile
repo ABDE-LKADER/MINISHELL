@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+         #
+#    By: darkab <darkab@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/19 17:23:22 by abadouab          #+#    #+#              #
-#    Updated: 2024/05/26 22:21:02 by abadouab         ###   ########.fr        #
+#    Updated: 2024/05/27 14:47:14 by darkab           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ MYLB		=	MYLIB
 MYAR		=	MYLIB/libar.a
 
 CC			=	cc
-FLAGS		=	-Wall -Wextra -Werror
+FLAGS		=	-Wall -Wextra -g -fsanitize=address #-Werror
 SHORT		=	-L$(MYLB) -lar -lreadline
 RM			=	rm -fr
 
