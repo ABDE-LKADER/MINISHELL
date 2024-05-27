@@ -20,7 +20,6 @@ typedef struct s_inject_data
 
 typedef struct s_minishell
 {
-	t_inject_data	data;
 	t_allocate		*leaks;
 }					t_minishell;
 

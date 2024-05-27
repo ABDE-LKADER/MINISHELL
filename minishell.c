@@ -69,17 +69,16 @@ void	copy_and_inject_spaces(t_inject_data *data, char *s, char *str)
 char	*inject_spaces(t_minishell *ms, char *s)
 {
 	char			*str;
-	t_inject_data	*data;
+	t_inject_data	data;
 
-	(TRUE) && (data = &ms->data, data->len = ft_strlen(s),
-		data->len += count_op(s),
-	data->i = 0, data->j = 0, data->quotes = -1);
-	str = allocate(&ms->leaks, data->len + 1, sizeof(char));
+	(TRUE) && (data.len = ft_strlen(s), data.len += count_op(s),
+		data.i = 0, data.j = 0, data.quotes = -1);
+	str = allocate(&ms->leaks, data.len + 1, sizeof(char));
 	if (!str)
 		return (NULL);
-	while (s[data->i])
-		copy_and_inject_spaces(data, s, str);
-	str[data->j] = '\0';
+	while (s[data.i])
+		copy_and_inject_spaces(&data, s, str);
+	str[data.j] = '\0';
 	return (str);
 }
 
@@ -102,6 +101,7 @@ int	main(void)
 		i = 0;
 		while (splitted_by_space[i])
 			printf("token: %s\n", splitted_by_space[i++]);
+		free(str);
 	}
 	cleanup(&ms.leaks);
 	return (0);
