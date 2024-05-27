@@ -1,5 +1,20 @@
 #include "minishell.h"
 
+int	count_spaces(char quotes, char *s, int i, int *space_counter)
+{
+	if (quotes == -1 && (s[i] == '(' || s[i] == ')') && (s[i + 1] || s[i + 1] != ' '))
+		(*space_counter)++;
+	if (quotes == -1 && (s[i] || s[i] != ' ') && (s[i + 1] == '(' || s[i + 1] == ')'))
+		(*space_counter)++;
+	else if (quotes == -1 && (s[i] && s[i] != ' ' && !cmp_operators(s[i])) && (cmp_operators(s[i + 1])))
+		(*space_counter)++;
+	else if (quotes == -1 && (cmp_operators(s[i]) && (s[i + 1] && s[i + 1] != ' ' && !cmp_operators(s[i + 1]))))
+		(*space_counter)++;
+	else if (quotes == -1 && cmp_operators(s[i])
+		&& (s[i + 1] != ' ' && !cmp_operators(s[i + 1])))
+		(*space_counter)++;
+}
+
 int	count_op(char *s)
 {
 	int		i;
@@ -16,17 +31,14 @@ int	count_op(char *s)
 				i++;
 		}
 		else if (s[i] && s[i] == quotes)
+		{
+			if (cmp_operators(s[i + 1]))
+				space_counter++;
 			(1) && (quotes = -1, i++);
+		}
 		if (s[i] == '\0')
 			break ;
-		if (quotes == -1 && (s[i] == '(' || s[i] == ')') && (s[i + 1] || s[i + 1] != ' '))
-			space_counter++;
-		if (quotes == -1 && (s[i] || s[i] != ' ') && (s[i + 1] == '(' || s[i + 1] == ')'))
-			space_counter++;
-		if (quotes == -1 && i != 0 && cmp_operators(s[i])
-			&& ((s[i - 1] && (s[i - 1] != ' ' && !cmp_operators(s[i - 1])))
-				|| (s[i + 1] != ' ' && !cmp_operators(s[i + 1]))))
-			space_counter++;
+		count_spaces(quotes, s, i, &space_counter);
 		i++;
 	}
 	return (space_counter);
@@ -79,7 +91,7 @@ void	copy_and_inject_spaces(t_inject_data *data, char *s, char *str)
 		&& (s[data->i + 1] != ' ' && !cmp_operators(s[data->i + 1])))
 		(1) && (str[data->j] = s[data->i], data->j++,
 		str[data->j] = ' ', data->j++, data->i++);
-	if (inject_spaces_between_par(data, s, str))
+	else if (inject_spaces_between_par(data, s, str))
 		;
 	else if (s[data->i])
 		(1) && (str[data->j] = s[data->i], data->j++, data->i++);
