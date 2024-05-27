@@ -82,7 +82,6 @@ char	*inject_spaces(t_minishell *ms, char *s)
 	return (str);
 }
 
-void	lk(){system("leaks minishell");}
 int	main(void)
 {
 	t_minishell		ms;
@@ -91,7 +90,6 @@ int	main(void)
 	char			**splitted_by_space;
 	int				i;
 
-	atexit(lk);
 	ft_bzero(&ms, sizeof(t_minishell));
 	while (1)
 	{
