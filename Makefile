@@ -6,7 +6,7 @@
 #    By: darkab <darkab@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/19 17:23:22 by abadouab          #+#    #+#              #
-#    Updated: 2024/05/27 20:40:38 by darkab           ###   ########.fr        #
+#    Updated: 2024/05/28 16:00:30 by darkab           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,8 @@ NAME		=	minishell
 
 SRCS		=	minishell.c \
 				check_tokens.c word_counter.c \
-				ft_split_op.c
+				ft_split_op.c \
+				inject_spaces_utils.c
 
 OBJS		=	$(SRCS:.c=.o)
 HEADER		=	minishell.h
@@ -23,7 +24,7 @@ MYLB		=	MYLIB
 MYAR		=	MYLIB/libar.a
 
 CC			=	cc
-FLAGS		=	-Wall -Wextra #-g -fsanitize=address #-Werror
+FLAGS		=	-Wall -Wextra -g -fsanitize=address #-Werror
 SHORT		=	-L$(MYLB) -lar -lreadline
 RM			=	rm -fr
 

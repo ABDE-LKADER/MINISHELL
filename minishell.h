@@ -7,6 +7,8 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
+# define CMD 1
+
 typedef struct s_inject_data
 {
 	int		i;
@@ -29,12 +31,26 @@ typedef struct s_minishell
 //     OP_OR
 // } 				operator_type_t;
 
-// typedef struct s_logical_exp_node
-// {
-//     t_operator_type	operator;
-//     void			*left;
-//     void			*right;
-// }				logical_exp_node_t;
+typedef struct s_logical_exp_node
+{
+    t_operator_type	operator;
+    void			*left;
+    void			*right;
+}				logical_exp_node_t;
+
+typedef struct s_command
+{
+    void	type;
+	char	*command;
+    void	args;
+    void	redirection;
+}				command_t;
+
+// Inject Spaces utils
+
+void	copy_and_inject_spaces(t_inject_data *data, char *s, char *str);
+
+// Tokenization utils
 
 int		cmp_operators(char c);
 void	tokenize_operators(char *s, int *j, char **arr, int w);

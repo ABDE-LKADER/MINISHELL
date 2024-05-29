@@ -1,107 +1,12 @@
 #include "minishell.h"
 
-int	count_spaces(char quotes, char *s, int i, int *space_counter)
-{
-	if (quotes == -1 && (s[i] == '(' || s[i] == ')') && (s[i + 1] || s[i + 1] != ' '))
-		(*space_counter)++;
-	if (quotes == -1 && (s[i] || s[i] != ' ') && (s[i + 1] == '(' || s[i + 1] == ')'))
-		(*space_counter)++;
-	else if (quotes == -1 && (s[i] && s[i] != ' ' && !cmp_operators(s[i])) && (cmp_operators(s[i + 1])))
-		(*space_counter)++;
-	else if (quotes == -1 && (cmp_operators(s[i]) && (s[i + 1] && s[i + 1] != ' ' && !cmp_operators(s[i + 1]))))
-		(*space_counter)++;
-	else if (quotes == -1 && cmp_operators(s[i])
-		&& (s[i + 1] != ' ' && !cmp_operators(s[i + 1])))
-		(*space_counter)++;
-}
-
-int	count_op(char *s)
-{
-	int		i;
-	int		space_counter;
-	char	quotes;
-
-	(1) && (i = 0, space_counter = 0, quotes = -1);
-	while (s[i])
-	{
-		if (s[i] && quotes == -1 && (s[i] == '\"' || s[i] == '\''))
-		{
-			quotes = s[i];
-			while (s[i] && s[i] != quotes)
-				i++;
-		}
-		else if (s[i] && s[i] == quotes)
-		{
-			if (cmp_operators(s[i + 1]))
-				space_counter++;
-			(1) && (quotes = -1, i++);
-		}
-		if (s[i] == '\0')
-			break ;
-		count_spaces(quotes, s, i, &space_counter);
-		i++;
-	}
-	return (space_counter);
-}
-
-void	copy_quotes(t_inject_data *data, char *s, char *str)
-{
-	if (s[data->i] && data->quotes == -1
-		&& (s[data->i] == '\"' || s[data->i] == '\''))
-	{
-		data->quotes = s[data->i];
-		while (s[data->i] && s[data->i] != data->quotes)
-			(1) && (str[data->j] = s[data->i], data->i++, data->j++);
-	}
-	else if (s[data->i] && s[data->i] == data->quotes)
-		(1) && (data->quotes = -1, str[data->j] = s[data->i],
-		data->i++, data->j++);
-}
-
-int	inject_spaces_between_par(t_inject_data *data, char *s, char *str)
-{
-	if (data->quotes == -1 && (s[data->i] && s[data->i] != ' ') && (s[data->i + 1] == '(' || s[data->i + 1] == ')'))
-		return (str[data->j] = s[data->i], data->j++,
-			str[data->j] = ' ', data->j++, data->i++, 1);
-	else if (data->quotes == -1 && (s[data->i] == '(' || s[data->i] == ')') && (s[data->i + 1] && s[data->i + 1] != ' '))
-		return (str[data->j] = s[data->i], data->j++,
-			str[data->j] = ' ', data->j++, data->i++, 1);
-	return (0);
-}
-
-void	copy_and_inject_spaces(t_inject_data *data, char *s, char *str)
-{
-	if (!s)
-		return ;
-	copy_quotes(data, s, str);
-	if (s[data->i] == '\0')
-		return ;
-	if (data->quotes == -1 && data->i != 0 && cmp_operators(s[data->i])
-		&& s[data->i - 1] && (s[data->i - 1] != ' '
-			&& !cmp_operators(s[data->i - 1])))
-	{
-		(1) && (str[data->j] = ' ', data->j++,
-		str[data->j] = s[data->i], data->j++);
-		if (cmp_operators(s[data->i]) && s[data->i + 1]
-			&& (s[data->i + 1] != ' ' && !cmp_operators(s[data->i + 1])))
-			(1) && (str[data->j] = ' ', data->j++);
-		data->i++;
-	}
-	else if (data->quotes == -1 && cmp_operators(s[data->i]) && s[data->i + 1]
-		&& (s[data->i + 1] != ' ' && !cmp_operators(s[data->i + 1])))
-		(1) && (str[data->j] = s[data->i], data->j++,
-		str[data->j] = ' ', data->j++, data->i++);
-	else if (inject_spaces_between_par(data, s, str))
-		;
-	else if (s[data->i])
-		(1) && (str[data->j] = s[data->i], data->j++, data->i++);
-}
-
 char	*inject_spaces(t_minishell *ms, char *s)
 {
 	char			*str;
 	t_inject_data	data;
 
+	if (!s)
+		return (NULL);
 	(TRUE) && (data.len = ft_strlen(s), data.len += count_op(s),
 		data.i = 0, data.j = 0, data.quotes = -1);
 	str = allocate(&ms->leaks, data.len + 1, sizeof(char));
@@ -130,6 +35,8 @@ int	main(void)
 		injected_spaces = inject_spaces(&ms, str);
 		splitted_by_space = ft_split_op(&ms.leaks, injected_spaces, ' ');
 		i = 0;
+		if (!splitted_by_space)
+			return (free(str), cleanup(&ms.leaks), 0);
 		while (splitted_by_space[i])
 			printf("token: %s\n", splitted_by_space[i++]);
 		free(str);
