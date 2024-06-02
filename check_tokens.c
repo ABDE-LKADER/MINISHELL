@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_tokens.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/02 09:41:56 by abbaraka          #+#    #+#             */
+/*   Updated: 2024/06/02 09:41:57 by abbaraka         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	check_quotes(char *s, int *j, char *quotes)
@@ -68,7 +80,7 @@ void	tokenize_operators(char *s, int *j, char **arr, int w)
 void	get_tokens(char *s, int *j, char *quotes)
 {
 	*j = 0;
-	while ((*(s + *j) && *(s + *j) != ' ') || (*(s + *j) && *quotes != -1))
+	while ((*(s + *j) && !check_sep(*(s + *j))) || (*(s + *j) && *quotes != -1))
 	{
 		if (check_quotes(s, j, quotes))
 			;

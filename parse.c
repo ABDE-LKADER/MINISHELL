@@ -1,69 +1,139 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/02 09:39:11 by abbaraka          #+#    #+#             */
+/*   Updated: 2024/06/02 10:05:35 by abbaraka         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-int	check_token_op(char *token)
+t_tree	*parse_side(t_minishell *ms, int *i)
 {
-	char	*operators[4];
-	int		i;
+	t_tree	*exp;
 
-	operators[0] = "|";
-	operators[1] = "||";
-	operators[2] = "&&";
-	operators[3] = NULL;
-
-	if (!token)
-		return(0);
-	i = 0;
-	while (operators[i])
+	if (ms->tokens[*i]
+		&& ft_strncmp(ms->tokens[*i], ")", ft_strlen(ms->tokens[*i])) == 0)
+		return (syntax_err("syntax error near unexpected token `)'", 0), NULL);
+	else if (ms->tokens[*i]
+		&& ft_strncmp(ms->tokens[*i], "(", ft_strlen(ms->tokens[*i])) == 0)
 	{
-		if (ft_strncmp(token, operators[i], ft_strlen(token)))
-			return (1);
-		i++;
+		(*i)++;
+		exp = parse_exp(ms, i, 0);
+		// if (tokens[*i + 1]
+		// 	&& ft_strncmp(tokens[*i + 1], "(", ft_strlen(tokens[*i + 1])) == 0)
+		// 	return (syntax_err("syntax error near unexpected token `('", 0)
+		// 		, NULL);
+		return (exp);
 	}
-	return (0);
+	return (parse_simple_command(&ms->leaks, ms->tokens, i));
 }
 
-logical_exp_node_t	parse_exp(char **tokens, int i)
+t_tree	*make_tree(t_allocate **leaks, t_tree *left, t_tree *right, char *op)
 {
-	command_t	cmd;
-	logical_exp_node_t exp;
+	t_tree	*node;
 
-	while (i > 0 && !tokens[i])
-		i--;
-	if (tokens[i - 1] && check_token_op(tokens[i]))
-	{
-		cmd.type = CMD;
-		cmd.command = tokens[i - 1];
-		exp.left = cmd;
-	}
-	else if (check_token_op(tokens[i]) && tokens[i + 1])
-	{
-		if (ft_strncmp(tokens[i + 1], "(", ft_strlen(tokens[i + 1])) == 0)
-		{
-			i += 2;
-			while(!check_token_op(tokens[i]))
-			{
-				
-			}
-		}
-	}
-
+	node = allocate(leaks, 1, sizeof(t_tree));
+	set_op(node, op);
+	if (ft_strncmp(op, "|", ft_strlen(op)) == 0
+		&& ft_strlen(op) == ft_strlen("|"))
+		node->type = PIPE_T;
+	if (ft_strncmp(op, "||", ft_strlen(op)) == 0
+		&& ft_strlen(op) == ft_strlen("||"))
+		node->type = OR_T;
+	if (ft_strncmp(op, "&&", ft_strlen(op)) == 0
+		&& ft_strlen(op) == ft_strlen("&&"))
+		node->type = AND_T;
+	node->value = op;
+	node->left = left;
+	node->right = right;
+	return (node);
 }
 
-int parse(char **tokens)
+int	check_if_prec(char *token)
 {
-	int	i;
-	logical_exp_node_t exp;
+	if ((ft_strncmp(token, "||", ft_strlen(token)) == 0
+			&& ft_strlen(token) == ft_strlen("||"))
+		|| (ft_strncmp(token, "&&", ft_strlen(token)) == 0
+			&& ft_strlen(token) == ft_strlen("&&")))
+		return (0);
+	return (1);
+}
 
-	if (!tokens || !tokens[0])
+t_tree	*parse_exp(t_minishell *ms, int *i, int min_pr)
+{
+	char		*op;
+	t_tree		*left;
+	t_tree		*right;
+
+	left = parse_side(ms, i);
+	if (!left)
+		return (NULL);
+	if (!ms->tokens[*i])
+		return (left);
+	if (ms->tokens[*i] && check_token_op(ms->tokens[*i]))
+		(*i)--;
+	while (ms->tokens[*i] && ms->tokens[*i + 1]
+		&& check_token_op(ms->tokens[*i + 1])
+		&& min_pr <= check_if_prec(ms->tokens[*i + 1]))
+	{
+		op = ms->tokens[*i + 1];
+		(*i) += 2;
+		if (!ms->tokens[*i] || check_token_op(ms->tokens[*i]))
+			return (syntax_err("syntax error", 0), NULL);
+		right = parse_exp(ms, i, check_if_prec(op) + 1);
+		left = make_tree(&ms->leaks, left, right, op);
+	}
+	return (left);
+}
+
+t_tree	*parse(t_minishell *ms)
+{
+	int			i;
+	int			j;
+
+	if (!ms->tokens || !ms->tokens[0])
 		return (NULL);
 	i = 0;
-	while (tokens[i])
+	j = 0;
+	if (check_closed_quotes(ms->tokens, i, j))
+		return (NULL);
+	ms->tree = allocate(&ms->leaks, 1, sizeof(t_tree));
+	ms->tree = parse_exp(ms, &i, 0);
+	if (ms->tree)
 	{
-		if (ft_strncmp(tokens[i], "(", ft_strlen(tokens[i])) == 0)
+		if (ms->tree->right)
 		{
-			if (tokens[i - 1] && check_token_op(token[i - 1]))
-				exp = parse_exp(tokens, (i - 1));
+			printf("             %s     \n", ms->tree->value);
+			printf("           /    \\   \n");
+			printf("          /      \\   \n");
+			if (ms->tree->type)
+			{
+				printf("        %s  ", ms->tree->left->value);
+				if (ms->tree->right)
+					printf("      %s  \n", ms->tree->right->value);
+				if (check_token_op(ms->tree->left->value))
+				{
+					printf("      /   \\   \n");
+					printf("     /     \\   \n");
+					printf("   %s   ", ms->tree->left->left->value);
+					printf("   %s   \n", ms->tree->left->right->value);
+					// if (check_token_op(ms->tree->left->left->value))
+					// {
+					// 	printf(" /   \\   \n");
+					// 	printf(" /     \\   \n");
+					// 	printf(" %s   ", ms->tree->left->left->left->value);
+					// 	printf("  %s   \n", ms->tree->left->left->right->value);
+					// }
+				}
+			}
 		}
-		i++;
+		else
+			printf("Tree left:%s\n", ms->tree->value);
 	}
+	return (ms->tree);
 }

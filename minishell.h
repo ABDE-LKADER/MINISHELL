@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/02 09:39:24 by abbaraka          #+#    #+#             */
+/*   Updated: 2024/06/02 11:12:25 by abbaraka         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -6,6 +18,7 @@
 # include <stdlib.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <signal.h>
 
 # define CMD 1
 
@@ -17,45 +30,94 @@ typedef struct s_inject_data
 	char	quotes;
 }			t_inject_data;
 
-// This structure holds the main state
-//	and configurations for the M1N15H3LL program.
-
-typedef struct s_minishell
-{
-	t_allocate		*leaks;
-}					t_minishell;
-
 // typedef enum	s_operator_type
 // {
 //     OP_AND,
 //     OP_OR
 // } 				operator_type_t;
 
-typedef struct s_logical_exp_node
+typedef enum s_type
 {
-    t_operator_type	operator;
-    void			*left;
-    void			*right;
-}				logical_exp_node_t;
+	CMD_T,
+	PIPE_T,
+	AND_T,
+	OR_T
+}			t_type;
 
-typedef struct s_command
+typedef enum s_redirection
 {
-    void	type;
-	char	*command;
-    void	args;
-    void	redirection;
-}				command_t;
+	IN_RED_T,
+	OUT_RED_T,
+	OUT_RED_APPEND_T,
+	HERE_DOC_T
+}			t_redirection;
+
+typedef struct s_redir
+{
+	t_redirection		redirection;
+	char				*redir_name;
+}						t_redir;
+
+typedef struct s_tree
+{
+	t_type				type;
+	void				*value;
+	void				**args;
+	int					args_index;
+	t_redir				*redir;
+	int					syntax_err;
+	int					redir_index;
+	struct s_tree		*left;
+	struct s_tree		*right;
+}						t_tree;
+
+// This structure holds the main state
+//	and configurations for the M1N15H3LL program.
+
+typedef struct s_minishell
+{
+	t_tree			*tree;
+	t_allocate		*leaks;
+	char			**tokens;
+}					t_minishell;
+
+// typedef struct s_command
+// {
+//     void	type;
+// 	char	*command;
+//     void	args;
+//     void	redirection;
+// }				command_t;
 
 // Inject Spaces utils
 
-void	copy_and_inject_spaces(t_inject_data *data, char *s, char *str);
+int			count_op(char *s);
+int			check_sep(char c);
+void		copy_and_inject_spaces(t_inject_data *data, char *s, char *str);
+int			check_par(char *s);
 
 // Tokenization utils
 
-int		cmp_operators(char c);
-void	tokenize_operators(char *s, int *j, char **arr, int w);
-void	get_tokens(char *s, int *j, char *quotes);
-int		words_counter(const char *s, char c);
-char	**ft_split_op(t_allocate **leaks, char const *s, char c);
+int			cmp_operators(char c);
+void		tokenize_operators(char *s, int *j, char **arr, int w);
+void		get_tokens(char *s, int *j, char *quotes);
+int			words_counter(const char *s);
+char		**ft_split_op(t_allocate **leaks, char const *s);
+
+int			check_token_op(char *token);
+void		syntax_err(char *error_msg, int exit_status);
+void		set_redir(t_tree *node, char *token);
+int			check_if_operator(char *token);
+int			check_redirection(t_tree *node, \
+			char **tokens, int *i, int	*redir_set);
+void		check_args(t_tree *node, char **tokens, int len);
+int			check_redir_at_end(t_tree *node, \
+			char **tokens, int *i, int *redir_set);
+int			check_closed_quotes(char **tokens, int i, int j);
+int			check_valid_op(char *token);
+void		set_op(t_tree *tree, char *token);
+t_tree		*parse_simple_command(t_allocate **leaks, char **tokens, int *i);
+t_tree		*parse_exp(t_minishell *ms, int *i, int min_pr);
+t_tree		*parse(t_minishell *ms);
 
 #endif

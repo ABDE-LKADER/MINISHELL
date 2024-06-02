@@ -6,3 +6,8 @@
 # HEAP CLEANER
 
 * Need To Fix The Problem Of "env" When You Clean The Heap == So Split Between The Heap Cleaner Of env And Other Allocations;
+
+
+syntax error:
+	wrong operator
+	

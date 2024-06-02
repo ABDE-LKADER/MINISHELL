@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   word_counter.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/02 09:39:27 by abbaraka          #+#    #+#             */
+/*   Updated: 2024/06/02 09:39:28 by abbaraka         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	check_quotes_counting(char *s, int *i, int *counter, char quotes_type)
@@ -16,7 +28,7 @@ void	check_quotes_counting(char *s, int *i, int *counter, char quotes_type)
 		if (s[*i])
 			(*i)++;
 	}
-	if (s[*i] == ' ' || s[*i] == '\0' || cmp_operators(s[*i]))
+	if (s[*i] || s[*i] == ' ' || s[*i] == '\0' || cmp_operators(s[*i]))
 		(*counter)++;
 }
 
@@ -64,7 +76,7 @@ int	quotes_counter(char *s, int *i, int *counter)
 // 	return (0);
 // }
 
-int	words_counter(const char *s, char c)
+int	words_counter(const char *s)
 {
 	int	i;
 	int	counter;
@@ -74,7 +86,8 @@ int	words_counter(const char *s, char c)
 	{
 		if (quotes_counter((char *)s, &i, &counter))
 			;
-		else if ((s[i] != c) && (s[i + 1] == c || s[i + 1] == '\0'))
+		else if ((!check_sep(s[i])) && (check_sep(s[i + 1])
+				|| s[i + 1] == '\0'))
 			counter++;
 		if (s[i] == '\0')
 			break ;

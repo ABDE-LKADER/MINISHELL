@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: darkab <darkab@student.42.fr>              +#+  +:+       +#+         #
+#    By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/19 17:23:22 by abadouab          #+#    #+#              #
-#    Updated: 2024/05/28 16:00:30 by darkab           ###   ########.fr        #
+#    Updated: 2024/06/01 11:27:20 by abbaraka         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,12 @@ NAME		=	minishell
 SRCS		=	minishell.c \
 				check_tokens.c word_counter.c \
 				ft_split_op.c \
-				inject_spaces_utils.c
+				inject_spaces_utils.c \
+				command_checkers.c \
+				errors.c \
+				parse_checkers.c \
+				parse_simple_command.c \
+				parse.c
 
 OBJS		=	$(SRCS:.c=.o)
 HEADER		=	minishell.h
@@ -24,7 +29,7 @@ MYLB		=	MYLIB
 MYAR		=	MYLIB/libar.a
 
 CC			=	cc
-FLAGS		=	-Wall -Wextra -g -fsanitize=address #-Werror
+FLAGS		=	-Wall -Wextra -Werror -g -fsanitize=address
 SHORT		=	-L$(MYLB) -lar -lreadline
 RM			=	rm -fr
 
@@ -69,5 +74,8 @@ fclean: clean
 	@echo $(REDCL)Purging all files 🗑️$(RESET)
 
 re: fclean all
+
+run: all
+	 clear && ./minishell
 
 .PHONY: $(MYLB)
