@@ -6,7 +6,7 @@
 /*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:37 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/02 09:50:14 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/06/02 21:17:53 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,28 @@ int	check_valid_op(char *token)
 	return (0);
 }
 
-void	set_redir(t_tree *node, char *token)
+void	set_redir(t_tree *node, char **tokens, int *i)
 {
-	if (ft_strncmp(token, ">", ft_strlen(token)) == 0)
+	if (ft_strncmp(tokens[*i], ">", ft_strlen(tokens[*i])) == 0)
+	{
 		node->redir[node->redir_index].redirection = OUT_RED_T;
-	else if (ft_strncmp(token, "<", ft_strlen(token)) == 0)
+		node->redir[node->redir_index].fd = -1;
+	}
+	else if (ft_strncmp(tokens[*i], "<", ft_strlen(tokens[*i])) == 0)
+	{
 		node->redir[node->redir_index].redirection = IN_RED_T;
-	else if (ft_strncmp(token, ">>", ft_strlen(token)) == 0)
+		node->redir[node->redir_index].fd = -1;
+	}
+	else if (ft_strncmp(tokens[*i], ">>", ft_strlen(tokens[*i])) == 0)
+	{
 		node->redir[node->redir_index].redirection = OUT_RED_APPEND_T;
-	else if (ft_strncmp(token, "<<", ft_strlen(token)) == 0)
+		node->redir[node->redir_index].fd = -1;
+	}
+	else if (ft_strncmp(tokens[*i], "<<", ft_strlen(tokens[*i])) == 0)
+	{
 		node->redir[node->redir_index].redirection = HERE_DOC_T;
+		node->redir[node->redir_index].fd = ft_open_here_doc(tokens[*i + 1]);
+	}
 }
 
 int	count_redir(char **tokens)

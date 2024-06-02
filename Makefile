@@ -6,7 +6,7 @@
 #    By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/19 17:23:22 by abadouab          #+#    #+#              #
-#    Updated: 2024/06/02 21:13:58 by abadouab         ###   ########.fr        #
+#    Updated: 2024/06/02 21:23:05 by abadouab         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,8 @@ SRCS		=	minishell.c \
 				parse_checkers.c \
 				parse_simple_command.c \
 				signal.c \
-				parse.c
+				parse.c \
+				here_doc.c 
 
 OBJS		=	$(SRCS:.c=.o)
 HEADER		=	minishell.h
