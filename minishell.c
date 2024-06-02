@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:44:46 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/02 18:38:12 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/06/02 20:45:45 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,17 +52,6 @@ int	parser(t_minishell *ms)
 	return (0);
 }
 
-void	signal_handler(int sig)
-{
-	if (sig == SIGINT)
-	{
-		rl_replace_line("", 0);
-		printf("\n");
-		rl_on_new_line();
-		rl_redisplay();
-	}
-}
-
 int	main(int ac, char **av, char **env)
 {
 	t_minishell		ms;
@@ -70,20 +59,17 @@ int	main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	(void)env;
+	sig_handler();
 	ft_bzero(&ms, sizeof(t_minishell));
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGINT, signal_handler);
 	while (1)
 	{
 		ms.read = readline("Minishell >$ ");
 		if (!ms.read)
-			break ;
+			return (printf("exit\n"), EXIT_SUCCESS);
 		if (parser(&ms) == -1)
 			error_handler(&ms);
 		free(ms.read);
-		// get_next_line(&ms.leaks, 0);
 	}
-	printf("exit\n");
 	cleanup(&ms.leaks);
 	return (EXIT_SUCCESS);
 }

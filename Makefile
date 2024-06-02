@@ -6,7 +6,7 @@
 #    By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/19 17:23:22 by abadouab          #+#    #+#              #
-#    Updated: 2024/06/02 15:57:51 by abadouab         ###   ########.fr        #
+#    Updated: 2024/06/02 21:13:58 by abadouab         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ SRCS		=	minishell.c \
 				errors.c \
 				parse_checkers.c \
 				parse_simple_command.c \
+				signal.c \
 				parse.c
 
 OBJS		=	$(SRCS:.c=.o)
@@ -76,6 +77,6 @@ fclean: clean
 re: fclean all
 
 run: all
-	 clear && ./minishell
+		clear && ./minishell
 
 .PHONY: $(MYLB)

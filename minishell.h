@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:24 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/02 16:08:27 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/06/02 21:11:10 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,5 +122,10 @@ void		set_op(t_tree *tree, char *token);
 t_tree		*parse_simple_command(t_allocate **leaks, char **tokens, int *i);
 t_tree		*parse_exp(t_minishell *ms, int *i, int min_pr);
 t_tree		*parse_tree(t_minishell *ms);
+
+///////////////// SIGNAL PROTOTYPES /////////////////
+
+void	sig_handler(void);
+void	signal_int_quit(int sig);
 
 #endif
