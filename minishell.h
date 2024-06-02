@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:24 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/02 11:52:10 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/06/02 14:18:25 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <signal.h>
+# include <fcntl.h>
 
 # define CMD 1
 
@@ -56,6 +57,7 @@ typedef struct s_redir
 {
 	t_redirection		redirection;
 	char				*redir_name;
+	int					fd;
 }						t_redir;
 
 typedef struct s_tree
@@ -106,7 +108,7 @@ char		**ft_split_op(t_allocate **leaks, char const *s);
 
 int			check_token_op(char *token);
 void		syntax_err(char *error_msg, int exit_status);
-void		set_redir(t_tree *node, char *token);
+void		set_redir(t_tree *node, char **tokens, int *i);
 int			check_if_operator(char *token);
 int			check_redirection(t_tree *node, \
 			char **tokens, int *i, int	*redir_set);

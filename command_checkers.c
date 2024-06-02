@@ -6,7 +6,7 @@
 /*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:19 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/02 09:43:50 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/06/02 14:19:07 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int	check_redirection(t_tree *node, char **tokens, int *i, int	*redir_set)
 	{
 		if (!tokens[*i + 1])
 			return (syntax_err("syntax error", 258), node->syntax_err = 1, 1);
-		set_redir(node, tokens[*i]);
+		set_redir(node, tokens, i);
 		if (check_if_operator(tokens[*i + 1]) || check_token_op(tokens[*i + 1]))
 			return (syntax_err("syntax error", 258), node->syntax_err = 1, 1);
 		node->redir[node->redir_index].redir_name = tokens[*i + 1];
