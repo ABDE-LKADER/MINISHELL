@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:11 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/02 10:05:35 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/06/02 12:01:13 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ t_tree	*parse_exp(t_minishell *ms, int *i, int min_pr)
 	return (left);
 }
 
-t_tree	*parse(t_minishell *ms)
+t_tree	*parse_tree(t_minishell *ms)
 {
 	int			i;
 	int			j;

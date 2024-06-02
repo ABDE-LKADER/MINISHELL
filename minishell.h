@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:24 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/02 11:12:25 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/06/02 11:52:10 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,6 @@ int			check_valid_op(char *token);
 void		set_op(t_tree *tree, char *token);
 t_tree		*parse_simple_command(t_allocate **leaks, char **tokens, int *i);
 t_tree		*parse_exp(t_minishell *ms, int *i, int min_pr);
-t_tree		*parse(t_minishell *ms);
+t_tree		*parse_tree(t_minishell *ms);
 
 #endif

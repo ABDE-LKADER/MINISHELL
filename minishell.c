@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:44:46 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/02 11:22:13 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/06/02 12:23:22 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,34 +32,41 @@ char	*inject_spaces(t_minishell *ms, char *s)
 	return (str);
 }
 
+int	parser(t_minishell *ms, char *str)
+{
+	char			*injected_spaces;
+	int				i;
+
+	if (*str)
+		add_history(str);
+	injected_spaces = inject_spaces(ms, str);
+	if (!injected_spaces)
+		return (-1);
+	ms->tokens = ft_split_op(&ms->leaks, injected_spaces);
+	if (!ms->tokens)
+		return (-1);
+	i = 0;
+	while (ms->tokens[i])
+		printf("token: %s\n", ms->tokens[i++]);
+	parse_tree(ms);
+	return (0);
+}
+
 int	main(void)
 {
 	t_minishell		ms;
 	char			*str;
-	char			*injected_spaces;
-	int				i;
 
 	ft_bzero(&ms, sizeof(t_minishell));
 	while (1)
 	{
 		str = readline("Minishell >$ ");
 		if (!str)
-			return (ft_printf("exit"), 0);
-		if (*str)
-			add_history(str);
-		injected_spaces = inject_spaces(&ms, str);
-		if (injected_spaces)
-		{
-			ms.tokens = ft_split_op(&ms.leaks, injected_spaces);
-			i = 0;
-			if (!ms.tokens)
-				return (free(str), cleanup(&ms.leaks), 0);
-			while (ms.tokens[i])
-				printf("token: %s\n", ms.tokens[i++]);
-			parse(&ms);
-			free(str);
-		}
+			return (ft_printf("exit"), EXIT_SUCCESS);
+		if (parser(&ms, str) == -1)
+			return (free(str), cleanup(&ms.leaks), EXIT_FAILURE);
+		free(str);
 	}
 	cleanup(&ms.leaks);
-	return (0);
+	return (EXIT_SUCCESS);
 }
