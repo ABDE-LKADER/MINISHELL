@@ -6,7 +6,7 @@
 /*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:24 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/02 14:18:25 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/06/02 18:40:36 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ typedef struct s_minishell
 {
 	t_tree			*tree;
 	t_allocate		*leaks;
+	char			*read;
 	char			**tokens;
 }					t_minishell;
 
@@ -99,6 +100,8 @@ void		copy_and_inject_spaces(t_inject_data *data, char *s, char *str);
 int			check_par(char *s);
 
 // Tokenization utils
+
+void	error_handler(t_minishell *ms);
 
 int			cmp_operators(char c);
 void		tokenize_operators(char *s, int *j, char **arr, int w);
