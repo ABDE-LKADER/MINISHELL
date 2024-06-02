@@ -6,7 +6,7 @@
 /*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:24 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/02 18:40:36 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/06/02 21:19:04 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include <readline/history.h>
 # include <signal.h>
 # include <fcntl.h>
+# include <errno.h>
+# include <string.h>
 
 # define CMD 1
 
@@ -121,6 +123,12 @@ int			check_redir_at_end(t_tree *node, \
 int			check_closed_quotes(char **tokens, int i, int j);
 int			check_valid_op(char *token);
 void		set_op(t_tree *tree, char *token);
+
+// HERE_DOC
+
+int	ft_open_here_doc(char *delimiter);
+
+
 t_tree		*parse_simple_command(t_allocate **leaks, char **tokens, int *i);
 t_tree		*parse_exp(t_minishell *ms, int *i, int min_pr);
 t_tree		*parse_tree(t_minishell *ms);
