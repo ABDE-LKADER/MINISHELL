@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+         #
+#    By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/19 17:23:22 by abadouab          #+#    #+#              #
-#    Updated: 2024/06/01 11:27:20 by abbaraka         ###   ########.fr        #
+#    Updated: 2024/06/02 15:57:51 by abadouab         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ MYAR		=	MYLIB/libar.a
 
 CC			=	cc
 FLAGS		=	-Wall -Wextra -Werror -g -fsanitize=address
-SHORT		=	-L$(MYLB) -lar -lreadline
+SHORT		=	-L$(MYLB) -lar -L ~/.brew/opt/readline/lib -lreadline
 RM			=	rm -fr
 
 GREEN		=	"\033[1;32m"
@@ -58,7 +58,7 @@ $(NAME): $(OBJS)
 	@$(CC) $(FLAGS) $^ $(SHORT) -o $(NAME)
 
 $(OBJS): %.o: %.c $(HEADER) $(MYAR)
-	@$(CC) $(FLAGS) -c -I $(MYLB) $< -o $@
+	@$(CC) $(FLAGS) -c -I $(MYLB) -I ~/.brew/opt/readline/include $< -o $@
 	@printf $(GREEN)"."$(RESET)
 
 clean:

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:44:21 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/02 10:22:08 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/06/02 14:35:48 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,12 @@ int	check_par(char *s)
 	if (level)
 		return (1);
 	return (0);
+}
+
+void	error_handler(t_minishell *ms)
+{
+	clear_history();
+	free(ms->read);
+	cleanup(&ms->leaks);
+	exit(EXIT_FAILURE);
 }

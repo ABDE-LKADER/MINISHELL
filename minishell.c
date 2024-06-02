@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:44:46 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/02 12:23:22 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/06/02 18:38:12 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,14 @@ char	*inject_spaces(t_minishell *ms, char *s)
 	return (str);
 }
 
-int	parser(t_minishell *ms, char *str)
+int	parser(t_minishell *ms)
 {
 	char			*injected_spaces;
 	int				i;
 
-	if (*str)
-		add_history(str);
-	injected_spaces = inject_spaces(ms, str);
+	if (*ms->read)
+		add_history(ms->read);
+	injected_spaces = inject_spaces(ms, ms->read);
 	if (!injected_spaces)
 		return (-1);
 	ms->tokens = ft_split_op(&ms->leaks, injected_spaces);
@@ -52,21 +52,38 @@ int	parser(t_minishell *ms, char *str)
 	return (0);
 }
 
-int	main(void)
+void	signal_handler(int sig)
+{
+	if (sig == SIGINT)
+	{
+		rl_replace_line("", 0);
+		printf("\n");
+		rl_on_new_line();
+		rl_redisplay();
+	}
+}
+
+int	main(int ac, char **av, char **env)
 {
 	t_minishell		ms;
-	char			*str;
 
+	(void)ac;
+	(void)av;
+	(void)env;
 	ft_bzero(&ms, sizeof(t_minishell));
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, signal_handler);
 	while (1)
 	{
-		str = readline("Minishell >$ ");
-		if (!str)
-			return (ft_printf("exit"), EXIT_SUCCESS);
-		if (parser(&ms, str) == -1)
-			return (free(str), cleanup(&ms.leaks), EXIT_FAILURE);
-		free(str);
+		ms.read = readline("Minishell >$ ");
+		if (!ms.read)
+			break ;
+		if (parser(&ms) == -1)
+			error_handler(&ms);
+		free(ms.read);
+		// get_next_line(&ms.leaks, 0);
 	}
+	printf("exit\n");
 	cleanup(&ms.leaks);
 	return (EXIT_SUCCESS);
 }
