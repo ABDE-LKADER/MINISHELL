@@ -6,23 +6,17 @@
 #    By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/19 17:23:22 by abadouab          #+#    #+#              #
-#    Updated: 2024/06/02 21:23:05 by abadouab         ###   ########.fr        #
+#    Updated: 2024/06/03 15:37:37 by abadouab         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	minishell
 
 SRCS		=	minishell.c \
-				check_tokens.c word_counter.c \
-				ft_split_op.c \
-				inject_spaces_utils.c \
-				command_checkers.c \
-				errors.c \
-				parse_checkers.c \
-				parse_simple_command.c \
-				signal.c \
-				parse.c \
-				here_doc.c 
+				inject_spaces_utils.c command_checkers.c  \
+				signal.c parse.c here_doc.c environment.c  \
+				check_tokens.c word_counter.c ft_split_op.c \
+				errors.c parse_checkers.c parse_simple_command.c 
 
 OBJS		=	$(SRCS:.c=.o)
 HEADER		=	minishell.h

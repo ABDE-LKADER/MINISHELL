@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:44:46 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/03 13:29:44 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/06/03 15:42:05 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*inject_spaces(t_minishell *ms, char *s)
 	return (str);
 }
 
-int	parser(t_minishell *ms)
+void	parser(t_minishell *ms)
 {
 	char			*injected_spaces;
 	int				i;
@@ -41,15 +41,14 @@ int	parser(t_minishell *ms)
 		add_history(ms->read);
 	injected_spaces = inject_spaces(ms, ms->read);
 	if (!injected_spaces)
-		return (-1);
+		error_handler(ms);
 	ms->tokens = ft_split_op(&ms->leaks, injected_spaces);
 	if (!ms->tokens)
-		return (-1);
+		error_handler(ms);
 	i = 0;
 	while (ms->tokens[i])
 		printf("token: %s\n", ms->tokens[i++]);
 	parse_tree(ms);
-	return (0);
 }
 
 int	main(int ac, char **av, char **env)
@@ -58,19 +57,15 @@ int	main(int ac, char **av, char **env)
 
 	(void)ac;
 	(void)av;
-	(void)env;
 	sig_handler();
-	// environment_init();
-	ft_bzero(&ms, sizeof(t_minishell));
+	environment_init(&ms, env);
 	while (1)
 	{
 		ms.read = readline("Minishell >$ ");
 		if (!ms.read)
 			return (printf("exit\n"), EXIT_SUCCESS);
-		if (parser(&ms) == -1)
-			error_handler(&ms);
-		free(ms.read);
+		(parser(&ms));
+		(cleanup(&ms.leaks), free(ms.read));
 	}
-	cleanup(&ms.leaks);
-	return (EXIT_SUCCESS);
+	return (cleanup(&ms.leaks), EXIT_SUCCESS);
 }

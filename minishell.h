@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:24 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/03 11:06:59 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/06/03 15:38:25 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,12 @@ typedef struct s_tree
 	struct s_tree		*right;
 }						t_tree;
 
+typedef struct s_environ
+{
+	char				*content;
+	struct s_environ	*next;
+}						t_environ;
+
 // This structure holds the main state
 //	and configurations for the M1N15H3LL program.
 
@@ -82,6 +88,9 @@ typedef struct s_minishell
 {
 	t_tree			*tree;
 	t_allocate		*leaks;
+	t_allocate		*locked;
+	t_environ		*env;
+	t_environ		*export;
 	char			*read;
 	char			**tokens;
 }					t_minishell;
@@ -101,9 +110,7 @@ int			check_sep(char c);
 void		copy_and_inject_spaces(t_inject_data *data, char *s, char *str);
 int			check_par(char *s);
 
-// Tokenization utils
-
-void	error_handler(t_minishell *ms);
+///////////////// PROTOTYPES TOKENIZATION /////////////////
 
 int			cmp_operators(char c);
 void		tokenize_operators(char *s, int *j, char **arr, int w);
@@ -124,10 +131,9 @@ int			check_closed_quotes(char **tokens, int i, int j);
 int			check_valid_op(char *token);
 void		set_op(t_tree *tree, char *token);
 
-// HERE_DOC
+///////////////// HERE_DOC /////////////////
 
 int	ft_open_here_doc(char *delimiter);
-
 
 t_tree		*parse_simple_command(t_allocate **leaks, char **tokens, int *i);
 t_tree		*parse_exp(t_minishell *ms, int *i, int min_pr);
@@ -137,5 +143,13 @@ t_tree		*parse_tree(t_minishell *ms);
 
 void	sig_handler(void);
 void	sig_heredoc(void);
+
+///////////////// ENVIRONMENT PROTOTYPES /////////////////
+
+void	environment_init(t_minishell *ms, char **env);
+
+///////////////// ERROR PROTOTYPES /////////////////
+
+void	error_handler(t_minishell *ms);
 
 #endif
