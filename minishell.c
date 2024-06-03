@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:44:46 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/03 15:42:05 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/06/03 20:26:49 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*inject_spaces(t_minishell *ms, char *s)
 	(TRUE) && (data.len = ft_strlen(s), data.len += count_op(s),
 		data.i = 0, data.j = 0, data.quotes = -1);
 	if (check_par(s))
-		return (syntax_err("syntax error", 1), NULL);
+		return (syntax_err(ms, "syntax error", 258), NULL);
 	str = allocate(&ms->leaks, data.len + 1, sizeof(char));
 	if (!str)
 		return (NULL);
@@ -61,11 +61,14 @@ int	main(int ac, char **av, char **env)
 	environment_init(&ms, env);
 	while (1)
 	{
+		g_sig = 0;
 		ms.read = readline("Minishell >$ ");
 		if (!ms.read)
 			return (printf("exit\n"), EXIT_SUCCESS);
 		(parser(&ms));
 		(cleanup(&ms.leaks), free(ms.read));
+		if (ms.exit_status == 1)
+			continue;
 	}
 	return (cleanup(&ms.leaks), EXIT_SUCCESS);
 }

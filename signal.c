@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 20:40:18 by abadouab          #+#    #+#             */
-/*   Updated: 2024/06/03 12:47:36 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/06/03 20:03:26 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ static void	signal_int_quit(int sig)
 		rl_on_new_line();
 		rl_redisplay();
 	}
+	else if (sig == SIGINT)
+		g_sig = SIGINT;
 }
 
 void	sig_handler(void)

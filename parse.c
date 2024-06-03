@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:11 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/03 14:44:13 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/06/03 20:27:35 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_tree	*parse_side(t_minishell *ms, int *i)
 
 	if (ms->tokens[*i]
 		&& ft_strncmp(ms->tokens[*i], ")", ft_strlen(ms->tokens[*i])) == 0)
-		return (syntax_err("syntax error near unexpected token `)'", 0), NULL);
+		return (syntax_err(ms, "syntax error near unexpected token `)'", 258), NULL);
 	else if (ms->tokens[*i]
 		&& ft_strncmp(ms->tokens[*i], "(", ft_strlen(ms->tokens[*i])) == 0)
 	{
@@ -30,14 +30,16 @@ t_tree	*parse_side(t_minishell *ms, int *i)
 		// 		, NULL);
 		return (exp);
 	}
-	return (parse_simple_command(&ms->leaks, ms->tokens, i));
+	return (parse_simple_command(ms, i));
 }
 
-t_tree	*make_tree(t_allocate **leaks, t_tree *left, t_tree *right, char *op)
+t_tree	*make_tree(t_minishell *ms, t_tree *left, t_tree *right, char *op)
 {
 	t_tree	*node;
 
-	node = allocate(leaks, 1, sizeof(t_tree));
+	node = allocate(&ms->leaks, 1, sizeof(t_tree));
+	if (!node)
+		error_handler(ms);
 	set_op(node, op);
 	if (ft_strncmp(op, "|", ft_strlen(op)) == 0
 		&& ft_strlen(op) == ft_strlen("|"))
@@ -84,9 +86,9 @@ t_tree	*parse_exp(t_minishell *ms, int *i, int min_pr)
 		op = ms->tokens[*i + 1];
 		(*i) += 2;
 		if (!ms->tokens[*i] || check_token_op(ms->tokens[*i]))
-			return (syntax_err("syntax error", 0), NULL);
+			return (syntax_err(ms, "syntax error", 258), NULL);
 		right = parse_exp(ms, i, check_if_prec(op) + 1);
-		left = make_tree(&ms->leaks, left, right, op);
+		left = make_tree(ms, left, right, op);
 	}
 	return (left);
 }
@@ -103,6 +105,8 @@ t_tree	*parse_tree(t_minishell *ms)
 	if (check_closed_quotes(ms->tokens, i, j))
 		return (NULL);
 	ms->tree = allocate(&ms->leaks, 1, sizeof(t_tree));
+	if (!ms->tree)
+		error_handler(ms);
 	ms->tree = parse_exp(ms, &i, 0);
 	if (ms->tree)
 	{

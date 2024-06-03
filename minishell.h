@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:24 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/03 15:38:25 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/06/03 20:27:26 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include <errno.h>
 # include <string.h>
 
-# define CMD 1
+int	g_sig;
 
 typedef struct s_inject_data
 {
@@ -93,6 +93,7 @@ typedef struct s_minishell
 	t_environ		*export;
 	char			*read;
 	char			**tokens;
+	int				exit_status;
 }					t_minishell;
 
 // typedef struct s_command
@@ -119,14 +120,12 @@ int			words_counter(const char *s);
 char		**ft_split_op(t_allocate **leaks, char const *s);
 
 int			check_token_op(char *token);
-void		syntax_err(char *error_msg, int exit_status);
-void		set_redir(t_tree *node, char **tokens, int *i);
+void		syntax_err(t_minishell *ms, char *error_msg, int exit_status);
+void		set_redir(t_minishell *ms, int *i);
 int			check_if_operator(char *token);
-int			check_redirection(t_tree *node, \
-			char **tokens, int *i, int	*redir_set);
+int			check_redirection(t_minishell *ms, int *i, int *redir_set);
 void		check_args(t_tree *node, char **tokens, int len);
-int			check_redir_at_end(t_tree *node, \
-			char **tokens, int *i, int *redir_set);
+int			check_redir_at_end(t_minishell *ms, int *i, int *redir_set);
 int			check_closed_quotes(char **tokens, int i, int j);
 int			check_valid_op(char *token);
 void		set_op(t_tree *tree, char *token);
@@ -135,14 +134,14 @@ void		set_op(t_tree *tree, char *token);
 
 int	ft_open_here_doc(char *delimiter);
 
-t_tree		*parse_simple_command(t_allocate **leaks, char **tokens, int *i);
+t_tree		*parse_simple_command(t_minishell *ms, int *i);
 t_tree		*parse_exp(t_minishell *ms, int *i, int min_pr);
 t_tree		*parse_tree(t_minishell *ms);
 
 ///////////////// SIGNAL PROTOTYPES /////////////////
 
-void	sig_handler(void);
-void	sig_heredoc(void);
+void		sig_handler(void);
+void		sig_heredoc(void);
 
 ///////////////// ENVIRONMENT PROTOTYPES /////////////////
 

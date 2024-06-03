@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_checkers.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:19 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/03 09:27:01 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/06/03 20:08:45 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,45 +81,49 @@ void	check_args(t_tree *node, char **tokens, int len)
 		printf("%s\n", node->args[k]), k++;
 }
 
-int	check_redirection(t_tree *node, char **tokens, int *i, int	*redir_set)
+int	check_redirection(t_minishell *ms, int *i, int *redir_set)
 {
-	if (ft_strncmp(tokens[*i], ">", ft_strlen(tokens[*i])) == 0
-		|| ft_strncmp(tokens[*i], "<", ft_strlen(tokens[*i])) == 0
-		|| ft_strncmp(tokens[*i], ">>", ft_strlen(tokens[*i])) == 0
-		|| ft_strncmp(tokens[*i], "<<", ft_strlen(tokens[*i])) == 0)
+	if (ft_strncmp(ms->tokens[*i], ">", ft_strlen(ms->tokens[*i])) == 0
+		|| ft_strncmp(ms->tokens[*i], "<", ft_strlen(ms->tokens[*i])) == 0
+		|| ft_strncmp(ms->tokens[*i], ">>", ft_strlen(ms->tokens[*i])) == 0
+		|| ft_strncmp(ms->tokens[*i], "<<", ft_strlen(ms->tokens[*i])) == 0)
 	{
-		if (!tokens[*i + 1])
-			return (syntax_err("syntax error", 258), node->syntax_err = 1, 1);
-		set_redir(node, tokens, i);
-		if (check_if_operator(tokens[*i + 1]) || check_token_op(tokens[*i + 1]))
-			return (syntax_err("syntax error", 258), node->syntax_err = 1, 1);
-		node->redir[node->redir_index].redir_name = tokens[*i + 1];
-		// printf("redir file name : %s\n", node->redir[node->redir_index].redir_name);
-		node->redir_index++;
+		if (!ms->tokens[*i + 1])
+			return (syntax_err(ms, "syntax error", 258),
+			ms->tree->syntax_err = 1, 1);
+		set_redir(ms, i);
+		if (check_if_operator(ms->tokens[*i + 1])
+			|| check_token_op(ms->tokens[*i + 1]))
+			return (syntax_err(ms ,"syntax error", 258),
+				ms->tree->syntax_err = 1, 1);
+		ms->tree->redir[ms->tree->redir_index].redir_name = ms->tokens[*i + 1];
+		ms->tree->redir_index++;
 		*redir_set = 1;
 		(*i) += 2;
 	}
-	if (*redir_set == 0 && tokens[*i] && check_if_operator(tokens[*i]))
-		return (syntax_err("syntax error", 258), node->syntax_err = 1, 1);
+	if (*redir_set == 0 && ms->tokens[*i] && check_if_operator(ms->tokens[*i]))
+		return (syntax_err(ms, "syntax error", 258), ms->tree->syntax_err = 1, 1);
 	*redir_set = 0;
-	if (tokens[*i] && check_if_operator(tokens[*i])
-		&& tokens[*i + 1] && !check_token_op(tokens[*i + 1]))
-		check_redirection(node, tokens, i, redir_set);
+	if (ms->tokens[*i] && check_if_operator(ms->tokens[*i])
+		&& ms->tokens[*i + 1] && !check_token_op(ms->tokens[*i + 1]))
+		check_redirection(ms, i, redir_set);
 	return (0);
 }
 
-int	check_redir_at_end(t_tree *node, char **tokens, int *i, int *redir_set)
+int	check_redir_at_end(t_minishell *ms, int *i, int *redir_set)
 {
-	while (tokens[*i] && !check_token_op(tokens[*i]))
+	while (ms->tokens[*i] && !check_token_op(ms->tokens[*i]))
 	{
-		if (tokens[*i] && check_if_operator(tokens[*i]))
+		if (ms->tokens[*i] && check_if_operator(ms->tokens[*i]))
 		{
-			if (tokens[*i] && check_redirection(node, tokens, i, redir_set))
+			if (ms->tokens[*i]
+			&& check_redirection(ms, i, redir_set))
 				return (1);
 		}
-		if (tokens[*i] && check_valid_op(tokens[*i]))
-			return (syntax_err("syntax error", 258), node->syntax_err = 1, 1);
-		if (!tokens[*i] || check_token_op(tokens[*i]))
+		if (ms->tokens[*i] && check_valid_op(ms->tokens[*i]))
+			return (syntax_err(ms, "syntax error", 258),
+				ms->tree->syntax_err = 1, 1);
+		if (!ms->tokens[*i] || check_token_op(ms->tokens[*i]))
 			return (0);
 		else
 			(*i)++;

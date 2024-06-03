@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 21:18:31 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/03 13:25:25 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/06/03 20:03:55 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_here_doc_in_child(pid_t pid, char *delimiter, int fds[])
+int	ft_here_doc_in_child(t_minishell *ms, pid_t pid, char *delimiter, int fds[])
 {
 	char	*line;
 
@@ -27,6 +27,7 @@ int	ft_here_doc_in_child(pid_t pid, char *delimiter, int fds[])
 				break ;
 			else
 				(write(fds[0], line, ft_strlen(line)), write(fds[0], "\n", 1));
+			free(line);
 		}
 		if (close(fds[0]) < 0)
 			return (ft_putstr_fd(strerror(errno), 2), -1);
@@ -34,10 +35,11 @@ int	ft_here_doc_in_child(pid_t pid, char *delimiter, int fds[])
 			return (ft_putstr_fd(strerror(errno), 2), -1);
 		exit(0);
 	}
+	ms->exit_status = 0;
 	return (wait(NULL), 0);
 }
 
-int	ft_open_here_doc(char *delimiter)
+int	ft_open_here_doc(t_minishell *ms, char *delimiter)
 {
 	int		fds[2];
 	int		len;
@@ -53,8 +55,10 @@ int	ft_open_here_doc(char *delimiter)
 	(1) && (unlink("here_doc"), len = ft_strlen(delimiter), pid = fork());
 	if (pid < 0)
 		return (-1);
-	if (ft_here_doc_in_child(pid, delimiter, fds) == -1)
+	if (ft_here_doc_in_child(ms, pid, delimiter, fds) == -1)
 		return (-1);
+	if (g_sig == SIGINT)
+		ms->exit_status = 1;
 	if (close(fds[0]) < 0)
 		return (ft_putstr_fd(strerror(errno), 2), -1);
 	return (fds[1]);
