@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:44:46 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/02 20:45:45 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/06/03 13:29:44 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int	main(int ac, char **av, char **env)
 	(void)av;
 	(void)env;
 	sig_handler();
+	// environment_init();
 	ft_bzero(&ms, sizeof(t_minishell));
 	while (1)
 	{

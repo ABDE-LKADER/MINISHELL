@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:24 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/02 21:23:53 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/06/03 11:06:59 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,6 @@ t_tree		*parse_tree(t_minishell *ms);
 ///////////////// SIGNAL PROTOTYPES /////////////////
 
 void	sig_handler(void);
-void	signal_int_quit(int sig);
+void	sig_heredoc(void);
 
 #endif

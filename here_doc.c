@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 21:18:31 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/02 21:18:39 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/06/03 13:25:25 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	ft_here_doc_in_child(pid_t pid, char *delimiter, int fds[])
 
 	if (pid == 0)
 	{
+		sig_heredoc();
 		while (1)
 		{
 			line = readline("> ");
@@ -33,7 +34,7 @@ int	ft_here_doc_in_child(pid_t pid, char *delimiter, int fds[])
 			return (ft_putstr_fd(strerror(errno), 2), -1);
 		exit(0);
 	}
-	return (0);
+	return (wait(NULL), 0);
 }
 
 int	ft_open_here_doc(char *delimiter)
@@ -54,8 +55,6 @@ int	ft_open_here_doc(char *delimiter)
 		return (-1);
 	if (ft_here_doc_in_child(pid, delimiter, fds) == -1)
 		return (-1);
-	if (waitpid(pid, NULL, 0) == -1)
-		return (ft_putstr_fd(strerror(errno), 2), -1);
 	if (close(fds[0]) < 0)
 		return (ft_putstr_fd(strerror(errno), 2), -1);
 	return (fds[1]);
