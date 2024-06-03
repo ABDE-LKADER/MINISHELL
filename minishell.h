@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:24 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/03 20:27:26 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/06/03 20:30:53 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ void		set_op(t_tree *tree, char *token);
 
 ///////////////// HERE_DOC /////////////////
 
-int	ft_open_here_doc(char *delimiter);
+int			ft_open_here_doc(t_minishell *ms, char *delimiter);
 
 t_tree		*parse_simple_command(t_minishell *ms, int *i);
 t_tree		*parse_exp(t_minishell *ms, int *i, int min_pr);
