@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:44:46 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/03 13:29:44 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/06/03 20:14:15 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*inject_spaces(t_minishell *ms, char *s)
 	(TRUE) && (data.len = ft_strlen(s), data.len += count_op(s),
 		data.i = 0, data.j = 0, data.quotes = -1);
 	if (check_par(s))
-		return (syntax_err("syntax error", 1), NULL);
+		return (syntax_err(ms, "syntax error", 258), NULL);
 	str = allocate(&ms->leaks, data.len + 1, sizeof(char));
 	if (!str)
 		return (NULL);
@@ -64,12 +64,15 @@ int	main(int ac, char **av, char **env)
 	ft_bzero(&ms, sizeof(t_minishell));
 	while (1)
 	{
+		g_sig = 0;
 		ms.read = readline("Minishell >$ ");
 		if (!ms.read)
 			return (printf("exit\n"), EXIT_SUCCESS);
 		if (parser(&ms) == -1)
 			error_handler(&ms);
 		free(ms.read);
+		if (ms.exit_status == 1)
+			continue;
 	}
 	cleanup(&ms.leaks);
 	return (EXIT_SUCCESS);

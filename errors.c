@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:44:21 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/02 21:13:25 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/06/03 20:12:27 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	syntax_err(char *error_msg, int exit_status)
+void	syntax_err(t_minishell *ms, char *error_msg, int exit_status)
 {
-	(void)exit_status;
 	ft_putstr_fd("Minishell: ", 2);
 	ft_putstr_fd(error_msg, 2);
 	ft_putstr_fd("\n", 2);
+	ms->exit_status = exit_status;	
 }
 
 int	check_par(char *s)
