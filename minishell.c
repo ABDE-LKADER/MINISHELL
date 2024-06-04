@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:44:46 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/03 20:34:31 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/06/04 18:29:53 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,16 @@ int	main(int ac, char **av, char **env)
 		g_sig = 0;
 		ms.read = readline("Minishell >$ ");
 		if (!ms.read)
-			return (printf("exit\n"), EXIT_SUCCESS);
+			return (printf(EXIT), EXIT_SUCCESS);
+		while (ms.export)
+		{
+			printf("\n --------------------------------------------------------\n VAR: %s || \n--------------------------------------------------------\n VAL: %s ||", ms.export->var, ms.export->val);
+			ms.export = ms.export->next;
+		}
 		parser(&ms);
 		(cleanup(&ms.leaks), free(ms.read));
-		if (ms.exit_status == 1)
-			continue;
+		// if (ms.exit_status == 1)
+		// 	continue;
 	}
 	return (cleanup(&ms.leaks), EXIT_SUCCESS);
 }

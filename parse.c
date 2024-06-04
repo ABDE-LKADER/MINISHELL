@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:11 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/03 20:27:35 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/06/04 20:10:41 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,6 @@ t_tree	*parse_side(t_minishell *ms, int *i)
 	{
 		(*i)++;
 		exp = parse_exp(ms, i, 0);
-		// if (tokens[*i + 1]
-		// 	&& ft_strncmp(tokens[*i + 1], "(", ft_strlen(tokens[*i + 1])) == 0)
-		// 	return (syntax_err("syntax error near unexpected token `('", 0)
-		// 		, NULL);
 		return (exp);
 	}
 	return (parse_simple_command(ms, i));
@@ -126,13 +122,13 @@ t_tree	*parse_tree(t_minishell *ms)
 					printf("     /     \\   \n");
 					printf("   %s   ", ms->tree->left->left->value);
 					printf("   %s   \n", ms->tree->left->right->value);
-					// if (check_token_op(ms->tree->left->left->value))
-					// {
-					// 	printf(" /   \\   \n");
-					// 	printf(" /     \\   \n");
-					// 	printf(" %s   ", ms->tree->left->left->left->value);
-					// 	printf("  %s   \n", ms->tree->left->left->right->value);
-					// }
+					if (check_token_op(ms->tree->left->left->value))
+					{
+						printf(" /   \\   \n");
+						printf(" /     \\   \n");
+						printf(" %s   ", ms->tree->left->left->left->value);
+						printf("  %s   \n", ms->tree->left->left->right->value);
+					}
 				}
 			}
 		}

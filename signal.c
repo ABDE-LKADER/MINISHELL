@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 20:40:18 by abadouab          #+#    #+#             */
-/*   Updated: 2024/06/03 20:03:26 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/06/04 17:46:41 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	heredoc_int_quit(int sig)
 {
 	if (sig == SIGINT)
 	{
-		printf("\n");
+		printf(INIT);
 		exit(EXIT_FAILURE);
 	}
 }

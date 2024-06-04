@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:24 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/03 20:30:53 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/06/04 17:46:38 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@
 # include <fcntl.h>
 # include <errno.h>
 # include <string.h>
+
+# define EXIT "\033[AMinishell >$ exit\n"
+# define INIT "\033[A\n>   \n"
 
 int	g_sig;
 
@@ -77,7 +80,8 @@ typedef struct s_tree
 
 typedef struct s_environ
 {
-	char				*content;
+	void				*var;
+	void				*val;
 	struct s_environ	*next;
 }						t_environ;
 
@@ -88,7 +92,7 @@ typedef struct s_minishell
 {
 	t_tree			*tree;
 	t_allocate		*leaks;
-	t_allocate		*locked;
+	t_allocate		*alloc;
 	t_environ		*env;
 	t_environ		*export;
 	char			*read;

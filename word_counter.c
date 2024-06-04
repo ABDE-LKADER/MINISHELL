@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   word_counter.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:27 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/02 09:39:28 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/06/03 20:37:17 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,35 +46,6 @@ int	quotes_counter(char *s, int *i, int *counter)
 	}
 	return (0);
 }
-
-// int	parentheses_counter(char *s, int *i, int *counter)
-// {
-// 	int	level;
-
-// 	level = 0;
-// 	if (s[*i] && s[*i] == '(')
-// 	{
-// 		level++;
-// 		(*i)++;
-// 		while (s[*i])
-// 		{
-// 			if (s[*i] && s[*i] == '(')
-// 				level++;
-// 			if (s[*i] && s[*i] == ')')
-// 				level--;
-// 			(*i)++;
-// 			if (level == 0)
-// 				break ;
-// 		}
-// 		if (s[*i] == ')')
-// 			(*i)++;
-// 		if (cmp_operators(s[*i]))
-// 			;
-// 		(*counter)++;
-// 		return (1);
-// 	}
-// 	return (0);
-// }
 
 int	words_counter(const char *s)
 {
