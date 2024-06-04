@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:24 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/04 17:46:38 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/06/04 20:26:12 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ typedef struct s_tree
 	void				**args;
 	int					args_index;
 	t_redir				*redir;
+	int					dis_error;
 	int					syntax_err;
 	int					redir_index;
 	struct s_tree		*left;
@@ -154,5 +155,7 @@ void	environment_init(t_minishell *ms, char **env);
 ///////////////// ERROR PROTOTYPES /////////////////
 
 void	error_handler(t_minishell *ms);
+int		check_syntax_err(t_minishell *ms);
+int		check_token_if_redir(char *token);
 
 #endif

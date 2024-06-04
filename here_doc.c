@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 21:18:31 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/04 17:46:03 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/06/04 20:27:03 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,38 @@ int	ft_here_doc_in_child(t_minishell *ms, pid_t pid, char *delimiter, int fds[])
 			return (ft_putstr_fd(strerror(errno), 2), -1);
 		exit(0);
 	}
-	ms->exit_status = 0;
+	if (!ms->tree->syntax_err)
+		ms->exit_status = 0;
 	return (wait(NULL), 0);
+}
+
+int	check_token_if_redir(char *token)
+{
+	if (check_if_operator(token)
+	&& ft_strncmp(token, ">>", ft_strlen(token))
+	&& ft_strncmp(token, "<<", ft_strlen(token))
+	&& ft_strncmp(token, "<", ft_strlen(token))
+	&& ft_strncmp(token, ">", ft_strlen(token)))
+		return (1);
+	return (0);
+}
+
+int	check_syntax_err(t_minishell *ms)
+{
+	int	i;
+
+	i = 0;
+	while (ms->tokens[i])
+	{
+		if (check_if_operator(ms->tokens[i])
+			&& ft_strncmp(ms->tokens[i], ">>", ft_strlen(ms->tokens[i]))
+			&& ft_strncmp(ms->tokens[i], "<<", ft_strlen(ms->tokens[i]))
+			&& ft_strncmp(ms->tokens[i], "<", ft_strlen(ms->tokens[i]))
+			&& ft_strncmp(ms->tokens[i], ">", ft_strlen(ms->tokens[i])))
+			return (syntax_err(ms, "syntax error", 258), 1);
+		i++;
+	}
+	return (0);
 }
 
 int	ft_open_here_doc(t_minishell *ms, char *delimiter)
