@@ -6,7 +6,7 @@
 /*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:37 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/03 20:03:26 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/06/04 15:30:17 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,7 @@ void	set_redir(t_minishell *ms, int *i)
 	t_tree *node;
 	char 	**tokens;
 
-	node = ms->tree;
-	tokens = ms->tokens;
+	(1) && (node = ms->tree, tokens = ms->tokens);
 	if (ft_strncmp(tokens[*i], ">", ft_strlen(tokens[*i])) == 0)
 	{
 		node->redir[node->redir_index].redirection = OUT_RED_T;
@@ -52,7 +51,8 @@ void	set_redir(t_minishell *ms, int *i)
 		node->redir[node->redir_index].redirection = OUT_RED_APPEND_T;
 		node->redir[node->redir_index].fd = -1;
 	}
-	else if (ft_strncmp(tokens[*i], "<<", ft_strlen(tokens[*i])) == 0 && g_sig == 0)
+	else if (ft_strncmp(tokens[*i], "<<", ft_strlen(tokens[*i])) == 0
+			&& g_sig == 0)
 	{
 		node->redir[node->redir_index].redirection = HERE_DOC_T;
 		node->redir[node->redir_index].fd = ft_open_here_doc(ms, tokens[*i + 1]);
@@ -123,15 +123,17 @@ t_tree	*parse_simple_command(t_minishell *ms, int *i)
 
 	if (check_op_and_allocate(ms, i, &redir_set))
 		return (NULL);
+	ms->tree->dis_error = check_syntax_err(ms);
 	if (check_redirection(ms, i, &redir_set))
 		return (NULL);
-	if (!ms->tokens[*i])
+	if (!ms->tokens[*i] || ms->tree->syntax_err)
 		return (NULL);
 	ms->tree->type = CMD_T;
 	ms->tree->value = ms->tokens[*i];
 	(1) && (ms->tree->left = NULL, ms->tree->right = NULL);
 	(1) && (redir_set = 0);
-	if (ms->tokens[*i] && !check_token_op(ms->tokens[*i]))
+	if (ms->tokens[*i] && !check_token_op(ms->tokens[*i])
+		&& count_args(ms->tokens + *i))
 		check_args(ms->tree, ms->tokens + *i, count_args(ms->tokens + *i));
 	if (check_redir_at_end(ms, i, &redir_set))
 		return (NULL);

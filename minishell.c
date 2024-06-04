@@ -6,7 +6,7 @@
 /*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:44:46 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/03 20:34:31 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/06/04 10:14:06 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,17 @@ int	main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	sig_handler();
+	printf("exit out: %d\n", ms.exit_status);
 	environment_init(&ms, env);
 	while (1)
 	{
 		g_sig = 0;
+		ms.exit_status = 0;
 		ms.read = readline("Minishell >$ ");
 		if (!ms.read)
 			return (printf("exit\n"), EXIT_SUCCESS);
 		parser(&ms);
+		printf("exit: %d\n", ms.exit_status);
 		(cleanup(&ms.leaks), free(ms.read));
 		if (ms.exit_status == 1)
 			continue;

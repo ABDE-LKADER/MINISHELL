@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+         #
+#    By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/19 17:23:22 by abadouab          #+#    #+#              #
-#    Updated: 2024/06/03 20:25:34 by abadouab         ###   ########.fr        #
+#    Updated: 2024/06/04 09:50:56 by abbaraka         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,7 +71,7 @@ fclean: clean
 
 re: fclean all
 
-run: all
+run: all clean
 		clear && ./minishell
 
 .PHONY: $(MYLB)

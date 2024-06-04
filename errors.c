@@ -6,7 +6,7 @@
 /*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:44:21 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/03 20:12:27 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/06/04 15:30:58 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,16 @@
 
 void	syntax_err(t_minishell *ms, char *error_msg, int exit_status)
 {
-	ft_putstr_fd("Minishell: ", 2);
-	ft_putstr_fd(error_msg, 2);
-	ft_putstr_fd("\n", 2);
-	ms->exit_status = exit_status;	
+	if (g_sig != SIGINT)
+	{
+		if (!ms->tree->dis_error)
+		{
+			ft_putstr_fd("Minishell: ", 2);
+			ft_putstr_fd(error_msg, 2);
+			ft_putstr_fd("\n", 2);
+		}
+		ms->exit_status = exit_status;
+	}
 }
 
 int	check_par(char *s)
