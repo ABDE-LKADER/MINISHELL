@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:44:46 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/05 11:49:35 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/06/05 11:57:41 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	main(int ac, char **av, char **env)
 		printf("exit: %d\n", ms.exit_status);
 		(cleanup(&ms.leaks), free(ms.read));
 		if (ms.exit_status == 1)
-			continue;
+			continue ;
 	}
 	return (cleanup(&ms.leaks), EXIT_SUCCESS);
 }

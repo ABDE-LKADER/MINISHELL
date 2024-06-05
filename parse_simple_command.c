@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:37 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/04 20:26:29 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/06/05 12:10:28 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ int	check_valid_op(char *token)
 
 void	set_redir(t_minishell *ms, int *i)
 {
-	t_tree *node;
-	char 	**tokens;
+	t_tree	*node;
+	char	**tokens;
 
 	(1) && (node = ms->tree, tokens = ms->tokens);
 	if (ft_strncmp(tokens[*i], ">", ft_strlen(tokens[*i])) == 0)
@@ -52,10 +52,11 @@ void	set_redir(t_minishell *ms, int *i)
 		node->redir[node->redir_index].fd = -1;
 	}
 	else if (ft_strncmp(tokens[*i], "<<", ft_strlen(tokens[*i])) == 0
-			&& g_sig == 0)
+		&& g_sig == 0)
 	{
 		node->redir[node->redir_index].redirection = HERE_DOC_T;
-		node->redir[node->redir_index].fd = ft_open_here_doc(ms, tokens[*i + 1]);
+		node->redir[node->redir_index].fd = ft_open_here_doc(ms,
+				tokens[*i + 1]);
 	}
 }
 
@@ -108,10 +109,12 @@ int	check_op_and_allocate(t_minishell *ms, int *i, int *redir_set)
 		error_handler(ms);
 	(1) && (*redir_set = 0, ms->tree->redir_index = 0,
 	ms->tree->syntax_err = 0);
-	ms->tree->redir = allocate(&ms->leaks, count_redir(ms->tokens) + 1, sizeof(t_redir));
+	ms->tree->redir = allocate(&ms->leaks, count_redir(ms->tokens) + 1,
+			sizeof(t_redir));
 	if (!ms->tree->redir)
 		error_handler(ms);
-	ms->tree->args = allocate(&ms->leaks, count_args(ms->tokens + *i) + 1, sizeof(char *));
+	ms->tree->args = allocate(&ms->leaks, count_args(ms->tokens + *i) + 1,
+			sizeof(char *));
 	if (!ms->tree->args)
 		error_handler(ms);
 	return (0);

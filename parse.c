@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:11 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/04 20:26:37 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/06/05 11:58:58 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ t_tree	*parse_side(t_minishell *ms, int *i)
 
 	if (ms->tokens[*i]
 		&& ft_strncmp(ms->tokens[*i], ")", ft_strlen(ms->tokens[*i])) == 0)
-		return (syntax_err(ms, "syntax error near unexpected token `)'", 258), NULL);
+		return (syntax_err(ms, "syntax error near unexpected token `)'", 258),
+			NULL);
 	else if (ms->tokens[*i]
 		&& ft_strncmp(ms->tokens[*i], "(", ft_strlen(ms->tokens[*i])) == 0)
 	{

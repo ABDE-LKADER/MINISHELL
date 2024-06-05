@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:44:21 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/04 15:30:58 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/06/05 11:56:36 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	check_par(char *s)
 		{
 			level++;
 			if (s[i + 1] == ')')
-			return (1);
+				return (1);
 		}
 		if (s[i] == ')')
 			level--;

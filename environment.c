@@ -6,14 +6,13 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 15:35:38 by abadouab          #+#    #+#             */
-/*   Updated: 2024/06/05 11:40:26 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/06/05 11:55:50 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	environment_add(t_minishell *ms, t_environ **env,
-		void *var, void *val)
+void	environment_add(t_minishell *ms, t_environ **env, void *var, void *val)
 {
 	t_environ	*new;
 	t_environ	*node;

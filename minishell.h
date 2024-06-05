@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:24 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/05 11:39:47 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/06/05 12:00:02 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,47 +112,48 @@ typedef struct s_minishell
 
 // Inject Spaces utils
 
-int			count_op(char *s);
-int			check_sep(char c);
-void		copy_and_inject_spaces(t_inject_data *data, char *s, char *str);
-int			check_par(char *s);
+int		count_op(char *s);
+int		check_sep(char c);
+void	copy_and_inject_spaces(t_inject_data *data, char *s, char *str);
+int		check_par(char *s);
 
 ///////////////// PROTOTYPES TOKENIZATION /////////////////
 
-int			cmp_operators(char c);
-void		tokenize_operators(char *s, int *j, char **arr, int w);
-void		get_tokens(char *s, int *j, char *quotes);
-int			words_counter(const char *s);
-char		**ft_split_op(t_allocate **leaks, char const *s);
+int		cmp_operators(char c);
+void	tokenize_operators(char *s, int *j, char **arr, int w);
+void	get_tokens(char *s, int *j, char *quotes);
+int		words_counter(const char *s);
+char	**ft_split_op(t_allocate **leaks, char const *s);
 
-int			check_token_op(char *token);
-void		syntax_err(t_minishell *ms, char *error_msg, int exit_status);
-void		set_redir(t_minishell *ms, int *i);
-int			check_if_operator(char *token);
-int			check_redirection(t_minishell *ms, int *i, int *redir_set);
-void		check_args(t_tree *node, char **tokens, int len);
-int			check_redir_at_end(t_minishell *ms, int *i, int *redir_set);
-int			check_closed_quotes(char **tokens, int i, int j);
-int			check_valid_op(char *token);
-void		set_op(t_tree *tree, char *token);
+int		check_token_op(char *token);
+void	syntax_err(t_minishell *ms, char *error_msg, int exit_status);
+void	set_redir(t_minishell *ms, int *i);
+int		check_if_operator(char *token);
+int		check_redirection(t_minishell *ms, int *i, int *redir_set);
+void	check_args(t_tree *node, char **tokens, int len);
+int		check_redir_at_end(t_minishell *ms, int *i, int *redir_set);
+int		check_closed_quotes(char **tokens, int i, int j);
+int		check_valid_op(char *token);
+void	set_op(t_tree *tree, char *token);
 
 ///////////////// HERE_DOC /////////////////
 
-int			ft_open_here_doc(t_minishell *ms, char *delimiter);
+int		ft_open_here_doc(t_minishell *ms, char *delimiter);
 
-t_tree		*parse_simple_command(t_minishell *ms, int *i);
-t_tree		*parse_exp(t_minishell *ms, int *i, int min_pr);
-t_tree		*parse_tree(t_minishell *ms);
+t_tree	*parse_simple_command(t_minishell *ms, int *i);
+t_tree	*parse_exp(t_minishell *ms, int *i, int min_pr);
+t_tree	*parse_tree(t_minishell *ms);
 
 ///////////////// SIGNAL PROTOTYPES /////////////////
 
-void		sig_handler(void);
-void		sig_heredoc(void);
+void	sig_handler(void);
+void	sig_heredoc(void);
 
 ///////////////// ENVIRONMENT PROTOTYPES /////////////////
 
-void	environment_init(t_minishell *ms, char **env);
 void	sort_export_vars(t_environ **export);
+void	environment_init(t_minishell *ms, char **env);
+void	environment_add(t_minishell *ms, t_environ **env, void *var, void *val);
 
 ///////////////// ERROR PROTOTYPES /////////////////
 

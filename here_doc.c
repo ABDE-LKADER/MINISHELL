@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 21:18:31 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/04 20:27:03 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/06/05 11:57:09 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	ft_here_doc_in_child(t_minishell *ms, pid_t pid, char *delimiter, int fds[])
 		{
 			line = readline("> ");
 			if (!line || (ft_strncmp(line, delimiter, ft_strlen(line)) == 0
-				&& ft_strlen(line) == ft_strlen(delimiter)))
+					&& ft_strlen(line) == ft_strlen(delimiter)))
 				break ;
 			else
 				(write(fds[0], line, ft_strlen(line)), write(fds[0], "\n", 1));
@@ -43,10 +43,10 @@ int	ft_here_doc_in_child(t_minishell *ms, pid_t pid, char *delimiter, int fds[])
 int	check_token_if_redir(char *token)
 {
 	if (check_if_operator(token)
-	&& ft_strncmp(token, ">>", ft_strlen(token))
-	&& ft_strncmp(token, "<<", ft_strlen(token))
-	&& ft_strncmp(token, "<", ft_strlen(token))
-	&& ft_strncmp(token, ">", ft_strlen(token)))
+		&& ft_strncmp(token, ">>", ft_strlen(token))
+		&& ft_strncmp(token, "<<", ft_strlen(token))
+		&& ft_strncmp(token, "<", ft_strlen(token))
+		&& ft_strncmp(token, ">", ft_strlen(token)))
 		return (1);
 	return (0);
 }
