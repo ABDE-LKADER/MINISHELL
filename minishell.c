@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:44:46 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/04 20:30:21 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/06/05 11:49:35 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,20 +62,19 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		g_sig = 0;
-		ms.exit_status = 0;
 		ms.read = readline("Minishell >$ ");
 		if (!ms.read)
 			return (printf(EXIT), EXIT_SUCCESS);
-		// while (ms.export)
-		// {
-		// 	printf("\n --------------------------------------------------------\n VAR: %s || \n--------------------------------------------------------\n VAL: %s ||", ms.export->var, ms.export->val);
-		// 	ms.export = ms.export->next;
-		// }
+		while (ms.env)
+		{
+			printf("%s=%s\n", ms.env->var, ms.env->val);
+			ms.env = ms.env->next;
+		}
 		parser(&ms);
 		printf("exit: %d\n", ms.exit_status);
 		(cleanup(&ms.leaks), free(ms.read));
-		// if (ms.exit_status == 1)
-		// 	continue;
+		if (ms.exit_status == 1)
+			continue;
 	}
 	return (cleanup(&ms.leaks), EXIT_SUCCESS);
 }

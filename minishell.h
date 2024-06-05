@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:24 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/04 20:26:12 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/06/05 11:39:47 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 
 # define EXIT "\033[AMinishell >$ exit\n"
 # define INIT "\033[A\n>   \n"
+# define TRUE 1
 
 int	g_sig;
 
@@ -151,6 +152,7 @@ void		sig_heredoc(void);
 ///////////////// ENVIRONMENT PROTOTYPES /////////////////
 
 void	environment_init(t_minishell *ms, char **env);
+void	sort_export_vars(t_environ **export);
 
 ///////////////// ERROR PROTOTYPES /////////////////
 

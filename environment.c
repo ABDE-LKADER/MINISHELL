@@ -6,13 +6,14 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 15:35:38 by abadouab          #+#    #+#             */
-/*   Updated: 2024/06/04 20:25:12 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/06/05 11:40:26 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	environment_add(t_minishell *ms, t_environ **env, void *var, void *val)
+static void	environment_add(t_minishell *ms, t_environ **env,
+		void *var, void *val)
 {
 	t_environ	*new;
 	t_environ	*node;
@@ -34,25 +35,54 @@ void	environment_add(t_minishell *ms, t_environ **env, void *var, void *val)
 	node->next = new;
 }
 
+void	sort_export_vars(t_environ **export)
+{
+	size_t		len;
+	void		*var;
+	void		*val;
+	t_environ	*first;
+	t_environ	*second;
+
+	(TRUE) && (len = 0, first = *export);
+	while (first)
+	{
+		second = first->next;
+		while (second)
+		{
+			len = ft_strlen(first->var);
+			if (len < ft_strlen(second->var))
+				len = ft_strlen(second->var);
+			if (ft_strncmp(first->var, second->var, len) > 0)
+			{
+				(TRUE) && (var = first->var, val = first->val);
+				(TRUE) && (first->var = second->var, first->val = second->val);
+				(TRUE) && (second->var = var, second->val = val);
+			}
+			second = second->next;
+		}
+		first = first->next;
+	}
+}
+
 void	environment_init(t_minishell *ms, char **env)
 {
-	int			index;
 	t_environ	*loop;
 
-	index = -1;
 	ft_bzero(ms, sizeof(t_minishell));
-	while (env[++index])
+	while (*env)
 	{
 		environment_add(ms, &ms->env,
-			ft_substr(&ms->alloc, env[index], 0, strlen_set(env[index], '=')),
-			ft_substr(&ms->alloc, env[index], strlen_set(env[index], '=') + 1,
-				ft_strlen(env[index])));
-		if (ft_strncmp(env[index], "_=", strlen_set(env[index], '=')))
+			ft_substr(&ms->alloc, *env, 0, strlen_set(*env, '=')),
+			ft_substr(&ms->alloc, *env, strlen_set(*env, '=') + 1,
+				ft_strlen(*env)));
+		if (ft_strncmp(*env, "_=", strlen_set(*env, '=')))
 			environment_add(ms, &ms->export,
-				ft_substr(&ms->alloc, env[index], 0, strlen_set(env[index], '=')),
-				ft_substr(&ms->alloc, env[index], strlen_set(env[index], '=') + 1,
-					ft_strlen(env[index])));
+				ft_substr(&ms->alloc, *env, 0, strlen_set(*env, '=')),
+				ft_substr(&ms->alloc, *env, strlen_set(*env, '=') + 1,
+					ft_strlen(*env)));
+		env++;
 	}
+	sort_export_vars(&ms->export);
 	loop = ms->export;
 	while (loop)
 	{
