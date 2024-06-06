@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 21:18:31 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/05 11:57:09 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/06/06 15:03:34 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	ft_open_here_doc(t_minishell *ms, char *delimiter)
 		return (-1);
 	if (ft_here_doc_in_child(ms, pid, delimiter, fds) == -1)
 		return (-1);
-	if (g_sig == SIGINT)
+	if (g_catch_signals == SIGINT)
 		ms->exit_status = 1;
 	if (close(fds[0]) < 0)
 		return (ft_putstr_fd(strerror(errno), 2), -1);

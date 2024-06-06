@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:24 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/05 12:00:02 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/06/06 15:03:34 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # define INIT "\033[A\n>   \n"
 # define TRUE 1
 
-int	g_sig;
+int	g_catch_signals;
 
 typedef struct s_inject_data
 {
@@ -70,7 +70,8 @@ typedef struct s_tree
 {
 	t_type				type;
 	void				*value;
-	void				**args;
+	char				**args;
+	char				**expand;
 	int					args_index;
 	t_redir				*redir;
 	int					dis_error;
@@ -160,5 +161,10 @@ void	environment_add(t_minishell *ms, t_environ **env, void *var, void *val);
 void	error_handler(t_minishell *ms);
 int		check_syntax_err(t_minishell *ms);
 int		check_token_if_redir(char *token);
+
+///////////////// OTHER PROTOTYPES /////////////////
+
+void	execution(t_minishell *ms, t_tree *tree);
+char	**expanding(t_minishell *ms, 	char **expand);
 
 #endif

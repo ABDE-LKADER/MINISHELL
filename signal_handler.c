@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal.c                                           :+:      :+:    :+:   */
+/*   signal_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 20:40:18 by abadouab          #+#    #+#             */
-/*   Updated: 2024/06/04 20:26:20 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/06/06 15:03:34 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	signal_int_quit(int sig)
 		rl_redisplay();
 	}
 	else if (sig == SIGINT)
-		g_sig = SIGINT;
+		g_catch_signals = SIGINT;
 }
 
 void	sig_handler(void)

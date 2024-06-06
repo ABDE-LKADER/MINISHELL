@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:11 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/05 11:58:58 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/06/06 14:40:23 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,36 +105,5 @@ t_tree	*parse_tree(t_minishell *ms)
 	if (!ms->tree)
 		error_handler(ms);
 	ms->tree = parse_exp(ms, &i, 0);
-	if (ms->tree)
-	{
-		if (ms->tree->right)
-		{
-			printf("             %s     \n", ms->tree->value);
-			printf("           /    \\   \n");
-			printf("          /      \\   \n");
-			if (ms->tree->type)
-			{
-				printf("        %s  ", ms->tree->left->value);
-				if (ms->tree->right)
-					printf("      %s  \n", ms->tree->right->value);
-				if (check_token_op(ms->tree->left->value))
-				{
-					printf("      /   \\   \n");
-					printf("     /     \\   \n");
-					printf("   %s   ", ms->tree->left->left->value);
-					printf("   %s   \n", ms->tree->left->right->value);
-					if (check_token_op(ms->tree->left->left->value))
-					{
-						printf(" /   \\   \n");
-						printf(" /     \\   \n");
-						printf(" %s   ", ms->tree->left->left->left->value);
-						printf("  %s   \n", ms->tree->left->left->right->value);
-					}
-				}
-			}
-		}
-		else
-			printf("Tree left:%s\n", ms->tree->value);
-	}
 	return (ms->tree);
 }

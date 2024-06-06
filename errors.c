@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:44:21 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/05 11:56:36 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/06/06 15:03:34 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	syntax_err(t_minishell *ms, char *error_msg, int exit_status)
 {
-	if (g_sig != SIGINT)
+	if (g_catch_signals != SIGINT)
 	{
 		if (!ms->tree->dis_error)
 		{
@@ -55,5 +55,6 @@ void	error_handler(t_minishell *ms)
 	clear_history();
 	free(ms->read);
 	cleanup(&ms->leaks);
+	cleanup(&ms->alloc);
 	exit(EXIT_FAILURE);
 }

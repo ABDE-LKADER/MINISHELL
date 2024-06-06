@@ -6,58 +6,32 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:37 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/05 12:10:28 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/06/06 15:03:34 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	check_valid_op(char *token)
-{
-	char	ops[3];
-	int		i;
-
-	ops[0] = '|';
-	ops[1] = '&';
-	ops[2] = '\0';
-	i = 0;
-	while (ops[i])
-	{
-		if (token[0] == ops[i] && !check_token_op(token))
-			return (1);
-		i++;
-	}
-	return (0);
-}
 
 void	set_redir(t_minishell *ms, int *i)
 {
 	t_tree	*node;
 	char	**tokens;
 
-	(1) && (node = ms->tree, tokens = ms->tokens);
+	(TRUE) && (node = ms->tree, tokens = ms->tokens);
 	if (ft_strncmp(tokens[*i], ">", ft_strlen(tokens[*i])) == 0)
-	{
-		node->redir[node->redir_index].redirection = OUT_RED_T;
-		node->redir[node->redir_index].fd = -1;
-	}
+		(TRUE) && (node->redir[node->redir_index].redirection = OUT_RED_T,
+			node->redir[node->redir_index].fd = -1);
 	else if (ft_strncmp(tokens[*i], "<", ft_strlen(tokens[*i])) == 0)
-	{
-		node->redir[node->redir_index].redirection = IN_RED_T;
-		node->redir[node->redir_index].fd = -1;
-	}
+		(TRUE) && (node->redir[node->redir_index].redirection = IN_RED_T,
+			node->redir[node->redir_index].fd = -1);
 	else if (ft_strncmp(tokens[*i], ">>", ft_strlen(tokens[*i])) == 0)
-	{
-		node->redir[node->redir_index].redirection = OUT_RED_APPEND_T;
-		node->redir[node->redir_index].fd = -1;
-	}
+		(TRUE) && (node->redir[node->redir_index].redirection =
+			OUT_RED_APPEND_T, node->redir[node->redir_index].fd = -1);
 	else if (ft_strncmp(tokens[*i], "<<", ft_strlen(tokens[*i])) == 0
-		&& g_sig == 0)
-	{
-		node->redir[node->redir_index].redirection = HERE_DOC_T;
+		&& g_catch_signals == 0)
+		(TRUE) && (node->redir[node->redir_index].redirection = HERE_DOC_T,
 		node->redir[node->redir_index].fd = ft_open_here_doc(ms,
-				tokens[*i + 1]);
-	}
+		tokens[*i + 1]));
 }
 
 int	count_redir(char **tokens)

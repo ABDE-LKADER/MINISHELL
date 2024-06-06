@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+         #
+#    By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/19 17:23:22 by abadouab          #+#    #+#              #
-#    Updated: 2024/06/04 09:50:56 by abbaraka         ###   ########.fr        #
+#    Updated: 2024/06/06 15:02:47 by abadouab         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,9 +14,10 @@ NAME		=	minishell
 
 SRCS		=	minishell.c \
 				inject_spaces_utils.c command_checkers.c  \
-				signal.c parse.c here_doc.c environment.c  \
 				check_tokens.c word_counter.c ft_split_op.c \
-				errors.c parse_checkers.c parse_simple_command.c 
+				errors.c parse_checkers.c parse_simple_command.c \
+				signal_handler.c parse.c here_doc.c environment.c  \
+				expanding.c execution.c check_redirection.c
 
 OBJS		=	$(SRCS:.c=.o)
 HEADER		=	minishell.h
