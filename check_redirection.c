@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 14:18:54 by abadouab          #+#    #+#             */
-/*   Updated: 2024/06/06 14:45:06 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/06/07 11:31:26 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,9 @@ int	check_redirection_symbole(t_minishell *ms, int *i, int *redir_set)
 int	check_redirection(t_minishell *ms, int *i, int *redir_set)
 {
 	if (check_redirection_symbole(ms, i, redir_set))
-		return (syntax_err(ms, "syntax error near unexpected token \
-			`newline'", 258), ms->tree->syntax_err = 1, 1);
+		return (syntax_err(ms,
+				"syntax error near unexpected token `newline'", 258),
+			ms->tree->syntax_err = 1, 1);
 	if (ms->tokens[*i] && check_token_if_redir(ms->tokens[*i]))
 		return (syntax_err(ms, "syntax error", 258), 1);
 	*redir_set = 0;
@@ -48,8 +49,9 @@ int	check_redirection(t_minishell *ms, int *i, int *redir_set)
 		if (ms->tokens[*i + 1] && !check_token_op(ms->tokens[*i + 1]))
 			check_redirection(ms, i, redir_set);
 		else if (!ms->tokens[*i + 1])
-			return (syntax_err(ms, "syntax error near unexpected token \
-				`newline'", 258), ms->tree->syntax_err = 1, 1);
+			return (syntax_err(ms,
+					"syntax error near unexpected token `newline'", 258),
+				ms->tree->syntax_err = 1, 1);
 	}
 	return (0);
 }

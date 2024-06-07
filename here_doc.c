@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 21:18:31 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/06 15:03:34 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/06/07 12:24:15 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	check_syntax_err(t_minishell *ms)
 			&& ft_strncmp(ms->tokens[i], "<<", ft_strlen(ms->tokens[i]))
 			&& ft_strncmp(ms->tokens[i], "<", ft_strlen(ms->tokens[i]))
 			&& ft_strncmp(ms->tokens[i], ">", ft_strlen(ms->tokens[i])))
-			return (syntax_err(ms, "syntax error", 258), 1);
+			return (syntax_err(ms, "syntax error near unexpected token", 258), 1);
 		i++;
 	}
 	return (0);

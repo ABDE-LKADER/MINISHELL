@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:24 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/06 15:03:34 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/06/07 11:41:14 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,11 @@
 # define EXIT "\033[AMinishell >$ exit\n"
 # define INIT "\033[A\n>   \n"
 # define TRUE 1
+
+# define GREEN "\033[1;32m"
+# define YELOW "\033[1;33m"
+# define REDCL "\033[1;31m"
+# define RESET "\033[0m"
 
 int	g_catch_signals;
 
@@ -69,7 +74,7 @@ typedef struct s_redir
 typedef struct s_tree
 {
 	t_type				type;
-	void				*value;
+	char				*value;
 	char				**args;
 	char				**expand;
 	int					args_index;
@@ -133,7 +138,7 @@ int		check_if_operator(char *token);
 int		check_redirection(t_minishell *ms, int *i, int *redir_set);
 void	check_args(t_tree *node, char **tokens, int len);
 int		check_redir_at_end(t_minishell *ms, int *i, int *redir_set);
-int		check_closed_quotes(char **tokens, int i, int j);
+int		check_closed_quotes(t_minishell *ms, int i, int j);
 int		check_valid_op(char *token);
 void	set_op(t_tree *tree, char *token);
 
@@ -164,7 +169,7 @@ int		check_token_if_redir(char *token);
 
 ///////////////// OTHER PROTOTYPES /////////////////
 
-void	execution(t_minishell *ms, t_tree *tree);
-char	**expanding(t_minishell *ms, 	char **expand);
+void	execution(t_minishell *ms, t_tree *tree, char **env);
+char	**expanding(t_minishell *ms, char **expand);
 
 #endif

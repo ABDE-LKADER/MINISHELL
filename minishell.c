@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:44:46 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/06 15:03:34 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/06/07 14:40:26 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,11 @@ char	*inject_spaces(t_minishell *ms, char *s)
 	(TRUE) && (data.len = ft_strlen(s), data.len += count_op(s),
 		data.i = 0, data.j = 0, data.quotes = -1);
 	if (check_par(s))
-		return (syntax_err(ms, "syntax error", 258), NULL);
+		return (syntax_err(ms, "syntax error: unexpected end of file\n"
+				, 258), NULL);
 	str = allocate(&ms->leaks, data.len + 1, sizeof(char));
 	if (!str)
-		return (NULL);
+		error_handler(ms);
 	while (s[data.i])
 		copy_and_inject_spaces(&data, s, str);
 	str[data.j] = '\0';
@@ -36,11 +37,12 @@ void	parser(t_minishell *ms)
 {
 	char			*injected_spaces;
 
+	ms->exit_status = 0;
 	if (*ms->read)
 		add_history(ms->read);
 	injected_spaces = inject_spaces(ms, ms->read);
 	if (!injected_spaces)
-		error_handler(ms);
+		return ;
 	ms->tokens = ft_split_op(&ms->leaks, injected_spaces);
 	if (!ms->tokens)
 		error_handler(ms);
@@ -54,20 +56,22 @@ int	main(int ac, char **av, char **env)
 	if (ac != 1 && av)
 		return (ft_putendl_fd("./minishell <empty>", 2),
 			EXIT_FAILURE);
-	sig_handler();
-	environment_init(&ms, env);
+	(sig_handler(), environment_init(&ms, env));
 	while (1)
 	{
-		g_catch_signals = 0;
-		ms.read = readline("Minishell >$ ");
+		(TRUE) && (g_catch_signals = 0, ms.tree = NULL,
+		ms.read = readline("Minishell >$ "));
 		if (!ms.read)
 			return (printf(EXIT), cleanup(&ms.leaks),
 				cleanup(&ms.alloc), EXIT_SUCCESS);
-		parser(&ms);
-		printf("EXIT STATUS: %d\n", ms.exit_status);
-		if (ms.exit_status == 1)
+		printf("DEF VAL EXIT STATUS: %d\n", ms.exit_status);
+		if (!(*ms.read))
 			continue ;
-		(execution(&ms, ms.tree), cleanup(&ms.leaks), free(ms.read));
+		parser(&ms);
+		printf("THE EXIT STATUS AFTER THE PARCE: %d\n", ms.exit_status);
+		if (ms.exit_status != 0)
+			continue ;
+		(execution(&ms, ms.tree, env), cleanup(&ms.leaks), free(ms.read));
 	}
 	return (cleanup(&ms.leaks), cleanup(&ms.alloc), EXIT_SUCCESS);
 }

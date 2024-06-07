@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_checkers.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:32 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/02 09:39:33 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/06/07 11:30:34 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,28 +44,28 @@ void	set_op(t_tree *tree, char *token)
 		tree->type = OR_T;
 }
 
-int	check_closed_quotes(char **tokens, int i, int j)
+int	check_closed_quotes(t_minishell *ms, int i, int j)
 {
 	char	quotes;
 
 	i = 0;
-	while (tokens[i])
+	while (ms->tokens[i])
 	{
 		(1) && (j = 0, quotes = -1);
-		while (tokens[i][j])
+		while (ms->tokens[i][j])
 		{
-			if (tokens[i][j] == '"' || tokens[i][j] == '\'')
+			if (ms->tokens[i][j] == '"' || ms->tokens[i][j] == '\'')
 			{
-				if (quotes > -1 && tokens[i][j] == quotes)
+				if (quotes > -1 && ms->tokens[i][j] == quotes)
 					quotes = -1;
 				else if (quotes == -1)
-					quotes = tokens[i][j];
+					quotes = ms->tokens[i][j];
 			}
 			j++;
 		}
 		if (quotes > -1)
-			return (ft_putstr_fd("Minishell: ", 2),
-				ft_putstr_fd("unexpected EOF while looking for matching `", 2),
+			return (syntax_err(ms,
+					"unexpected EOF while looking for matching `", 258),
 				write(2, &quotes, 1), ft_putstr_fd("'\n", 2), 1);
 		i++;
 	}

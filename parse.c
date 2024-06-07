@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:11 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/06 14:40:23 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/06/07 11:19:30 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_tree	*parse_side(t_minishell *ms, int *i)
 
 	if (ms->tokens[*i]
 		&& ft_strncmp(ms->tokens[*i], ")", ft_strlen(ms->tokens[*i])) == 0)
-		return (syntax_err(ms, "syntax error near unexpected token `)'", 258),
+		return (syntax_err(ms, "syntax error near unexpected token `)'\n", 258),
 			NULL);
 	else if (ms->tokens[*i]
 		&& ft_strncmp(ms->tokens[*i], "(", ft_strlen(ms->tokens[*i])) == 0)
@@ -99,7 +99,7 @@ t_tree	*parse_tree(t_minishell *ms)
 		return (NULL);
 	i = 0;
 	j = 0;
-	if (check_closed_quotes(ms->tokens, i, j))
+	if (check_closed_quotes(ms, i, j))
 		return (NULL);
 	ms->tree = allocate(&ms->leaks, 1, sizeof(t_tree));
 	if (!ms->tree)

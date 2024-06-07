@@ -6,7 +6,7 @@
 #    By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/19 17:23:22 by abadouab          #+#    #+#              #
-#    Updated: 2024/06/06 15:02:47 by abadouab         ###   ########.fr        #
+#    Updated: 2024/06/07 10:28:47 by abadouab         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,9 +31,9 @@ SHORT		=	-L$(MYLB) -lar -L ~/.brew/opt/readline/lib -lreadline
 RM			=	rm -fr
 
 GREEN		=	"\033[1;32m"
-YELOW 		=	"\033[1;33m"
-REDCL 		=	"\033[1;31m"
-RESET 		=	"\033[0m"
+YELOW		=	"\033[1;33m"
+REDCL		=	"\033[1;31m"
+RESET		=	"\033[0m"
 
 all: start $(MYLB) $(NAME) finish
 
