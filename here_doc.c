@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 21:18:31 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/07 15:17:19 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/06/07 15:32:49 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	ft_open_here_doc(t_minishell *ms, char *delimiter)
 	fds[1] = open("here_doc", O_RDONLY, 0644);
 	if (fds[1] < 0)
 		return (ft_putstr_fd(strerror(errno), 2), -1);
-	(1) && (unlink("here_doc"), len = ft_strlen(delimiter), pid = fork());
+	(TRUE) && (unlink("here_doc"), len = ft_strlen(delimiter), pid = fork());
 	if (pid < 0)
 		return (-1);
 	if (ft_here_doc_in_child(ms, pid, delimiter, fds) == -1)
