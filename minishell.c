@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:44:46 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/07 20:32:39 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/06/07 22:17:08 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,38 @@ char	*inject_spaces(t_minishell *ms, char *s)
 	return (str);
 }
 
+int	check_level_par(char *input)
+{
+	int level;
+	int cmd;
+	int op;
+	int	i;
+
+	(1) && (level = 0, cmd = 0, i = -1, op = 0);
+	while (input[++i])
+	{
+		if (input[i] == '(')
+			level++;
+		else if (input[i] != '&' && input[i] != '|'
+			&& input[i] != ')' && input[i] != '(')
+		{
+			cmd++;
+			while (input[i] && input[i] != '&' && input[i] != '|'
+				&& input[i] != ')' && input[i] != '(')
+				i++;
+		}
+		else if (input[i] == '&' || input[i] == '|')
+		{
+			op++;
+			while (input[i] && input[i] != '&' && input[i] != '|')
+				i++;
+		}
+	}
+	if (level == cmd)
+		return (cmd);
+	return (0);
+}
+
 void	parser(t_minishell *ms)
 {
 	char			*injected_spaces;
@@ -41,6 +73,7 @@ void	parser(t_minishell *ms)
 	if (*ms->read)
 		add_history(ms->read);
 	injected_spaces = inject_spaces(ms, ms->read);
+	printf("par %d\n", check_level_par(injected_spaces));
 	if (!injected_spaces)
 		return ;
 	ms->tokens = ft_split_op(&ms->leaks, injected_spaces);
