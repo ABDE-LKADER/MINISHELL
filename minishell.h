@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:24 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/07 11:41:14 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/06/08 01:16:52 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,5 +171,7 @@ int		check_token_if_redir(char *token);
 
 void	execution(t_minishell *ms, t_tree *tree, char **env);
 char	**expanding(t_minishell *ms, char **expand);
+char	*inject_spaces(t_minishell *ms, char *s);
+int		check_ops_and_cmds(t_minishell *ms);
 
 #endif
