@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:54:33 by abadouab          #+#    #+#             */
-/*   Updated: 2024/06/08 02:43:26 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/06/08 03:17:24 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ char	*fetch_path(t_minishell *ms, t_environ *env, char *cmd)
 	{
 		*paths = ft_strjoin(&ms->alloc, *paths, "/");
 		*paths = ft_strjoin(&ms->alloc, *paths, cmd);
-		printf("PATH: %s\n", *paths);
 		if (!access(*paths, X_OK))
 			return (*paths);
 		paths++;
@@ -35,6 +34,7 @@ void	command_execute(t_minishell *ms, t_tree *tree, char **env)
 {
 	pid_t	pid;
 	char	*path;
+	int		status;
 
 	pid = fork();
 	if (pid == -1)
@@ -42,26 +42,24 @@ void	command_execute(t_minishell *ms, t_tree *tree, char **env)
 	if (pid == 0)
 	{
 		path = fetch_path(ms, ms->env, tree->value);
-		if (!path)
-			return ;
 		if (execve(path, tree->args, env) == -1)
-			(syntax_err(ms, "command not found\n", 127),
-				exit(EXIT_FAILURE));
+			(syntax_err(ms, "command not found", 127),
+				exit(127));
 		exit(EXIT_SUCCESS);
 	}
-	wait(NULL);
+	waitpid(pid, &status, 0);
+	if (WIFEXITED(status))
+		ms->exit_status = WEXITSTATUS(status);
 }
 
 void	execution(t_minishell *ms, t_tree *tree, char **env)
 {
-
 	if (!tree)
 		return ;
-	printf("THE PLACE YOU ARE : %s\n", tree->value);
 	execution(ms, tree->left, env);
 	if (*(tree->value) != '|' && *(tree->value) != '&')
 		command_execute(ms, tree, env);
-	printf("THE PLACE YOU ARE : %s\n", tree->value);
-	if (!ft_strncmp(tree->value, "&&", ft_strlen("&&")))
+	if ((!ft_strncmp(tree->value, "&&", ft_strlen("&&")) && !ms->exit_status)
+		|| (!ft_strncmp(tree->value, "||", ft_strlen("||")) && ms->exit_status))
 		execution(ms, tree->right, env);
 }

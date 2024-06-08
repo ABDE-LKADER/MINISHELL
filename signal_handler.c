@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 20:40:18 by abadouab          #+#    #+#             */
-/*   Updated: 2024/06/07 20:33:18 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/06/08 03:27:30 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static void	signal_int_quit(int sig)
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
+		g_catch_signals = SIGINT;
 	}
 	else if (pid > 0 && sig == SIGQUIT)
 	{
