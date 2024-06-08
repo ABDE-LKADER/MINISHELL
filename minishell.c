@@ -6,7 +6,7 @@
 /*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:44:46 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/07 22:17:08 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/06/08 00:00:09 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,52 +33,43 @@ char	*inject_spaces(t_minishell *ms, char *s)
 	return (str);
 }
 
-int	check_level_par(char *input)
+int	check_ops_and_cmds(t_minishell *ms)
 {
-	int level;
-	int cmd;
-	int op;
 	int	i;
+	int	cmd;
+	int	ops;
 
-	(1) && (level = 0, cmd = 0, i = -1, op = 0);
-	while (input[++i])
+	(1) && (i = 0, cmd = 0, ops = 0);
+	while (ms->tokens[i])
 	{
-		if (input[i] == '(')
-			level++;
-		else if (input[i] != '&' && input[i] != '|'
-			&& input[i] != ')' && input[i] != '(')
-		{
+		if (check_token_op(ms->tokens[i]))
+			ops++;
+		else if (ms->tokens[i][0] != '('
+			&& ms->tokens[i][0] != ')')
 			cmd++;
-			while (input[i] && input[i] != '&' && input[i] != '|'
-				&& input[i] != ')' && input[i] != '(')
-				i++;
-		}
-		else if (input[i] == '&' || input[i] == '|')
-		{
-			op++;
-			while (input[i] && input[i] != '&' && input[i] != '|')
-				i++;
-		}
+		i++;
 	}
-	if (level == cmd)
-		return (cmd);
+	if (ops + 1 != cmd)
+		return (syntax_err(ms,
+			"syntax error near unexpected token\n", 258), -1);
 	return (0);
 }
 
 void	parser(t_minishell *ms)
 {
-	char			*injected_spaces;
+	char	*injected_spaces;
 
 	ms->exit_status = 0;
 	if (*ms->read)
 		add_history(ms->read);
 	injected_spaces = inject_spaces(ms, ms->read);
-	printf("par %d\n", check_level_par(injected_spaces));
 	if (!injected_spaces)
 		return ;
 	ms->tokens = ft_split_op(&ms->leaks, injected_spaces);
 	if (!ms->tokens)
 		error_handler(ms);
+	if (check_ops_and_cmds(ms) == -1)
+		return ;
 	parse_tree(ms);
 }
 
