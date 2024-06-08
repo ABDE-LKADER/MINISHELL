@@ -6,7 +6,7 @@
 /*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 01:12:48 by abadouab          #+#    #+#             */
-/*   Updated: 2024/06/08 02:31:04 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/06/08 02:32:34 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ int	check_ops_and_cmds(t_minishell *ms)
 		}
 		i++;
 	}
-	printf("CMD Count %d\n", ops);
 	if (ops + 1 != cmd)
 		return (syntax_err(ms,
 			"syntax error near unexpected token\n", 258), -1);
