@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_simple_command.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:37 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/06 15:03:34 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/06/08 02:38:07 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	set_redir(t_minishell *ms, int *i)
 	t_tree	*node;
 	char	**tokens;
 
-	(TRUE) && (node = ms->tree, tokens = ms->tokens);
+	(TRUE) && (node = ms->tree, tokens = ms->tokens, ms->tree->redir_ex = true);
 	if (ft_strncmp(tokens[*i], ">", ft_strlen(tokens[*i])) == 0)
 		(TRUE) && (node->redir[node->redir_index].redirection = OUT_RED_T,
 			node->redir[node->redir_index].fd = -1);
@@ -82,7 +82,7 @@ int	check_op_and_allocate(t_minishell *ms, int *i, int *redir_set)
 	if (!ms->tree)
 		error_handler(ms);
 	(1) && (*redir_set = 0, ms->tree->redir_index = 0,
-	ms->tree->syntax_err = 0);
+	ms->tree->syntax_err = 0, ms->tree->redir_ex = false);
 	ms->tree->redir = allocate(&ms->leaks, count_redir(ms->tokens) + 1,
 			sizeof(t_redir));
 	if (!ms->tree->redir)

@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:24 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/08 01:38:04 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/06/08 02:44:37 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <fcntl.h>
 # include <errno.h>
 # include <string.h>
+# include <stdbool.h>
 
 # define EXIT "\033[AMinishell >$ exit\n"
 # define INIT "\033[A\n>   \n"
@@ -78,6 +79,7 @@ typedef struct s_tree
 	char				**args;
 	char				**expand;
 	int					args_index;
+	bool				redir_ex;
 	t_redir				*redir;
 	int					dis_error;
 	int					syntax_err;

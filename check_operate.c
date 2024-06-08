@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 01:12:48 by abadouab          #+#    #+#             */
-/*   Updated: 2024/06/08 02:09:52 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/06/08 02:44:16 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,14 @@ int	check_ops_and_cmds(t_minishell *ms)
 	{
 		if (check_token_op(ms->tokens[i]))
 			ops++;
-		else if (ms->tokens[i][0] != '('
-			&& ms->tokens[i][0] != ')')
+		else if (ms->tokens[i][0] != '(' && ms->tokens[i][0] != ')')
+		{
 			cmd++;
+			while (ms->tokens[i + 1] && ms->tokens[i + 1][0] != '('
+				&& ms->tokens[i + 1][0] != ')'
+				&& !check_token_op(ms->tokens[i + 1]))
+					i++;
+		}
 		i++;
 	}
 	if (ops + 1 != cmd)
