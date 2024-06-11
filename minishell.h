@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:24 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/08 16:50:10 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/06/11 15:48:18 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ typedef struct s_tree
 	t_type				type;
 	char				*value;
 	char				**args;
-	char				**expand;
 	int					args_index;
 	bool				redir_ex;
 	t_redir				*redir;
@@ -168,6 +167,14 @@ void	environment_add(t_minishell *ms, t_environ **env, void *var, void *val);
 void	error_handler(t_minishell *ms);
 int		check_syntax_err(t_minishell *ms);
 int		check_token_if_redir(char *token);
+
+///////////////// PIPES PROTOTYPES /////////////////
+
+void	pipeline_handler(t_minishell *ms, t_tree *tree, char **env);
+
+///////////////// PIPES PROTOTYPES /////////////////
+
+void	redirection(t_tree *tree);
 
 ///////////////// OTHER PROTOTYPES /////////////////
 

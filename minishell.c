@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:44:46 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/08 03:23:49 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/06/11 14:22:57 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,18 @@ int	main(int ac, char **av, char **env)
 		if (!ms.read)
 			return (printf(EXIT), cleanup(&ms.leaks),
 				cleanup(&ms.alloc), EXIT_SUCCESS);
-		if (g_catch_signals == SIGINT)
-			ms.exit_status = 1;
-		printf("DEF VAL EXIT STATUS: %d\n", ms.exit_status);
+		(g_catch_signals == SIGINT) && (ms.exit_status = 1);
 		if (!(*ms.read))
+		{
+			free(ms.read);
 			continue ;
+		}
 		parser(&ms);
-		printf("THE EXIT STATUS AFTER THE PARCE: %d\n", ms.exit_status);
 		if (ms.exit_status != 0)
+		{
+			free(ms.read);
 			continue ;
+		}
 		(execution(&ms, ms.tree, env), cleanup(&ms.leaks), free(ms.read));
 	}
 	return (cleanup(&ms.leaks), cleanup(&ms.alloc), EXIT_SUCCESS);

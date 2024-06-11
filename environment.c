@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 15:35:38 by abadouab          #+#    #+#             */
-/*   Updated: 2024/06/05 11:55:50 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/06/11 19:53:44 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,22 @@ void	sort_export_vars(t_environ **export)
 	}
 }
 
-void	environment_init(t_minishell *ms, char **env)
+void	export_create(t_minishell *ms)
 {
 	t_environ	*loop;
+
+	loop = ms->export;
+	while (loop)
+	{
+		loop->var = ft_strjoin(&ms->alloc, "declare -x ", loop->var);
+		loop->val = ft_strjoin(&ms->alloc, "\"", loop->val);
+		loop->val = ft_strjoin(&ms->alloc, loop->val, "\"");
+		loop = loop->next;
+	}
+}
+
+void	environment_init(t_minishell *ms, char **env)
+{
 
 	ft_bzero(ms, sizeof(t_minishell));
 	while (*env)
@@ -82,12 +95,5 @@ void	environment_init(t_minishell *ms, char **env)
 		env++;
 	}
 	sort_export_vars(&ms->export);
-	loop = ms->export;
-	while (loop)
-	{
-		loop->var = ft_strjoin(&ms->alloc, "declare -x ", loop->var);
-		loop->val = ft_strjoin(&ms->alloc, "\"", loop->val);
-		loop->val = ft_strjoin(&ms->alloc, loop->val, "\"");
-		loop = loop->next;
-	}
+	export_create(ms);
 }

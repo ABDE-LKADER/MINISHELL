@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 14:18:54 by abadouab          #+#    #+#             */
-/*   Updated: 2024/06/07 11:31:26 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/06/11 15:34:45 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 int	check_redirection_symbole(t_minishell *ms, int *i, int *redir_set)
 {
-	if (ft_strncmp(ms->tokens[*i], ">", ft_strlen(ms->tokens[*i])) == 0
-		|| ft_strncmp(ms->tokens[*i], "<", ft_strlen(ms->tokens[*i])) == 0
-		|| ft_strncmp(ms->tokens[*i], ">>", ft_strlen(ms->tokens[*i])) == 0
-		|| ft_strncmp(ms->tokens[*i], "<<", ft_strlen(ms->tokens[*i])) == 0)
+	if (!ft_strncmp(ms->tokens[*i], ">", ft_strlen(ms->tokens[*i]))
+		|| !ft_strncmp(ms->tokens[*i], "<", ft_strlen(ms->tokens[*i]))
+		|| !ft_strncmp(ms->tokens[*i], ">>", ft_strlen(ms->tokens[*i]))
+		|| !ft_strncmp(ms->tokens[*i], "<<", ft_strlen(ms->tokens[*i])))
 	{
 		if (!ms->tokens[*i + 1])
 			return (1);

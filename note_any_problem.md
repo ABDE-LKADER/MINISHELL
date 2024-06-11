@@ -10,4 +10,16 @@
 
 syntax error:
 	wrong operator
-	
+
+Error On Redirection Parce:
+	ls > file > file_in > file_tow > tree
+
+Example :
+{
+	ARG: ls
+	ARG: >
+	ARG: file_in
+	REDIRECTION 4
+	REDIRECTION 1
+	usage: ls [-@ABCFGHLOPRSTUWabcdefghiklmnopqrstuwx1%] [file ...]
+}

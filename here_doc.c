@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 21:18:31 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/07 20:33:17 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/06/09 16:26:21 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	ft_here_doc_in_child(t_minishell *ms, pid_t pid, char *delimiter, int fds[])
 			return (ft_putstr_fd(strerror(errno), 2), -1);
 		if (close(fds[1]) < 0)
 			return (ft_putstr_fd(strerror(errno), 2), -1);
-		exit(10);
+		exit(EXIT_SUCCESS);
 	}
 	if (!ms->tree->syntax_err)
 		ms->exit_status = 0;
