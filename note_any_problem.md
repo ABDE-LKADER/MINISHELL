@@ -11,7 +11,7 @@
 syntax error:
 	wrong operator
 
-Error On Redirection Parce:
+Error On Redirect Symbol Parce:
 	ls > file > file_in > file_tow > tree
 
 Example :
