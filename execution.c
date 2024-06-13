@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:54:33 by abadouab          #+#    #+#             */
-/*   Updated: 2024/06/11 20:02:43 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/06/12 03:06:47 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,10 @@ char	*fetch_path(t_minishell *ms, t_environ *env, char *cmd)
 {
 	char	**paths;
 
+	if (!access(cmd, X_OK) && !ft_strncmp("./", cmd, ft_strlen("./")))
+		return (cmd);
+	if (!access(cmd, X_OK) && !ft_strncmp("/", cmd, ft_strlen("/")))
+		return (cmd);
 	while (env && ft_strncmp("PATH", env->var, ft_strlen("PATH")))
 		env = env->next;
 	paths = ft_split(&ms->leaks, env->val, ':');
@@ -35,7 +39,6 @@ void	command_execute(t_minishell *ms, t_tree *tree, char **env)
 	pid_t	pid;
 	char	*path;
 	int		status;
-	// char	*args[2];
 
 	pid = fork();
 	if (pid == -1)
@@ -46,8 +49,7 @@ void	command_execute(t_minishell *ms, t_tree *tree, char **env)
 		// args = expanding(ms, tree->args); // STILL NOT WORKING
 		path = fetch_path(ms, ms->env, tree->value);
 		if (execve(path, tree->args, env) == -1)
-			(perror("Minishell"),
-				exit(127));
+			execution_errors(ms, path);
 	}
 	waitpid(pid, &status, 0);
 	if (WIFSIGNALED(status))

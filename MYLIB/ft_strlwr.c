@@ -1,20 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_tolower.c                                       :+:      :+:    :+:   */
+/*   ft_strlwr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/01 12:59:49 by abadouab          #+#    #+#             */
-/*   Updated: 2024/06/12 01:38:59 by abadouab         ###   ########.fr       */
+/*   Created: 2024/06/12 01:31:59 by abadouab          #+#    #+#             */
+/*   Updated: 2024/06/12 01:45:35 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mylib.h"
+# include <libc.h>
 
-int	ft_tolower(int c)
+char	*ft_strlwr(char *str)
 {
-	if (c >= 65 && c <= 90)
-		return (c + 32);
-	return (c);
+	int		index;
+
+	if (!str)
+		return (NULL);
+	index = -1;
+	while (str[++index])
+		str[index] = ft_tolower(str[index]);
+	return (str);
 }

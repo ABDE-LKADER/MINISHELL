@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:44:46 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/11 14:22:57 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/06/12 16:54:15 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ int	main(int ac, char **av, char **env)
 			continue ;
 		}
 		(execution(&ms, ms.tree, env), cleanup(&ms.leaks), free(ms.read));
+		printf("EXIT STATUS : %d\n", ms.exit_status);
 	}
 	return (cleanup(&ms.leaks), cleanup(&ms.alloc), EXIT_SUCCESS);
 }

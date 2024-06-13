@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:11 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/07 11:19:30 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/06/12 01:21:23 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_tree	*parse_side(t_minishell *ms, int *i)
 
 	if (ms->tokens[*i]
 		&& ft_strncmp(ms->tokens[*i], ")", ft_strlen(ms->tokens[*i])) == 0)
-		return (syntax_err(ms, "syntax error near unexpected token `)'\n", 258),
+		return (syntax_err(ms, NULL, "syntax error near unexpected token `)'\n", 258),
 			NULL);
 	else if (ms->tokens[*i]
 		&& ft_strncmp(ms->tokens[*i], "(", ft_strlen(ms->tokens[*i])) == 0)
@@ -83,7 +83,7 @@ t_tree	*parse_exp(t_minishell *ms, int *i, int min_pr)
 		op = ms->tokens[*i + 1];
 		(*i) += 2;
 		if (!ms->tokens[*i] || check_token_op(ms->tokens[*i]))
-			return (syntax_err(ms, "syntax error", 258), NULL);
+			return (syntax_err(ms, NULL, "syntax error", 258), NULL);
 		right = parse_exp(ms, i, check_if_prec(op) + 1);
 		left = make_tree(ms, left, right, op);
 	}

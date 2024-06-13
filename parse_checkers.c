@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:32 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/07 11:30:34 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/06/11 23:33:19 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	check_closed_quotes(t_minishell *ms, int i, int j)
 			j++;
 		}
 		if (quotes > -1)
-			return (syntax_err(ms,
+			return (syntax_err(ms, NULL,
 					"unexpected EOF while looking for matching `", 258),
 				write(2, &quotes, 1), ft_putstr_fd("'\n", 2), 1);
 		i++;

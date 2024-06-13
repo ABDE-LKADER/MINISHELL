@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_simple_command.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:37 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/08 02:38:07 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/06/12 01:53:05 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	count_args(char **tokens)
 int	check_op_and_allocate(t_minishell *ms, int *i, int *redir_set)
 {
 	if (check_token_op(ms->tokens[*i]))
-		return (syntax_err(ms, "syntax error", 258), 1);
+		return (syntax_err(ms, NULL, "syntax errorhere", 258), 1);
 	ms->tree = allocate(&ms->leaks, 1, sizeof(t_tree));
 	if (!ms->tree)
 		error_handler(ms);

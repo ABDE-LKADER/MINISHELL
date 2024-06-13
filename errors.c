@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:44:21 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/09 19:34:51 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/06/13 08:39:56 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,33 @@ void	error_handler(t_minishell *ms)
 	exit(EXIT_FAILURE);
 }
 
-void	syntax_err(t_minishell *ms, char *error_msg, int exit_status)
+void	execution_errors(t_minishell *ms, char *path)
+{
+	DIR		*dir;
+
+	printf("%d\n", errno);
+	dir = opendir(path);
+	if (dir && !closedir(dir))
+		(syntax_err(ms, path, "is a directory", 126), exit(126));
+	if (errno == 2 && !ft_strncmp("./", path, ft_strlen("./")))
+			(syntax_err(ms, path, "No such file or directory", 127), exit(127));
+	if (errno == 13)
+		(syntax_err(ms, path, "Permission denied", 126), exit(126));
+	(syntax_err(ms, path, "command not found", 127), exit(127));
+}
+
+void	syntax_err(t_minishell *ms, char *option, char *error_msg, int exit_status)
 {
 	if (g_catch_signals != SIGINT)
 	{
 		if (ms->tree && !ms->tree->dis_error)
 		{
 			ft_putstr_fd("Minishell: ", 2);
+			if (option)
+			{
+				ft_putstr_fd(option, 2);
+				ft_putstr_fd(": ", 2);
+			}
 			ft_putstr_fd(error_msg, 2);
 			ft_putstr_fd("\n", 2);
 		}

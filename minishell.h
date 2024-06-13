@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:24 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/11 15:48:18 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/06/12 02:43:48 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 # include <errno.h>
 # include <string.h>
 # include <stdbool.h>
+# include <dirent.h>
+#include <sys/errno.h>
 
 # define EXIT "\033[AMinishell >$ exit\n"
 # define INIT "\033[A\n>   \n"
@@ -133,7 +135,7 @@ int		words_counter(const char *s);
 char	**ft_split_op(t_allocate **leaks, char const *s);
 
 int		check_token_op(char *token);
-void	syntax_err(t_minishell *ms, char *error_msg, int exit_status);
+void	syntax_err(t_minishell *ms, char *option,char *error_msg, int exit_status);
 void	set_redir(t_minishell *ms, int *i);
 int		check_if_operator(char *token);
 int		check_redirection(t_minishell *ms, int *i, int *redir_set);
@@ -167,6 +169,7 @@ void	environment_add(t_minishell *ms, t_environ **env, void *var, void *val);
 void	error_handler(t_minishell *ms);
 int		check_syntax_err(t_minishell *ms);
 int		check_token_if_redir(char *token);
+void	execution_errors(t_minishell *ms, char *path);
 
 ///////////////// PIPES PROTOTYPES /////////////////
 
