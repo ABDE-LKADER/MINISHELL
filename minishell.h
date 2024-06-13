@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: darkab <darkab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:24 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/12 02:43:48 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/06/13 20:14:16 by darkab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 # define REDCL "\033[1;31m"
 # define RESET "\033[0m"
 
-int	g_catch_signals;
+extern int	g_catch_signals;
 
 typedef struct s_inject_data
 {
@@ -185,5 +185,12 @@ void	execution(t_minishell *ms, t_tree *tree, char **env);
 char	**expanding(t_minishell *ms, char **expand);
 char	*inject_spaces(t_minishell *ms, char *s);
 int		check_ops_and_cmds(t_minishell *ms);
+
+///////////////// BUILTINS PROTOTYPES /////////////////
+
+int		check_if_builtins(char **args);
+int 	ft_echo(char **args);
+int 	ft_pwd(void);
+int		ft_exit(char **args);
 
 #endif

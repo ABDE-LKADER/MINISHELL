@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: darkab <darkab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:54:33 by abadouab          #+#    #+#             */
-/*   Updated: 2024/06/12 03:06:47 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/06/13 20:15:03 by darkab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,12 @@ void	execution(t_minishell *ms, t_tree *tree, char **env)
 	}
 	execution(ms, tree->left, env);
 	if (tree->type == CMD_T)
-		command_execute(ms, tree, env);
+	{
+		if (check_if_builtins(tree->args))
+			;
+		else
+			command_execute(ms, tree, env);
+	}
 	if ((tree->type == AND_T && !ms->exit_status)
 		|| (tree->type == OR_T && ms->exit_status))
 		execution(ms, tree->right, env);

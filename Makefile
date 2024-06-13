@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+         #
+#    By: darkab <darkab@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/19 17:23:22 by abadouab          #+#    #+#              #
-#    Updated: 2024/06/12 03:29:01 by abadouab         ###   ########.fr        #
+#    Updated: 2024/06/13 20:18:36 by darkab           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,11 @@ SRCS		=	minishell.c \
 				errors.c parse_checkers.c parse_simple_command.c \
 				signal_handler.c parse.c here_doc.c environment.c  \
 				expanding.c execution.c check_redirection.c \
-				check_operate.c pipeline.c redirection.c
+				check_operate.c pipeline.c redirection.c \
+				builtins/handle_builtins.c \
+				builtins/ft_echo.c \
+				builtins/ft_pwd.c \
+				builtins/ft_exit.c 
 
 OBJS		=	$(SRCS:.c=.o)
 HEADER		=	minishell.h

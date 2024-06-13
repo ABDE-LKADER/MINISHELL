@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_simple_command.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: darkab <darkab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:37 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/12 01:53:05 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/06/13 20:12:14 by darkab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	count_args(char **tokens)
 	{
 		if (tokens[j] && tokens[j + 1] && check_if_operator(tokens[j]))
 			j += 2;
-		if (tokens[j] && !check_if_operator(tokens[j]))
+		if (tokens[j] && !check_if_operator(tokens[j]) && !check_token_op(tokens[j]))
 		{
 			counter++;
 			j++;
