@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_checkers.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: darkab <darkab@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:19 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/07 21:57:22 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/06/13 21:13:52 by darkab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	check_args(t_tree *node, char **tokens, int len)
 			i++;
 		else if (tokens[i])
 		{
-			if (j < len)
+			if (j < len && !check_if_operator(tokens[i]))
 			{
 				node->args[j] = tokens[i];
 				j++;
