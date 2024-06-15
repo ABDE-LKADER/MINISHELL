@@ -49,14 +49,16 @@ void	execution_errors(t_minishell *ms, char *path)
 {
 	DIR		*dir;
 
-	printf("%d\n", errno);
-	dir = opendir(path);
-	if (dir && !closedir(dir))
-		(syntax_err(ms, path, "is a directory", 126), exit(126));
-	if (errno == 2 && !ft_strncmp("./", path, ft_strlen("./")))
-			(syntax_err(ms, path, "No such file or directory", 127), exit(127));
+	if (errno == 2)
+		(syntax_err(ms, path, "No such file or directory", 127), exit(127));
 	if (errno == 13)
-		(syntax_err(ms, path, "Permission denied", 126), exit(126));
+	{
+		dir = opendir(path);
+		if (dir && !closedir(dir))
+			(syntax_err(ms, path, "Is a directory", 126), exit(126));
+		else
+			(syntax_err(ms, path, "Permission denied", 126), exit(126));
+	}
 	(syntax_err(ms, path, "command not found", 127), exit(127));
 }
 

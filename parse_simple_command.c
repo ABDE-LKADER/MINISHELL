@@ -103,7 +103,7 @@ t_tree	*parse_simple_command(t_minishell *ms, int *i)
 	ms->tree->dis_error = check_syntax_err(ms);
 	if (check_redirection(ms, i, &redir_set))
 		return (NULL);
-	if (!ms->tokens[*i] || ms->tree->syntax_err)
+	if (ms->tree->syntax_err)
 		return (NULL);
 	ms->tree->type = CMD_T;
 	ms->tree->value = ms->tokens[*i];
