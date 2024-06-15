@@ -19,10 +19,10 @@ SRCS		=	minishell.c \
 				signal_handler.c parse.c here_doc.c environment.c  \
 				expanding.c execution.c check_redirection.c \
 				check_operate.c pipeline.c redirection.c \
-				builtins/handle_builtins.c \
-				builtins/ft_echo.c \
-				builtins/ft_pwd.c \
-				builtins/ft_exit.c 
+				builtins/handle_builtins.c builtins/ft_echo.c \
+				builtins/ft_pwd.c builtins/ft_exit.c \
+				builtins/ft_env.c builtins/ft_export.c \
+				builtins/ft_unset.c
 
 OBJS		=	$(SRCS:.c=.o)
 HEADER		=	minishell.h
@@ -31,7 +31,7 @@ MYLB		=	MYLIB
 MYAR		=	MYLIB/libar.a
 
 CC			=	cc
-FLAGS		=	-Wall -Wextra -Werror #-g -fsanitize=address
+FLAGS		=	#-Wall -Wextra -Werror #-g -fsanitize=address
 SHORT		=	-L$(MYLB) -lar -L ~/.brew/opt/readline/lib -lreadline
 RM			=	rm -fr
 
@@ -60,7 +60,7 @@ $(NAME): $(OBJS)
 	@$(CC) $(FLAGS) $^ $(SHORT) -o $(NAME)
 
 $(OBJS): %.o: %.c $(HEADER) $(MYAR)
-	@$(CC) $(FLAGS) -c -I $(MYLB) -I ~/.brew/opt/readline/include $< -o $@
+	@$(CC) $(FLAGS) -c -I $(MYLB) -I . -I ~/.brew/opt/readline/include $< -o $@
 	@printf $(GREEN)"."$(RESET)
 
 clean:

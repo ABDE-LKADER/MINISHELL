@@ -14,7 +14,6 @@
 
 int g_catch_signals = 0;
 
-
 void	parser(t_minishell *ms)
 {
 	char	*injected_spaces;

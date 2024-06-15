@@ -1,4 +1,4 @@
-#include "../minishell.h"
+#include "minishell.h"
 
 void	check_options(char **args, int *i, int *option)
 {
@@ -37,12 +37,6 @@ int ft_echo(char **args)
 
 	i = 1;
 	option = 0;
-	// printf("I'M HERE");
-	// while (args[i])
-	// {
-	// 	printf("arg :%s\n", args[i]);
-	// 	i++;
-	// }
 	check_options(args, &i, &option);
 	while (args[i])
 	{
