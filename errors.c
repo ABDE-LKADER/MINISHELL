@@ -62,7 +62,8 @@ void	execution_errors(t_minishell *ms, char *path)
 	(syntax_err(ms, path, "command not found", 127), exit(127));
 }
 
-void	syntax_err(t_minishell *ms, char *option, char *error_msg, int exit_status)
+void	syntax_err(t_minishell *ms, char *option, char *error_msg,
+		int exit_status)
 {
 	if (g_catch_signals != SIGINT)
 	{
