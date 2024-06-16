@@ -31,7 +31,7 @@ MYLB		=	MYLIB
 MYAR		=	MYLIB/libar.a
 
 CC			=	cc
-FLAGS		=	#-Wall -Wextra -Werror #-g -fsanitize=address
+FLAGS		=	-Wall -Wextra -g -fsanitize=address # -Werror
 SHORT		=	-L$(MYLB) -lar -L ~/.brew/opt/readline/lib -lreadline
 RM			=	rm -fr
 

@@ -53,13 +53,8 @@ int	main(int ac, char **av, char **env)
 			free(ms.read);
 			continue ;
 		}
-		parser(&ms);
-		if (ms.exit_status != 0)
-		{
-			free(ms.read);
-			continue ;
-		}
-		(execution(&ms, ms.tree, env), cleanup(&ms.leaks), free(ms.read));
+		(parser(&ms), execution(&ms, ms.tree, env),
+			cleanup(&ms.leaks), free(ms.read));
 		printf("EXIT STATUS : %d\n", ms.exit_status);
 	}
 	return (cleanup(&ms.leaks), cleanup(&ms.alloc), EXIT_SUCCESS);

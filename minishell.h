@@ -188,13 +188,12 @@ int		check_ops_and_cmds(t_minishell *ms);
 
 ///////////////// BUILTINS PROTOTYPES /////////////////
 
-int 	ft_echo(char **args);
-int 	ft_pwd(void);
-int		ft_exit(char **args);
-int		check_is_builtins(t_minishell *ms, char **args);
 int		check_if_builtins(t_minishell *ms, char **args);
 void	ft_export(t_environ *export, char **args);
-void	ft_env(t_environ *env);
 void	ft_unset(t_minishell *ms, char **args);
+void	ft_env(t_environ *env);
+int 	ft_echo(char **args);
+int		ft_exit(char **args);
+int 	ft_pwd(void);
 
 #endif

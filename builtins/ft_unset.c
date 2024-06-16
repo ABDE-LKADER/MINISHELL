@@ -2,17 +2,24 @@
 
 void    unset_target(t_environ **env, char *to_find)
 {
-	t_environ	*loop;
-	t_environ	*hold;
+	t_environ	*current;
+	t_environ	*previous;
 
-	loop = *env;
-	if (!ft_strncmp(loop->var, to_find, ft_strlen(to_find)))
-		*env = (*env)->next;
-	while (loop->next)
+	current = *env;
+	previous = NULL;
+	while (current)
 	{
-		if (!ft_strncmp(loop->next->var, to_find, ft_strlen(to_find)))
-			;
-		loop = loop->next;
+		if (!ft_strncmp(current->var, to_find, ft_strlen(to_find))
+			&& ft_strlen(current->var) == ft_strlen(to_find))
+		{
+			if (!previous)
+				current = current->next;
+			else
+				previous->next = current->next;
+			return ;
+		}
+		previous = current;
+		current = current->next;
 	}
 }
 
