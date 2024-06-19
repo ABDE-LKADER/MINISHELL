@@ -88,7 +88,7 @@ int		check_ops_and_cmds(t_minishell *ms);
 
 void	built_in_execute(t_minishell *ms, t_tree *tree);
 int		check_if_builtins(char *cmd);
-void	ft_export(t_environ *export, char **args);
+void	ft_export(t_minishell *ms, t_environ *export, char **args);
 void	ft_unset(t_minishell *ms, char **args);
 void	ft_env(t_environ *env);
 int 	ft_echo(char **args);

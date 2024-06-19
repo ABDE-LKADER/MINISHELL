@@ -26,7 +26,7 @@ void	built_in_execute(t_minishell *ms, t_tree *tree)
 	else if (!ft_strncmp(*tree->args, "pwd", ft_strlen(*tree->args)))
 		ft_pwd();
 	else if (!ft_strncmp(*tree->args, "export", ft_strlen(*tree->args)))
-		ft_export(ms->export, tree->args);
+		ft_export(ms, ms->export, tree->args);
 	else if (!ft_strncmp(*tree->args, "unset", ft_strlen(*tree->args)))
 		ft_unset(ms, tree->args);
 	else if (!ft_strncmp(*tree->args, "env", ft_strlen(*tree->args)))
