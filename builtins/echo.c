@@ -14,10 +14,7 @@ void	check_options(char **args, int *i, int *option)
 			while (args[*i][j])
 			{
 				if (args[*i][j] == 'n')
-				{
-					found = 1;
-					j++;
-				}
+					(TRUE) && (found = 1, j++);
 				else if (args[*i][j] != '\0' && args[*i][j] != 'n')
 					return ;
 			}
