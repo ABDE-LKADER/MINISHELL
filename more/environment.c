@@ -77,9 +77,10 @@ void	export_create(t_minishell *ms)
 	}
 }
 
-void	environment_init(t_minishell *ms, char **env)
+void	environment_init(t_minishell *ms, char **env, int ac, char **av)
 {
-
+	if (ac != 1 && av)
+		(ft_putendl_fd("./minishell <empty>", 2), exit(EXIT_FAILURE));
 	ft_bzero(ms, sizeof(t_minishell));
 	while (*env)
 	{

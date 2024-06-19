@@ -11,11 +11,11 @@ static void	export_list(t_environ *export)
 
 void	ft_export(t_environ *export, char **args)
 {
-    int     len;
+	int     len;
 
-    len = 0;
-    while (args[len])
-        len++;
-    if (len == 1)
-        export_list(export);
+	len = 0;
+	while (args[len])
+		len++;
+	if (len == 1)
+		export_list(export);
 }

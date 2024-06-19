@@ -36,10 +36,7 @@ int	main(int ac, char **av, char **env)
 {
 	t_minishell		ms;
 
-	if (ac != 1 && av)
-		return (ft_putendl_fd("./minishell <empty>", 2),
-			EXIT_FAILURE);
-	(sig_handler(), environment_init(&ms, env));
+	(sig_handler(), environment_init(&ms, env, ac, av));
 	while (1)
 	{
 		(TRUE) && (g_catch_signals = 0, ms.tree = NULL,

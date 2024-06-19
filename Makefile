@@ -12,26 +12,30 @@
 
 NAME		=	minishell
 
-SRCS		=	minishell.c \
-				inject_spaces.c command_checkers.c  \
-				check_tokens.c word_counter.c ft_split_op.c \
-				errors.c parse_checkers.c parse_simple_command.c \
-				signal_handler.c parse.c here_doc.c environment.c  \
-				expanding.c execution.c check_redirection.c \
-				check_operate.c pipeline.c redirection.c \
-				builtins/handle_builtins.c builtins/ft_echo.c \
-				builtins/ft_pwd.c builtins/ft_exit.c \
-				builtins/ft_env.c builtins/ft_export.c \
-				builtins/ft_unset.c
+SRCS		=	more/minishell.c more/signal_handler.c \
+				more/here_doc.c more/errors.c more/environment.c \
+				tokinizer/inject_spaces.c tokinizer/check_tokens.c \
+				tokinizer/word_counter.c tokinizer/ft_split_op.c \
+				tokinizer/check_operate.c \
+				parcer/parse.c parcer/parse_simple_command.c \
+				parcer/parse_checkers.c  parcer/command_checkers.c \
+				parcer/check_redirection.c \
+				execution/execution.c execution/builtins_execution.c \
+				execution/command_execution.c execution/pipeline.c \
+				expander/expanding.c \
+				redirection/redirection.c redirection/restore_fds.c \
+				builtins/echo.c builtins/pwd.c builtins/exit.c \
+				builtins/env.c builtins/export.c builtins/unset.c \
+				builtins/cd.c \
 
 OBJS		=	$(SRCS:.c=.o)
-HEADER		=	minishell.h
+HEADER		=	includes/minishell.h
 
 MYLB		=	MYLIB
 MYAR		=	MYLIB/libar.a
 
 CC			=	cc
-FLAGS		=	-Wall -Wextra -g -fsanitize=address # -Werror
+FLAGS		=	-Wall -Wextra -g -fsanitize=address -fsanitize=leak # -Werror
 SHORT		=	-L$(MYLB) -lar -L ~/.brew/opt/readline/lib -lreadline
 RM			=	rm -fr
 
@@ -60,7 +64,7 @@ $(NAME): $(OBJS)
 	@$(CC) $(FLAGS) $^ $(SHORT) -o $(NAME)
 
 $(OBJS): %.o: %.c $(HEADER) $(MYAR)
-	@$(CC) $(FLAGS) -c -I $(MYLB) -I . -I ~/.brew/opt/readline/include $< -o $@
+	@$(CC) $(FLAGS) -c -I $(MYLB) -I includes -I ~/.brew/opt/readline/include $< -o $@
 	@printf $(GREEN)"."$(RESET)
 
 clean:
