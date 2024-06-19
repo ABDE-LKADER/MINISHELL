@@ -2,6 +2,8 @@
 
 int	check_if_builtins(char *cmd)
 {
+	if (!cmd)
+		return (NULL);
 	if (!ft_strncmp(cmd, "echo", ft_strlen(cmd))
 		|| !ft_strncmp(cmd, "cd", ft_strlen(cmd))
 		|| !ft_strncmp(cmd, "pwd", ft_strlen(cmd))

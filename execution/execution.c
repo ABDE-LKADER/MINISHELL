@@ -24,10 +24,9 @@ void	execution(t_minishell *ms, t_tree *tree, char **env)
 	execution(ms, tree->left, env);
 	if (tree->type == CMD_T)
 	{
-		
 		if (check_if_builtins(tree->value))
 			built_in_execute(ms, tree);
-		else
+		else if (tree->value)
 			command_execute(ms, tree, env);
 	}
 	if ((tree->type == AND_T && !ms->exit_status)
