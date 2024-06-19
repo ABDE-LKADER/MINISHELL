@@ -19,7 +19,7 @@ static void	signal_int_quit(int sig)
 	pid = wait(NULL);
 	if (pid == -1 && sig == SIGINT)
 	{
-		printf("\n");
+		ft_printf("\n");
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
@@ -28,7 +28,7 @@ static void	signal_int_quit(int sig)
 	else if (pid > 0 && sig == SIGQUIT)
 	{
 		g_catch_signals = SIGQUIT;
-		printf("Quit: %d\n", sig);
+		ft_printf("Quit: %d\n", sig);
 	}
 	else if (sig == SIGINT)
 		g_catch_signals = SIGINT;
@@ -45,7 +45,7 @@ static void	heredoc_int_quit(int sig)
 {
 	if (sig == SIGINT)
 	{
-		printf(INIT);
+		ft_printf(INIT);
 		exit(EXIT_FAILURE);
 	}
 }

@@ -4,7 +4,7 @@ static void	export_list(t_environ *export)
 {
 	while (export)
 	{
-		printf("%s=%s\n", export->var, export->val);
+		ft_printf("%s=%s\n", export->var, export->val);
 		export = export->next;
 	}
 }

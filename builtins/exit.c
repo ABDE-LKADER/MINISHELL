@@ -8,11 +8,11 @@ int	ft_exit(char **args)
     len = 0;
     while (args[len])
         len++;
-    printf("exit\n");
+    ft_printf("exit\n");
     exit_status = 0;
     if (len > 2)
     {
-        printf("Minishell: exit: too many arguments\n");
+        ft_printf("Minishell: exit: too many arguments\n");
         exit(1);
     }
     else if (len == 2)

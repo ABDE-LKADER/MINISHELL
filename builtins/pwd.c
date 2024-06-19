@@ -10,6 +10,7 @@ void	ft_pwd(void)
 		perror("getcwd");
 		return ;
 	}
-	printf("%s", path);
-	printf("\n");
+	ft_printf("%s", path);
+	ft_printf("\n");
+	free(path);
 }

@@ -42,7 +42,7 @@ int	main(int ac, char **av, char **env)
 		(TRUE) && (g_catch_signals = 0, ms.tree = NULL,
 		ms.read = readline("Minishell >$ "));
 		if (!ms.read)
-			return (printf(EXIT), cleanup(&ms.leaks),
+			return (ft_printf(EXIT), cleanup(&ms.leaks),
 				cleanup(&ms.alloc), EXIT_SUCCESS);
 		(g_catch_signals == SIGINT) && (ms.exit_status = 1);
 		if (!(*ms.read))
@@ -52,7 +52,7 @@ int	main(int ac, char **av, char **env)
 		}
 		(parser(&ms), execution(&ms, ms.tree, env),
 			cleanup(&ms.leaks), free(ms.read));
-		printf("EXIT STATUS : %d\n", ms.exit_status);
+		ft_printf("EXIT STATUS : %d\n", ms.exit_status);
 	}
 	return (cleanup(&ms.leaks), cleanup(&ms.alloc), EXIT_SUCCESS);
 }
