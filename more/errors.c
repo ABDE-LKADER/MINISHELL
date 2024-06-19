@@ -45,7 +45,7 @@ void	error_handler(t_minishell *ms)
 	exit(EXIT_FAILURE);
 }
 
-void	execution_errors(t_minishell *ms, char *path)
+void	execution_errors(t_minishell *ms, t_tree *tree, char *path)
 {
 	DIR		*dir;
 
@@ -59,7 +59,7 @@ void	execution_errors(t_minishell *ms, char *path)
 		else
 			(syntax_err(ms, path, "Permission denied", 126), exit(126));
 	}
-	(syntax_err(ms, path, "command not found", 127), exit(127));
+	(syntax_err(ms, tree->value, "command not found", 127), exit(127));
 }
 
 void	syntax_err(t_minishell *ms, char *option, char *error_msg,

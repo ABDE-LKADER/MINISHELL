@@ -52,7 +52,7 @@ void	command_execute(t_minishell *ms, t_tree *tree, char **env)
 		// args = expanding(ms, tree->args); // STILL NOT WORKING
 		path = fetch_path(ms, ms->env, tree->value);
 		if (execve(path, tree->args, env) == -1)
-			execution_errors(ms, path);
+			execution_errors(ms, tree, path);
 	}
 	waitpid(pid, &status, 0);
 	if (WIFSIGNALED(status))

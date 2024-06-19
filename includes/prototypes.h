@@ -65,7 +65,7 @@ void	environment_add(t_minishell *ms, t_environ **env, void *var, void *val);
 void	error_handler(t_minishell *ms);
 int		check_syntax_err(t_minishell *ms);
 int		check_token_if_redir(char *token);
-void	execution_errors(t_minishell *ms, char *path);
+void	execution_errors(t_minishell *ms, t_tree *tree, char *path);
 
 ///////////////// PIPES PROTOTYPES /////////////////
 
