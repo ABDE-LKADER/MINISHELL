@@ -14,6 +14,20 @@
 
 char	*expand_val(t_minishell *ms, char *arg)
 {
+	t_environ	*loop;
+
+	loop = ms->env;
+	while (loop)
+	{
+		if (!ft_strncmp(loop->var, arg, ft_strlen(arg)))
+			return (loop->val);
+		loop = loop->next;
+	}
+	return (ft_strdup(&ms->leaks, ""));
+}
+
+char	*splite_to_expand(t_minishell *ms, char *arg)
+{
 	int			end;
 	int			start;
 	char		*expand;
@@ -33,17 +47,11 @@ char	*expand_val(t_minishell *ms, char *arg)
 	return (ft_strdup(&ms->leaks, ""));
 }
 
-char	**expanding(t_minishell *ms, char **args)
+void	expanding(t_minishell *ms, char **args)
 {
 	int		index;
-	char	**expand;
 
-	index = 0;
-	while (args[index])
-		index++;
-	expand = allocate(&ms->leaks, index + 1, sizeof(char *));
 	index = -1;
 	while (args[++index])
-		expand[index] = expand_val(ms, args[index]);
-	return (expand);
+		args[index] = expand_val(ms, args[index]);
 }

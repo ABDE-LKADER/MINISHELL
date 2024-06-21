@@ -80,7 +80,7 @@ void	restore_fds(t_fds fds);
 ///////////////// OTHER PROTOTYPES /////////////////
 
 void	execution(t_minishell *ms, t_tree *tree, char **env);
-char	**expanding(t_minishell *ms, char **expand);
+void	expanding(t_minishell *ms, char **args);
 char	*inject_spaces(t_minishell *ms, char *s);
 int		check_ops_and_cmds(t_minishell *ms);
 
