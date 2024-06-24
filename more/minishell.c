@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int g_catch_signals = 0;
+int	g_catch_signals = 0;
 
 void	parser(t_minishell *ms)
 {
@@ -44,7 +44,8 @@ int	main(int ac, char **av, char **env)
 		if (!ms.read)
 			return (ft_printf(EXIT), cleanup(&ms.leaks),
 				cleanup(&ms.alloc), EXIT_SUCCESS);
-		(g_catch_signals == SIGINT) && (ms.exit_status = 1);
+		(g_catch_signals == SIGINT) && (ms.exit_status = 1
+			, g_catch_signals = 0);
 		if (!(*ms.read))
 		{
 			free(ms.read);

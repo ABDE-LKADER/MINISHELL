@@ -31,7 +31,8 @@ int		words_counter(const char *s);
 char	**ft_split_op(t_allocate **leaks, char const *s);
 
 int		check_token_op(char *token);
-void	syntax_err(t_minishell *ms, char *option,char *error_msg, int exit_status);
+void	syntax_err(t_minishell *ms, char *option,
+			char *error_msg, int exit_status);
 void	set_redir(t_minishell *ms, int *i);
 int		check_if_operator(char *token);
 int		check_redirection(t_minishell *ms, int *i, int *redir_set);
@@ -91,7 +92,7 @@ int		check_if_builtins(char *cmd);
 void	ft_export(t_minishell *ms, t_environ *export, char **args);
 void	ft_unset(t_minishell *ms, char **args);
 void	ft_env(t_environ *env);
-int 	ft_echo(char **args);
+int		ft_echo(char **args);
 int		ft_exit(char **args);
 void	ft_pwd(void);
 void	ft_cd(t_minishell *ms, char **args);

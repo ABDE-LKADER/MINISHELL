@@ -50,7 +50,7 @@ void	export_unset_target(t_environ **env, char *to_find)
 
 void	ft_unset(t_minishell *ms, char **args)
 {
-	int     index;
+	int	index;
 
 	index = 0;
 	while (args[++index])

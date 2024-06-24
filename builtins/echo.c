@@ -27,7 +27,7 @@ void	check_options(char **args, int *i, int *option)
 	}
 }
 
-int ft_echo(char **args)
+int	ft_echo(char **args)
 {
 	int	i;
 	int	option;

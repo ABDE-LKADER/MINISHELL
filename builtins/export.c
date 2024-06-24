@@ -25,11 +25,11 @@ void	ft_export(t_minishell *ms, t_environ *export, char **args)
 			environment_add(ms, &ms->env,
 				ft_substr(&ms->alloc, *args, 0, strlen_set(*args, '=')),
 				ft_substr(&ms->alloc, *args, strlen_set(*args, '=') + 1,
-				ft_strlen(*args)));
+					ft_strlen(*args)));
 			environment_add(ms, &ms->export,
 				ft_substr(&ms->alloc, *args, 0, strlen_set(*args, '=')),
 				ft_substr(&ms->alloc, *args, strlen_set(*args, '=') + 1,
-				ft_strlen(*args)));
+					ft_strlen(*args)));
 		}
 		sort_export_vars(&ms->export);
 	}
