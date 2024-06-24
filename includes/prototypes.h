@@ -15,11 +15,13 @@
 
 # include "typedefs.h"
 
-///////////////// INJECT SPACES PROTOTYPES /////////////////
+///////////////// INJECT-SPACES PROTOTYPES /////////////////
 
 int		count_op(char *s);
 int		check_sep(char c);
 void	copy_and_inject_spaces(t_inject_data *data, char *s, char *str);
+char	*inject_spaces(t_minishell *ms, char *s);
+int		check_ops_and_cmds(t_minishell *ms);
 int		check_par(char *s);
 
 ///////////////// PROTOTYPES TOKENIZATION /////////////////
@@ -29,6 +31,8 @@ void	tokenize_operators(char *s, int *j, char **arr, int w);
 void	get_tokens(char *s, int *j, char *quotes);
 int		words_counter(const char *s);
 char	**ft_split_op(t_allocate **leaks, char const *s);
+
+///////////////// PARCE TOKENIZATION /////////////////
 
 int		check_token_op(char *token);
 void	syntax_err(t_minishell *ms, char *option,char *error_msg, int exit_status);
@@ -44,7 +48,6 @@ void	set_op(t_tree *tree, char *token);
 ///////////////// HERE_DOC /////////////////
 
 int		ft_open_here_doc(t_minishell *ms, char *delimiter);
-
 t_tree	*parse_simple_command(t_minishell *ms, int *i);
 t_tree	*parse_exp(t_minishell *ms, int *i, int min_pr);
 t_tree	*parse_tree(t_minishell *ms);
@@ -71,22 +74,26 @@ void	execution_errors(t_minishell *ms, t_tree *tree, char *path);
 
 void	pipeline_handler(t_minishell *ms, t_tree *tree, char **env);
 
-///////////////// PIPES PROTOTYPES /////////////////
+///////////////// REDIR PROTOTYPES /////////////////
 
 void	redirection(t_tree *tree);
 t_fds	save_fds(t_fds fds);
 void	restore_fds(t_fds fds);
 
-///////////////// OTHER PROTOTYPES /////////////////
+///////////////// EXEC PROTOTYPES /////////////////
 
 void	execution(t_minishell *ms, t_tree *tree, char **env);
-char	**expanding(t_minishell *ms, char **expand);
-char	*inject_spaces(t_minishell *ms, char *s);
-int		check_ops_and_cmds(t_minishell *ms);
+void	built_in_execute(t_minishell *ms, t_tree *tree);
+
+///////////////// EXPAND PROTOTYPES /////////////////
+
+char	*splite_to_expand(t_minishell *ms, char *arg);
+void	expanding(t_minishell *ms, char **args);
+char	*tilde_expander(t_environ *env);
+char	*expand_val(t_minishell *ms, char *arg);;
 
 ///////////////// BUILTINS PROTOTYPES /////////////////
 
-void	built_in_execute(t_minishell *ms, t_tree *tree);
 int		check_if_builtins(char *cmd);
 void	ft_export(t_minishell *ms, t_environ *export, char **args);
 void	ft_unset(t_minishell *ms, char **args);
@@ -95,5 +102,7 @@ int 	ft_echo(char **args);
 int		ft_exit(char **args);
 void	ft_pwd(void);
 void	ft_cd(t_minishell *ms, char **args);
+
+///////////////// OTHER PROTOTYPES /////////////////
 
 #endif

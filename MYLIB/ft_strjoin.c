@@ -19,8 +19,10 @@ char	*ft_strjoin(t_allocate **alloc, char const *s1, char const *s2)
 	size_t	len;
 	char	*str;
 
-	if (!s1 || !s2)
+	if (!s2)
 		return (NULL);
+	if (!s1)
+		return (ft_strdup(alloc, s2));
 	len = ft_strlen(s1) + ft_strlen(s2) + 1;
 	str = allocate(alloc, len, sizeof(char));
 	if (!str)

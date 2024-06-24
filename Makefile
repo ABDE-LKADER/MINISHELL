@@ -22,7 +22,7 @@ SRCS		=	more/minishell.c more/signal_handler.c \
 				parcer/check_redirection.c \
 				execution/execution.c execution/builtins_execution.c \
 				execution/command_execution.c execution/pipeline.c \
-				expander/expanding.c \
+				expander/expander.c expander/expanding.c expander/tilde_expander.c \
 				redirection/redirection.c redirection/restore_fds.c \
 				builtins/echo.c builtins/pwd.c builtins/exit.c \
 				builtins/env.c builtins/export.c builtins/unset.c \
