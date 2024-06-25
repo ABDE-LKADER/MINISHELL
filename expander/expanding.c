@@ -35,6 +35,19 @@ void	expand_add(t_minishell *ms, t_expand **expand, void *value)
 	node->next = new;
 }
 
+bool	expand_option(char *value)
+{
+	while (*value && *value == '\"' && *(value + 1) == '\"')
+		value += 2;
+	if (*value == '\"')
+		return (TRUE);
+	while (*value && *value == '\'' && *(value + 1) == '\'')
+		value += 2;
+	if (*value == '\'')
+		return (FALSE);
+	return (TRUE);
+}
+
 char	*skip_to_var(t_minishell *ms, char *arg, int start, int *index)
 {
 	char	*sub;
@@ -42,8 +55,7 @@ char	*skip_to_var(t_minishell *ms, char *arg, int start, int *index)
 	sub = NULL;
 	while (arg[*index] && arg[*index] != '$')
 		(*index)++;
-	if (*index && arg[*index] == '$' && (arg[*index - 1] == '\\'
-		|| arg[*index - 1] == '\''))
+	if (*index && arg[*index] == '$' && arg[*index - 1] == '\\')
 		(*index)--;
 	if (*index - start)
 		sub = ft_substr(&ms->leaks, arg, start, *index - start);
@@ -55,7 +67,7 @@ char	*get_to_expand(t_minishell *ms, char *arg, int start, int *index)
 	char	*sub;
 
 	sub = NULL;
-	if (arg[*index] && (arg[*index] == '\\' || arg[*index] == '\''))
+	if (arg[*index] && arg[*index] == '\\')
 		(*index) += 2;
 	if (arg[*index] && arg[*index] == '$')
 		(*index)++;
@@ -66,10 +78,34 @@ char	*get_to_expand(t_minishell *ms, char *arg, int start, int *index)
 	return (sub);
 }
 
+char	*remove_duplicate_qoutes(t_minishell *ms, char *value)
+{
+	char	*new;
+	int		start;
+	int		index;
+
+	(TRUE) && (new = NULL, index = 0);
+	while (value[index])
+	{
+		while (value[index]
+			&& ((value[index] == '\"' && value[index + 1] == '\"')
+			|| (value[index] == '\'' && value[index + 1] == '\'')))
+			index += 2;
+		start = index;
+		if ((value[index] == '\"' || value[index] == '\''))
+			index++;
+		while (value[index] && value[index] != '\"' && value[index] != '\'')
+			index++;
+		new = ft_strjoin(&ms->leaks, new,
+			ft_substr(&ms->leaks, value, start, index - start));
+	}
+	return (new);
+}
+
 char	*splite_to_expand(t_minishell *ms, char *arg)
 {
-	int			index;
 	char		*new;
+	int			index;
 	t_expand	*expand;
 
 	(TRUE) && (index = 0, new = NULL, expand = NULL);
@@ -80,14 +116,10 @@ char	*splite_to_expand(t_minishell *ms, char *arg)
 	}
 	while (expand)
 	{
-		printf("|%s|\n", expand->value);
-		if (ft_strchr(expand->value, '$'))
-		{
-			if (*expand->value == '$')
-				expand->value = expand_val(ms, expand->value + 1);
-			if (*expand->value == '\\')
-				expand->value += 1;
-		}
+		if (ft_strchr(expand->value, '$') && *expand->value == '$')
+			expand->value = expand_val(ms, expand->value + 1);
+		if (ft_strchr(expand->value, '$') && *expand->value == '\\')
+			expand->value += 1;
 		new = ft_strjoin(&ms->leaks, new, expand->value);
 		expand = expand->next;
 	}
