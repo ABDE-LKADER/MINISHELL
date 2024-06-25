@@ -12,19 +12,48 @@
 
 #include "minishell.h"
 
-char	*expand_val(t_minishell *ms, char *arg)
+t_expand	*splite_use_qoutes(t_minishell *ms, char *arg)
 {
-	t_environ	*loop;
+	char		*new;
+	int			index;
+	int			start;
+	int			qoutes;
+	t_expand	*expand;
 
-	loop = ms->env;
-	while (loop)
+	(TRUE) && (index = 0, start = 0, new = NULL, expand = NULL);
+	while (arg[index])
 	{
-		if (!ft_strncmp(loop->var, arg, ft_strlen(arg)) 
-			&& ft_strlen(arg) == ft_strlen(loop->var))
-			return (loop->val);
-		loop = loop->next;
+		(TRUE) && (start = index, qoutes = 0);
+		(arg[index] == '\''&& !qoutes) && (qoutes = 1, index++);
+		(arg[index] == '\"' && !qoutes) && (qoutes = 2, index++);
+		while ((qoutes == 1 && arg[index] && arg[index] != '\'') 
+			|| (qoutes == 2 && arg[index] && arg[index] != '\"')
+			|| (!qoutes && arg[index] && arg[index] != '\''
+			&& arg[index] != '\"'))
+			index++;
+		if ((qoutes == 1 && arg[index] == '\'')
+			|| (qoutes == 2 && arg[index] == '\"'))
+			index++;
+		expand_add(ms, &expand, ft_substr(&ms->leaks, arg, start, index - start));
 	}
-	return (ft_strdup(&ms->leaks, ""));
+	return (expand);
+}
+
+char	*splite_mult_args(t_minishell *ms, char *arg)
+{
+	char		*new;
+	t_expand	*expand;
+
+	(TRUE) && (new = NULL, // arg = remove_duplicate_qoutes(ms, arg),
+		expand = splite_use_qoutes(ms, arg));
+	while (expand)
+	{
+		printf("|%s|\n", expand->value);
+		expand->value = splite_to_expand(ms, expand->value);
+		new = ft_strjoin(&ms->leaks, new, expand->value);
+		expand = expand->next;
+	}
+	return (new);
 }
 
 void	expanding(t_minishell *ms, char **args)
@@ -36,7 +65,7 @@ void	expanding(t_minishell *ms, char **args)
 	{
 		if (!ft_strncmp("~", args[index], ft_strlen(args[index])))
 			args[index] = tilde_expander(ms->env);
-		else if (ft_strchr(args[index], '$'))	
-			args[index] = splite_to_expand(ms, args[index]);
+		else if (ft_strchr(args[index], '$'))
+			args[index] = splite_mult_args(ms, args[index]);
 	}
 }
