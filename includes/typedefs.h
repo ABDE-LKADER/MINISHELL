@@ -21,6 +21,19 @@ typedef struct s_fds
 	int		std_out;
 }			t_fds;
 
+typedef struct s_expand
+{
+	char				*value;
+	struct s_expand		*next;
+}						t_expand;
+
+typedef struct s_environ
+{
+	void				*var;
+	void				*val;
+	struct s_environ	*next;
+}						t_environ;
+
 typedef struct s_inject_data
 {
 	int		i;
@@ -67,13 +80,6 @@ typedef struct s_tree
 	struct s_tree		*right;
 }						t_tree;
 
-typedef struct s_environ
-{
-	void				*var;
-	void				*val;
-	struct s_environ	*next;
-}						t_environ;
-
 // This structure holds the main state
 //	and configurations for the M1N15H3LL program.
 
@@ -84,6 +90,7 @@ typedef struct s_minishell
 	t_allocate		*alloc;
 	t_environ		*env;
 	t_environ		*export;
+	t_expand		*expand;
 	char			*read;
 	char			**tokens;
 	int				exit_status;

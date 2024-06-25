@@ -12,38 +12,84 @@
 
 #include "minishell.h"
 
-char	*expand_val(t_minishell *ms, char *arg)
+void	expand_add(t_minishell *ms, t_expand **expand, void *value)
 {
-	int			end;
-	int			start;
-	char		*expand;
-	t_environ	*loop;
+	t_expand	*new;
+	t_expand	*node;
 
-	(TRUE) && (end = 0, start = 0);
-	start = strlen_set(arg, '$');
-	end = strlen_set(arg, ' ');
-	expand = allocate(&ms->leaks, end - start, sizeof(char));
-	loop = ms->env;
-	while (loop)
+	if (!value)
+		return ;
+	new = allocate(&ms->alloc, 1, sizeof(t_expand));
+	if (!new)
+		error_handler(ms);
+	new->value = value;
+	new->next = NULL;
+	if (!*expand)
 	{
-		if (!ft_strncmp(loop->var, arg + start + 1, end - start))
-			return (loop->val);
-		loop = loop->next;
+		*expand = new;
+		return ;
 	}
-	return (ft_strdup(&ms->leaks, ""));
+	node = *expand;
+	while (node->next)
+		node = node->next;
+	node->next = new;
 }
 
-char	**expanding(t_minishell *ms, char **args)
+char	*skip_to_var(t_minishell *ms, char *arg, int start, int *index)
 {
-	int		index;
-	char	**expand;
+	char	*sub;
 
-	index = 0;
-	while (args[index])
-		index++;
-	expand = allocate(&ms->leaks, index + 1, sizeof(char *));
-	index = -1;
-	while (args[++index])
-		expand[index] = expand_val(ms, args[index]);
-	return (expand);
+	sub = NULL;
+	while (arg[*index] && arg[*index] != '$')
+		(*index)++;
+	if (*index && arg[*index] == '$' && (arg[*index - 1] == '\\'
+		|| arg[*index - 1] == '\''))
+		(*index)--;
+	if (*index - start)
+		sub = ft_substr(&ms->leaks, arg, start, *index - start);
+	return (sub);
+}
+
+char	*get_to_expand(t_minishell *ms, char *arg, int start, int *index)
+{
+	char	*sub;
+
+	sub = NULL;
+	if (arg[*index] && (arg[*index] == '\\' || arg[*index] == '\''))
+		(*index) += 2;
+	if (arg[*index] && arg[*index] == '$')
+		(*index)++;
+	while (arg[*index] && (ft_isalnum(arg[*index]) || arg[*index] == '_'))
+		(*index)++;
+	if (*index - start)
+		sub = ft_substr(&ms->leaks, arg, start, *index - start);
+	return (sub);
+}
+
+char	*splite_to_expand(t_minishell *ms, char *arg)
+{
+	int			index;
+	char		*new;
+	t_expand	*expand;
+
+	(TRUE) && (index = 0, new = NULL, expand = NULL);
+	while (arg[index])
+	{
+		expand_add(ms, &expand, skip_to_var(ms, arg, index, &index));
+		expand_add(ms, &expand, get_to_expand(ms, arg, index, &index));
+	}
+	while (expand)
+	{
+		printf("|%s|\n", expand->value);
+		if (ft_strchr(expand->value, '$'))
+		{
+			if (*expand->value == '$')
+				expand->value = expand_val(ms, expand->value + 1);
+			if (*expand->value == '\\')
+				expand->value += 1;
+		}
+		new = ft_strjoin(&ms->leaks, new, expand->value);
+		expand = expand->next;
+	}
+	return (new);
 }

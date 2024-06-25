@@ -3,7 +3,7 @@
 int	check_if_builtins(char *cmd)
 {
 	if (!cmd)
-		return (NULL);
+		return (FALSE);
 	if (!ft_strncmp(cmd, "echo", ft_strlen(cmd))
 		|| !ft_strncmp(cmd, "cd", ft_strlen(cmd))
 		|| !ft_strncmp(cmd, "pwd", ft_strlen(cmd))
@@ -21,6 +21,7 @@ void	built_in_execute(t_minishell *ms, t_tree *tree)
 
 	fds = save_fds(fds);
 	redirection(tree);
+	expanding(ms, tree->args); // STILL NOT WORKING
 	if (!ft_strncmp(*tree->args, "echo", ft_strlen(*tree->args)))
 		ft_echo(tree->args);
 	else if (!ft_strncmp(*tree->args, "cd", ft_strlen(*tree->args)))
