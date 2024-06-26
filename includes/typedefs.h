@@ -23,7 +23,6 @@ typedef struct s_fds
 
 typedef struct s_expand
 {
-	bool				status;
 	char				*value;
 	struct s_expand		*next;
 }						t_expand;

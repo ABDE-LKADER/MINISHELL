@@ -34,9 +34,20 @@ t_expand	*splite_use_qoutes(t_minishell *ms, char *arg)
 		if ((qoutes == 1 && arg[index] == '\'')
 			|| (qoutes == 2 && arg[index] == '\"'))
 			index++;
-		expand_add(ms, &expand, ft_substr(&ms->leaks, arg, start, index - start));
+		expand_add(ms, &expand, ft_substr(&ms->leaks, arg, start,
+			index - start));
 	}
 	return (expand);
+}
+
+char	*remove_qoutes(t_minishell *ms, char *value)
+{
+	if (*value == '\'' || *value == '\"')
+	{
+		value++;
+		return (ft_substr(&ms->leaks, value, 0, ft_strlen(value) - 1));
+	}
+	return (value);
 }
 
 char	*splite_mult_args(t_minishell *ms, char *arg)
@@ -44,12 +55,12 @@ char	*splite_mult_args(t_minishell *ms, char *arg)
 	char		*new;
 	t_expand	*expand;
 
-	(TRUE) && (new = NULL, // arg = remove_duplicate_qoutes(ms, arg),
-		expand = splite_use_qoutes(ms, arg));
+	(TRUE) && (new = NULL, expand = splite_use_qoutes(ms, arg));
 	while (expand)
 	{
-		printf("|%s|\n", expand->value);
+		printf("AFTER SPLITE WITH QOUTES: |%s|\n", expand->value);
 		expand->value = splite_to_expand(ms, expand->value);
+		expand->value = remove_qoutes(ms, expand->value);
 		new = ft_strjoin(&ms->leaks, new, expand->value);
 		expand = expand->next;
 	}
@@ -65,7 +76,7 @@ void	expanding(t_minishell *ms, char **args)
 	{
 		if (!ft_strncmp("~", args[index], ft_strlen(args[index])))
 			args[index] = tilde_expander(ms->env);
-		else if (ft_strchr(args[index], '$'))
+		else
 			args[index] = splite_mult_args(ms, args[index]);
 	}
 }

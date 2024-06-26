@@ -37,12 +37,6 @@ void	expand_add(t_minishell *ms, t_expand **expand, void *value)
 
 bool	expand_option(char *value)
 {
-	while (*value && *value == '\"' && *(value + 1) == '\"')
-		value += 2;
-	if (*value == '\"')
-		return (TRUE);
-	while (*value && *value == '\'' && *(value + 1) == '\'')
-		value += 2;
 	if (*value == '\'')
 		return (FALSE);
 	return (TRUE);
@@ -78,29 +72,29 @@ char	*get_to_expand(t_minishell *ms, char *arg, int start, int *index)
 	return (sub);
 }
 
-char	*remove_duplicate_qoutes(t_minishell *ms, char *value)
-{
-	char	*new;
-	int		start;
-	int		index;
+// char	*remove_duplicate_qoutes(t_minishell *ms, char *value)
+// {
+// 	char	*new;
+// 	int		start;
+// 	int		index;
 
-	(TRUE) && (new = NULL, index = 0);
-	while (value[index])
-	{
-		while (value[index]
-			&& ((value[index] == '\"' && value[index + 1] == '\"')
-			|| (value[index] == '\'' && value[index + 1] == '\'')))
-			index += 2;
-		start = index;
-		if ((value[index] == '\"' || value[index] == '\''))
-			index++;
-		while (value[index] && value[index] != '\"' && value[index] != '\'')
-			index++;
-		new = ft_strjoin(&ms->leaks, new,
-			ft_substr(&ms->leaks, value, start, index - start));
-	}
-	return (new);
-}
+// 	(TRUE) && (new = NULL, index = 0);
+// 	while (value[index])
+// 	{
+// 		while (value[index]
+// 			&& ((*value != '\'' && value[index] == '\"' && value[index + 1] == '\"')
+// 			|| (*value != '\"' && value[index] == '\'' && value[index + 1] == '\'')))
+// 			index += 2;
+// 		start = index;
+// 		if ((value[index] == '\"' || value[index] == '\''))
+// 			index++;
+// 		while (value[index] && value[index] != '\"' && value[index] != '\'')
+// 			index++;
+// 		new = ft_strjoin(&ms->leaks, new,
+// 			ft_substr(&ms->leaks, value, start, index - start));
+// 	}
+// 	return (new);
+// }
 
 char	*splite_to_expand(t_minishell *ms, char *arg)
 {
@@ -116,7 +110,9 @@ char	*splite_to_expand(t_minishell *ms, char *arg)
 	}
 	while (expand)
 	{
-		if (ft_strchr(expand->value, '$') && *expand->value == '$')
+		// expand->value = remove_duplicate_qoutes(ms, expand->value);
+		if (ft_strchr(expand->value, '$') && *expand->value == '$'
+			&& expand_option(arg))
 			expand->value = expand_val(ms, expand->value + 1);
 		if (ft_strchr(expand->value, '$') && *expand->value == '\\')
 			expand->value += 1;
