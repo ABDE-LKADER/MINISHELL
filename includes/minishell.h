@@ -16,7 +16,6 @@
 # include "mylib.h"
 # include "prototypes.h"
 # include <stdio.h>
-// # include <stdlib.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <signal.h>
@@ -28,6 +27,7 @@
 
 # define EXIT "\033[AMinishell >$ exit\n"
 # define INIT "\033[A\n>   \n"
+
 # define TRUE 1
 # define FALSE 0
 

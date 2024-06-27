@@ -16,6 +16,8 @@ char	*fetch_path(t_minishell *ms, t_environ *env, char *cmd)
 {
 	char	**paths;
 
+	if (!cmd)
+		return (NULL);
 	if (!ft_strncmp("./", cmd, ft_strlen("./"))
 		|| !ft_strncmp("/", cmd, ft_strlen("/")))
 		return (cmd);
@@ -49,7 +51,7 @@ void	command_execute(t_minishell *ms, t_tree *tree, char **env)
 		redirection(tree);
 		if (!tree->value)
 			exit(EXIT_SUCCESS);
-		// expanding(ms, tree->args); // STILL NOT WORKING
+		expanding(ms, tree);
 		path = fetch_path(ms, ms->env, tree->value);
 		if (execve(path, tree->args, env) == -1)
 			execution_errors(ms, tree, path);

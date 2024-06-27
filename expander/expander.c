@@ -43,10 +43,7 @@ t_expand	*splite_use_qoutes(t_minishell *ms, char *arg)
 char	*remove_qoutes(t_minishell *ms, char *value)
 {
 	if (*value == '\'' || *value == '\"')
-	{
-		value++;
-		return (ft_substr(&ms->leaks, value, 0, ft_strlen(value) - 1));
-	}
+		return (value++, ft_substr(&ms->leaks, value, 0, ft_strlen(value) - 1));
 	return (value);
 }
 
@@ -58,7 +55,6 @@ char	*splite_mult_args(t_minishell *ms, char *arg)
 	(TRUE) && (new = NULL, expand = splite_use_qoutes(ms, arg));
 	while (expand)
 	{
-		printf("AFTER SPLITE WITH QOUTES: |%s|\n", expand->value);
 		expand->value = splite_to_expand(ms, expand->value);
 		expand->value = remove_qoutes(ms, expand->value);
 		new = ft_strjoin(&ms->leaks, new, expand->value);
@@ -67,16 +63,19 @@ char	*splite_mult_args(t_minishell *ms, char *arg)
 	return (new);
 }
 
-void	expanding(t_minishell *ms, char **args)
+void	expanding(t_minishell *ms, t_tree *tree)
 {
 	int		index;
 
 	index = -1;
-	while (args[++index])
+	while (tree->args[++index])
 	{
-		if (!ft_strncmp("~", args[index], ft_strlen(args[index])))
-			args[index] = tilde_expander(ms->env);
+		if (!ft_strncmp("~", tree->args[index], ft_strlen(tree->args[index])))
+			tree->args[index] = tilde_expander(ms->env);
+		if (!ft_strncmp("*", tree->args[index], ft_strlen(tree->args[index])))
+			tree->args[index] = wildcards_expander(ms);
 		else
-			args[index] = splite_mult_args(ms, args[index]);
+			tree->args[index] = splite_mult_args(ms, tree->args[index]);
 	}
+	tree->value = *tree->args;
 }

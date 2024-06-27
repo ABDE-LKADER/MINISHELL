@@ -18,7 +18,6 @@ void	parser(t_minishell *ms)
 {
 	char	*injected_spaces;
 
-	ms->exit_status = 0;
 	if (*ms->read)
 		add_history(ms->read);
 	injected_spaces = inject_spaces(ms, ms->read);
@@ -53,7 +52,6 @@ int	main(int ac, char **av, char **env)
 		}
 		(parser(&ms), execution(&ms, ms.tree, env),
 			cleanup(&ms.leaks), free(ms.read));
-		ft_printf("EXIT STATUS : %d\n", ms.exit_status);
 	}
 	return (cleanup(&ms.leaks), cleanup(&ms.alloc), EXIT_SUCCESS);
 }
