@@ -41,7 +41,7 @@ void	increase_shelvl(t_minishell *ms)
 
 	num = ft_atoi(get_env_val(ms, "SHLVL"));
 	num++;
-	str = ft_itoa(ms->alloc, num);
+	str = ft_itoa(&ms->alloc, num);
 	modify_env_val(ms, "SHLVL", str);
 }
 
