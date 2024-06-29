@@ -60,9 +60,10 @@ void	sig_heredoc(void);
 
 ///////////////// ENVIRONMENT PROTOTYPES /////////////////
 
-void	sort_export_vars(t_environ **export);
 void	environment_init(t_minishell *ms, char **env, int ac, char **av);
 void	environment_add(t_minishell *ms, t_environ **env, void *var, void *val);
+char	*get_env_val(t_minishell *ms, char *s);
+int		modify_env_val(t_minishell *ms, char *env_var, char *val);
 
 ///////////////// ERROR PROTOTYPES /////////////////
 
@@ -89,21 +90,22 @@ void	built_in_execute(t_minishell *ms, t_tree *tree);
 ///////////////// EXPAND PROTOTYPES /////////////////
 
 char	*splite_to_expand(t_minishell *ms, char *arg);
-void	expanding(t_minishell *ms, char **args);
 char	*tilde_expander(t_environ *env);
 char	*expand_val(t_minishell *ms, char *arg);
 void	expand_add(t_minishell *ms, t_expand **expand, void *value);
-char	*remove_duplicate_qoutes(t_minishell *ms, char *value);
+char	*splite_mult_args(t_minishell *ms, char *arg);
+void	expanding(t_minishell *ms, t_tree *tree);
+char	**wildcards_expander(t_minishell *ms, char **args);
 
 ///////////////// BUILTINS PROTOTYPES /////////////////
 
 int		check_if_builtins(char *cmd);
-void	ft_export(t_minishell *ms, t_environ *export, char **args);
+void	ft_export(t_minishell *ms, t_environ *env, char **args);
 void	ft_unset(t_minishell *ms, char **args);
-void	ft_env(t_environ *env);
-int		ft_echo(char **args);
+void	ft_env(t_minishell *ms, t_environ *env);
+void	ft_echo(t_minishell *ms, char **args);
 int		ft_exit(char **args);
-void	ft_pwd(void);
+void	ft_pwd(t_minishell *ms);
 void	ft_cd(t_minishell *ms, char **args);
 
 ///////////////// OTHER PROTOTYPES /////////////////

@@ -16,6 +16,8 @@ char	*fetch_path(t_minishell *ms, t_environ *env, char *cmd)
 {
 	char	**paths;
 
+	if (!cmd)
+		return (NULL);
 	if (!ft_strncmp("./", cmd, ft_strlen("./"))
 		|| !ft_strncmp("/", cmd, ft_strlen("/")))
 		return (cmd);
@@ -26,13 +28,39 @@ char	*fetch_path(t_minishell *ms, t_environ *env, char *cmd)
 	paths = ft_split(&ms->leaks, env->val, ':');
 	while (*paths)
 	{
-		*paths = ft_strjoin(&ms->alloc, *paths, "/");
-		*paths = ft_strjoin(&ms->alloc, *paths, cmd);
+		*paths = ft_strjoin(&ms->leaks, *paths, "/");
+		*paths = ft_strjoin(&ms->leaks, *paths, cmd);
 		if (!access(*paths, X_OK))
 			return (*paths);
 		paths++;
 	}
 	return (NULL);
+}
+
+char	**change_linked_to_double(t_minishell *ms)
+{
+	t_environ	*tmp;
+	int			len;
+	char		**env;
+	int			i;
+
+	tmp = ms->env;
+	while (tmp)
+	{
+		len++;
+		tmp = tmp->next;
+	}
+	env = allocate(&ms->alloc, len, sizeof(char *));
+	tmp = ms->env;
+	i = 0;
+	while (tmp)
+	{
+		env[i] = ft_strjoin(ms->alloc, tmp->var, "=");
+		env[i] = ft_strjoin(ms->alloc, env[i], tmp->val);
+		i++;
+		tmp = tmp->next;
+	}
+	return (env);
 }
 
 void	command_execute(t_minishell *ms, t_tree *tree, char **env)
@@ -47,10 +75,11 @@ void	command_execute(t_minishell *ms, t_tree *tree, char **env)
 	if (pid == 0)
 	{
 		redirection(tree);
-		if (!tree->value)
+		expanding(ms, tree);
+		if (!tree->value || !*tree->value)
 			exit(EXIT_SUCCESS);
-		// expanding(ms, tree->args); // STILL NOT WORKING
 		path = fetch_path(ms, ms->env, tree->value);
+		env = change_linked_to_double(ms);
 		if (execve(path, tree->args, env) == -1)
 			execution_errors(ms, tree, path);
 	}

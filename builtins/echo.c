@@ -2,8 +2,8 @@
 
 void	check_options(char **args, int *i, int *option)
 {
-	int	j;
-	int	found;
+	int		j;
+	int		found;
 
 	found = 0;
 	while (args[*i])
@@ -27,7 +27,7 @@ void	check_options(char **args, int *i, int *option)
 	}
 }
 
-int	ft_echo(char **args)
+void	ft_echo(t_minishell *ms, char **args)
 {
 	int	i;
 	int	option;
@@ -44,5 +44,5 @@ int	ft_echo(char **args)
 	}
 	if (!option)
 		ft_printf("\n");
-	return (0);
+	ms->exit_status = 0;
 }

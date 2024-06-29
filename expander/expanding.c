@@ -19,7 +19,7 @@ void	expand_add(t_minishell *ms, t_expand **expand, void *value)
 
 	if (!value)
 		return ;
-	new = allocate(&ms->alloc, 1, sizeof(t_expand));
+	new = allocate(&ms->leaks, 1, sizeof(t_expand));
 	if (!new)
 		error_handler(ms);
 	new->value = value;
@@ -33,19 +33,6 @@ void	expand_add(t_minishell *ms, t_expand **expand, void *value)
 	while (node->next)
 		node = node->next;
 	node->next = new;
-}
-
-bool	expand_option(char *value)
-{
-	while (*value && *value == '\"' && *(value + 1) == '\"')
-		value += 2;
-	if (*value == '\"')
-		return (TRUE);
-	while (*value && *value == '\'' && *(value + 1) == '\'')
-		value += 2;
-	if (*value == '\'')
-		return (FALSE);
-	return (TRUE);
 }
 
 char	*skip_to_var(t_minishell *ms, char *arg, int start, int *index)
@@ -73,33 +60,11 @@ char	*get_to_expand(t_minishell *ms, char *arg, int start, int *index)
 		(*index)++;
 	while (arg[*index] && (ft_isalnum(arg[*index]) || arg[*index] == '_'))
 		(*index)++;
+	if (arg[*index] && (arg[*index] == '$' || arg[*index] == '?'))
+		(*index)++;
 	if (*index - start)
 		sub = ft_substr(&ms->leaks, arg, start, *index - start);
 	return (sub);
-}
-
-char	*remove_duplicate_qoutes(t_minishell *ms, char *value)
-{
-	char	*new;
-	int		start;
-	int		index;
-
-	(TRUE) && (new = NULL, index = 0);
-	while (value[index])
-	{
-		while (value[index]
-			&& ((value[index] == '\"' && value[index + 1] == '\"')
-			|| (value[index] == '\'' && value[index + 1] == '\'')))
-			index += 2;
-		start = index;
-		if ((value[index] == '\"' || value[index] == '\''))
-			index++;
-		while (value[index] && value[index] != '\"' && value[index] != '\'')
-			index++;
-		new = ft_strjoin(&ms->leaks, new,
-			ft_substr(&ms->leaks, value, start, index - start));
-	}
-	return (new);
 }
 
 char	*splite_to_expand(t_minishell *ms, char *arg)
@@ -116,10 +81,15 @@ char	*splite_to_expand(t_minishell *ms, char *arg)
 	}
 	while (expand)
 	{
-		if (ft_strchr(expand->value, '$') && *expand->value == '$')
+		if (!ft_strncmp(expand->value, "$$", ft_strlen(expand->value))
+			&& ft_strlen("$$") == ft_strlen(expand->value))
+			expand->value = ft_itoa(&ms->leaks, getpid());
+		else if (!ft_strncmp(expand->value, "$?", ft_strlen(expand->value))
+			&& ft_strlen("$?") == ft_strlen(expand->value))
+			expand->value = ft_itoa(&ms->leaks, ms->exit_status);
+		else if (*expand->value == '$' && expand_option(arg, expand->value))
 			expand->value = expand_val(ms, expand->value + 1);
-		if (ft_strchr(expand->value, '$') && *expand->value == '\\')
-			expand->value += 1;
+		(*expand->value == '\\') && (expand->value += 1);
 		new = ft_strjoin(&ms->leaks, new, expand->value);
 		expand = expand->next;
 	}

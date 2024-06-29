@@ -34,47 +34,15 @@ void	environment_add(t_minishell *ms, t_environ **env, void *var, void *val)
 	node->next = new;
 }
 
-void	sort_export_vars(t_environ **export)
+void	increase_shelvl(t_minishell *ms)
 {
-	size_t		len;
-	void		*var;
-	void		*val;
-	t_environ	*first;
-	t_environ	*second;
+	int		num;
+	char	*str;
 
-	(TRUE) && (len = 0, first = *export);
-	while (first)
-	{
-		second = first->next;
-		while (second)
-		{
-			len = ft_strlen(first->var);
-			if (len < ft_strlen(second->var))
-				len = ft_strlen(second->var);
-			if (ft_strncmp(first->var, second->var, len) > 0)
-			{
-				(TRUE) && (var = first->var, val = first->val);
-				(TRUE) && (first->var = second->var, first->val = second->val);
-				(TRUE) && (second->var = var, second->val = val);
-			}
-			second = second->next;
-		}
-		first = first->next;
-	}
-}
-
-void	export_create(t_minishell *ms)
-{
-	t_environ	*loop;
-
-	loop = ms->export;
-	while (loop)
-	{
-		loop->var = ft_strjoin(&ms->alloc, "declare -x ", loop->var);
-		loop->val = ft_strjoin(&ms->alloc, "\"", loop->val);
-		loop->val = ft_strjoin(&ms->alloc, loop->val, "\"");
-		loop = loop->next;
-	}
+	num = ft_atoi(get_env_val(ms, "SHLVL"));
+	num++;
+	str = ft_itoa(ms->alloc, num);
+	modify_env_val(ms, "SHLVL", str);
 }
 
 void	environment_init(t_minishell *ms, char **env, int ac, char **av)
@@ -88,13 +56,9 @@ void	environment_init(t_minishell *ms, char **env, int ac, char **av)
 			ft_substr(&ms->alloc, *env, 0, strlen_set(*env, '=')),
 			ft_substr(&ms->alloc, *env, strlen_set(*env, '=') + 1,
 				ft_strlen(*env)));
-		if (ft_strncmp(*env, "_=", strlen_set(*env, '=')))
-			environment_add(ms, &ms->export,
-				ft_substr(&ms->alloc, *env, 0, strlen_set(*env, '=')),
-				ft_substr(&ms->alloc, *env, strlen_set(*env, '=') + 1,
-					ft_strlen(*env)));
 		env++;
 	}
-	sort_export_vars(&ms->export);
-	export_create(ms);
+	if (get_env_val(ms, "OLDPWD") == NULL)
+		environment_add(ms, &ms->env, "OLDPWD", NULL);
+	increase_shelvl(ms);
 }

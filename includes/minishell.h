@@ -27,6 +27,7 @@
 
 # define EXIT "\033[AMinishell >$ exit\n"
 # define INIT "\033[A\n>   \n"
+
 # define TRUE 1
 # define FALSE 0
 
