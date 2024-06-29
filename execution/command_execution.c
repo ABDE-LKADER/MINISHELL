@@ -23,7 +23,7 @@ char	*fetch_path(t_minishell *ms, t_environ *env, char *cmd)
 		return (cmd);
 	while (env && ft_strncmp("PATH", env->var, ft_strlen("PATH")))
 		env = env->next;
-	if (!env)
+	if (!env || !env->val || !*env->val)
 		(syntax_err(ms, cmd, "No such file or directory", 127), exit(127));
 	paths = ft_split(&ms->leaks, env->val, ':');
 	while (*paths)
