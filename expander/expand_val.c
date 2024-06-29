@@ -21,7 +21,12 @@ char	*expand_val(t_minishell *ms, char *arg)
 	{
 		if (!ft_strncmp(loop->var, arg, ft_strlen(arg)) 
 			&& ft_strlen(arg) == ft_strlen(loop->var))
-			return (loop->val);
+		{
+			if (!loop->val)
+				break ;
+			if (loop->val)
+				return (loop->val);
+		}
 		loop = loop->next;
 	}
 	return (ft_strdup(&ms->leaks, ""));

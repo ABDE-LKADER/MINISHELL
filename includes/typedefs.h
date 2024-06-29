@@ -29,8 +29,8 @@ typedef struct s_expand
 
 typedef struct s_environ
 {
-	void				*var;
-	void				*val;
+	char				*var;
+	char				*val;
 	struct s_environ	*next;
 }						t_environ;
 
@@ -89,8 +89,6 @@ typedef struct s_minishell
 	t_allocate		*leaks;
 	t_allocate		*alloc;
 	t_environ		*env;
-	t_environ		*export;
-	t_expand		*expand;
 	char			*read;
 	char			**tokens;
 	int				exit_status;

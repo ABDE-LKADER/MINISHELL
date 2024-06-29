@@ -15,10 +15,7 @@
 void	here_doc_redir(int fd)
 {
 	if (dup2(fd, STDIN_FILENO) == -1)
-	{
-		close(fd);
-		(perror("dup2"), exit(EXIT_FAILURE));
-	}
+		perror("dup2");
 	close(fd);
 }
 
@@ -28,12 +25,9 @@ void	in_redirection(char *file)
 
 	fd = open(file, O_RDONLY, 0777);
 	if (fd == -1)
-		(perror("open"), exit(EXIT_FAILURE));
-	if (dup2(fd, STDIN_FILENO) == -1)
-	{
-		close(fd);
-		(perror("dup2"), exit(EXIT_FAILURE));
-	}
+		perror("open");
+	else if (dup2(fd, STDIN_FILENO) == -1)
+		perror("dup2");
 	close(fd);
 }
 
@@ -43,12 +37,9 @@ void	out_redirection(char *file)
 
 	fd = open(file, O_CREAT | O_TRUNC | O_WRONLY, 0777);
 	if (fd == -1)
-		(perror("open"), exit(EXIT_FAILURE));
-	if (dup2(fd, STDOUT_FILENO) == -1)
-	{
-		close(fd);
-		(perror("dup2"), exit(EXIT_FAILURE));
-	}
+		perror("open");
+	else if (dup2(fd, STDOUT_FILENO) == -1)
+		perror("dup2");
 	close(fd);
 }
 
@@ -58,9 +49,9 @@ void	append_out_redir(char *file)
 
 	fd = open(file, O_CREAT | O_APPEND | O_WRONLY, 0777);
 	if (fd == -1)
-		(perror("open"), exit(EXIT_FAILURE));
-	if (dup2(fd, STDOUT_FILENO) == -1)
-		(perror("dup2"), exit(EXIT_FAILURE));
+		perror("open");
+	else if (dup2(fd, STDOUT_FILENO) == -1)
+		perror("dup2");
 	close(fd);
 }
 

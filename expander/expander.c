@@ -67,12 +67,16 @@ void	expanding(t_minishell *ms, t_tree *tree)
 {
 	int		index;
 
+	if (!tree->value)
+		return ;
 	index = -1;
 	while (tree->args[++index])
 	{
 		if (!ft_strncmp("~", tree->args[index], ft_strlen(tree->args[index])))
 			tree->args[index] = tilde_expander(ms->env);
-		if (!ft_strncmp("*", tree->args[index], ft_strlen(tree->args[index])))
+		if (ft_strchr(tree->args[index], '*')
+			&& !ft_strchr(tree->args[index], '\'')
+			&& !ft_strchr(tree->args[index], '\"'))
 			tree->args[index] = wildcards_expander(ms);
 		else
 			tree->args[index] = splite_mult_args(ms, tree->args[index]);

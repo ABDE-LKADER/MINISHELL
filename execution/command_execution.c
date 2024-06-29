@@ -49,9 +49,9 @@ void	command_execute(t_minishell *ms, t_tree *tree, char **env)
 	if (pid == 0)
 	{
 		redirection(tree);
-		if (!tree->value)
-			exit(EXIT_SUCCESS);
 		expanding(ms, tree);
+		if (!tree->value || !*tree->value)
+			exit(EXIT_SUCCESS);
 		path = fetch_path(ms, ms->env, tree->value);
 		if (execve(path, tree->args, env) == -1)
 			execution_errors(ms, tree, path);

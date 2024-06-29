@@ -59,7 +59,6 @@ void	sig_heredoc(void);
 
 ///////////////// ENVIRONMENT PROTOTYPES /////////////////
 
-void	sort_export_vars(t_environ **export);
 void	environment_init(t_minishell *ms, char **env, int ac, char **av);
 void	environment_add(t_minishell *ms, t_environ **env, void *var, void *val);
 
@@ -100,10 +99,10 @@ char	*wildcards_expander(t_minishell *ms);
 int		check_if_builtins(char *cmd);
 void	ft_export(t_minishell *ms, t_environ *export, char **args);
 void	ft_unset(t_minishell *ms, char **args);
-void	ft_env(t_environ *env);
-int 	ft_echo(char **args);
+void	ft_env(t_minishell *ms, t_environ *env);
+void	ft_echo(t_minishell *ms, char **args);
 int		ft_exit(char **args);
-void	ft_pwd(void);
+void	ft_pwd(t_minishell *ms);
 void	ft_cd(t_minishell *ms, char **args);
 
 ///////////////// OTHER PROTOTYPES /////////////////

@@ -40,10 +40,10 @@ char	*wildcards_expander(t_minishell *ms)
 {
 	DIR				*dir;
 	char			*new;
-	struct dirent	*entries;
 	t_expand		*expand;
+	struct dirent	*entries;
 
-	new = NULL;
+	(TRUE) && (new = NULL, expand = NULL);
 	dir  = opendir(".");
 	if (!dir)
 		return (perror("opendir"), NULL);
