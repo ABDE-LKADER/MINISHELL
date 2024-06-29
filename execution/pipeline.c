@@ -12,25 +12,25 @@
 
 #include "minishell.h"
 
-void	first_child_exec(t_minishell *ms, t_tree *tree, char **env, int fds[2])
+void	first_child_exec(t_minishell *ms, t_tree *tree, int fds[2])
 {
 	dup2(fds[1], STDOUT_FILENO);
 	close(fds[1]);
 	close(fds[0]);
-	execution(ms, tree, env);
+	execution(ms, tree);
 	exit(ms->exit_status);
 }
 
-void	second_child_exec(t_minishell *ms, t_tree *tree, char **env, int fds[2])
+void	second_child_exec(t_minishell *ms, t_tree *tree, int fds[2])
 {
 	dup2(fds[0], STDIN_FILENO);
 	close(fds[1]);
 	close(fds[0]);
-	execution(ms, tree, env);
+	execution(ms, tree);
 	exit(ms->exit_status);
 }
 
-void	pipeline_handler(t_minishell *ms, t_tree *tree, char **env)
+void	pipeline_handler(t_minishell *ms, t_tree *tree)
 {
 	int		fds[2];
 	pid_t	f_pid;
@@ -43,12 +43,12 @@ void	pipeline_handler(t_minishell *ms, t_tree *tree, char **env)
 	if (f_pid == -1)
 		(perror("fork"), error_handler(ms));
 	if (f_pid == 0)
-		first_child_exec(ms, tree->left, env, fds);
+		first_child_exec(ms, tree->left, fds);
 	s_pid = fork();
 	if (s_pid == -1)
 		(perror("fork"), error_handler(ms));
 	if (s_pid == 0)
-		second_child_exec(ms, tree->right, env, fds);
+		second_child_exec(ms, tree->right, fds);
 	close(fds[1]);
 	close(fds[0]);
 	waitpid(f_pid, &status, 0);

@@ -50,7 +50,7 @@ int	main(int ac, char **av, char **env)
 			free(ms.read);
 			continue ;
 		}
-		(parser(&ms), execution(&ms, ms.tree, env),
+		(parser(&ms), execution(&ms, ms.tree),
 			cleanup(&ms.leaks), free(ms.read));
 	}
 	return (cleanup(&ms.leaks), cleanup(&ms.alloc), EXIT_SUCCESS);

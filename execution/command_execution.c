@@ -12,6 +12,32 @@
 
 #include "minishell.h"
 
+char	**change_linked_to_double(t_minishell *ms)
+{
+	int			i;
+	int			len;
+	t_environ	*tmp;
+	char		**env;
+
+	tmp = ms->env;
+	while (tmp)
+	{
+		len++;
+		tmp = tmp->next;
+	}
+	env = allocate(&ms->alloc, len, sizeof(char *));
+	tmp = ms->env;
+	i = 0;
+	while (tmp)
+	{
+		env[i] = ft_strjoin(ms->alloc, tmp->var, "=");
+		env[i] = ft_strjoin(ms->alloc, env[i], tmp->val);
+		i++;
+		tmp = tmp->next;
+	}
+	return (env);
+}
+
 char	*fetch_path(t_minishell *ms, t_environ *env, char *cmd)
 {
 	char	**paths;
@@ -37,33 +63,7 @@ char	*fetch_path(t_minishell *ms, t_environ *env, char *cmd)
 	return (NULL);
 }
 
-char	**change_linked_to_double(t_minishell *ms)
-{
-	t_environ	*tmp;
-	int			len;
-	char		**env;
-	int			i;
-
-	tmp = ms->env;
-	while (tmp)
-	{
-		len++;
-		tmp = tmp->next;
-	}
-	env = allocate(&ms->alloc, len, sizeof(char *));
-	tmp = ms->env;
-	i = 0;
-	while (tmp)
-	{
-		env[i] = ft_strjoin(ms->alloc, tmp->var, "=");
-		env[i] = ft_strjoin(ms->alloc, env[i], tmp->val);
-		i++;
-		tmp = tmp->next;
-	}
-	return (env);
-}
-
-void	command_execute(t_minishell *ms, t_tree *tree, char **env)
+void	command_execute(t_minishell *ms, t_tree *tree)
 {
 	pid_t	pid;
 	char	*path;
@@ -79,8 +79,7 @@ void	command_execute(t_minishell *ms, t_tree *tree, char **env)
 		if (!tree->value || !*tree->value)
 			exit(EXIT_SUCCESS);
 		path = fetch_path(ms, ms->env, tree->value);
-		env = change_linked_to_double(ms);
-		if (execve(path, tree->args, env) == -1)
+		if (execve(path, tree->args, change_linked_to_double(ms)) == -1)
 			execution_errors(ms, tree, path);
 	}
 	waitpid(pid, &status, 0);

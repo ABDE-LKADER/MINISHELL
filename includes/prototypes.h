@@ -74,7 +74,7 @@ void	execution_errors(t_minishell *ms, t_tree *tree, char *path);
 
 ///////////////// PIPES PROTOTYPES /////////////////
 
-void	pipeline_handler(t_minishell *ms, t_tree *tree, char **env);
+void	pipeline_handler(t_minishell *ms, t_tree *tree);
 
 ///////////////// REDIR PROTOTYPES /////////////////
 
@@ -84,7 +84,7 @@ void	restore_fds(t_fds fds);
 
 ///////////////// EXEC PROTOTYPES /////////////////
 
-void	execution(t_minishell *ms, t_tree *tree, char **env);
+void	execution(t_minishell *ms, t_tree *tree);
 void	built_in_execute(t_minishell *ms, t_tree *tree);
 
 ///////////////// EXPAND PROTOTYPES /////////////////
