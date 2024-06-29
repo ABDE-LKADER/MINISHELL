@@ -18,7 +18,8 @@ t_tree	*parse_side(t_minishell *ms, int *i)
 
 	if (ms->tokens[*i]
 		&& ft_strncmp(ms->tokens[*i], ")", ft_strlen(ms->tokens[*i])) == 0)
-		return (syntax_err(ms, NULL, "syntax error near unexpected token `)'\n", 258),
+		return (syntax_err(ms, NULL,
+				"syntax error near unexpected token `)'\n", 258),
 			NULL);
 	else if (ms->tokens[*i]
 		&& ft_strncmp(ms->tokens[*i], "(", ft_strlen(ms->tokens[*i])) == 0)

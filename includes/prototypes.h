@@ -35,7 +35,8 @@ char	**ft_split_op(t_allocate **leaks, char const *s);
 ///////////////// PARCE TOKENIZATION /////////////////
 
 int		check_token_op(char *token);
-void	syntax_err(t_minishell *ms, char *option,char *error_msg, int exit_status);
+void	syntax_err(t_minishell *ms, char *option,
+			char *error_msg, int exit_status);
 void	set_redir(t_minishell *ms, int *i);
 int		check_if_operator(char *token);
 int		check_redirection(t_minishell *ms, int *i, int *redir_set);
@@ -61,6 +62,8 @@ void	sig_heredoc(void);
 
 void	environment_init(t_minishell *ms, char **env, int ac, char **av);
 void	environment_add(t_minishell *ms, t_environ **env, void *var, void *val);
+char	*get_env_val(t_minishell *ms, char *s);
+int		modify_env_val(t_minishell *ms, char *env_var, char *val);
 
 ///////////////// ERROR PROTOTYPES /////////////////
 

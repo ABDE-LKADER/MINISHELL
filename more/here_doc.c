@@ -35,7 +35,8 @@ int	check_syntax_err(t_minishell *ms)
 			&& ft_strncmp(ms->tokens[i], "<<", ft_strlen(ms->tokens[i]))
 			&& ft_strncmp(ms->tokens[i], "<", ft_strlen(ms->tokens[i]))
 			&& ft_strncmp(ms->tokens[i], ">", ft_strlen(ms->tokens[i])))
-			return (syntax_err(ms, NULL, "syntax error near unexpected token", 258), 1);
+			return (syntax_err(ms, NULL,
+					"syntax error near unexpected token", 258), 1);
 		i++;
 	}
 	return (0);

@@ -25,7 +25,7 @@ void	restore_fds(t_fds fds)
 {
 	if (dup2(fds.std_in, STDIN_FILENO) == -1
 		|| dup2(fds.std_out, STDOUT_FILENO) == -1)
-        perror("dup2");
+		perror("dup2");
 	if (close(fds.std_in) == -1 || close(fds.std_out) == -1)
-        perror("close");
+		perror("close");
 }

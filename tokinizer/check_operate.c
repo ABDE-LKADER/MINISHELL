@@ -50,12 +50,12 @@ int	check_ops_and_cmds(t_minishell *ms)
 			while (ms->tokens[i + 1] && ms->tokens[i + 1][0] != '('
 				&& ms->tokens[i + 1][0] != ')'
 				&& !check_token_op(ms->tokens[i + 1]))
-					i++;
+				i++;
 		}
 		i++;
 	}
 	if (ops + 1 != cmd)
 		return (syntax_err(ms, NULL,
-			"syntax error near unexpected token\n", 258), -1);
+				"syntax error near unexpected token\n", 258), -1);
 	return (0);
 }

@@ -63,7 +63,8 @@ int	count_args(char **tokens)
 	{
 		if (tokens[j] && tokens[j + 1] && check_if_operator(tokens[j]))
 			j += 2;
-		else if (tokens[j] && !check_if_operator(tokens[j]) && !check_token_op(tokens[j]))
+		else if (tokens[j] && !check_if_operator(tokens[j])
+			&& !check_token_op(tokens[j]))
 		{
 			counter++;
 			j++;

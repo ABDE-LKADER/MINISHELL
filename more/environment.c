@@ -34,6 +34,17 @@ void	environment_add(t_minishell *ms, t_environ **env, void *var, void *val)
 	node->next = new;
 }
 
+void	increase_shelvl(t_minishell *ms)
+{
+	int		num;
+	char	*str;
+
+	num = ft_atoi(get_env_val(ms, "SHLVL"));
+	num++;
+	str = ft_itoa(ms->alloc, num);
+	modify_env_val(ms, "SHLVL", str);
+}
+
 void	environment_init(t_minishell *ms, char **env, int ac, char **av)
 {
 	if (ac != 1 && av)
@@ -47,5 +58,7 @@ void	environment_init(t_minishell *ms, char **env, int ac, char **av)
 				ft_strlen(*env)));
 		env++;
 	}
-	environment_add(ms, &ms->env, "OLDPWD", NULL);
+	if (get_env_val(ms, "OLDPWD") == NULL)
+		environment_add(ms, &ms->env, "OLDPWD", NULL);
+	increase_shelvl(ms);
 }
