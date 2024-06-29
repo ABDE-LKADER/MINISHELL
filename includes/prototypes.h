@@ -92,12 +92,12 @@ char	*expand_val(t_minishell *ms, char *arg);
 void	expand_add(t_minishell *ms, t_expand **expand, void *value);
 char	*splite_mult_args(t_minishell *ms, char *arg);
 void	expanding(t_minishell *ms, t_tree *tree);
-char	*wildcards_expander(t_minishell *ms);
+char	**wildcards_expander(t_minishell *ms, char **args);
 
 ///////////////// BUILTINS PROTOTYPES /////////////////
 
 int		check_if_builtins(char *cmd);
-void	ft_export(t_minishell *ms, t_environ *export, char **args);
+void	ft_export(t_minishell *ms, t_environ *env, char **args);
 void	ft_unset(t_minishell *ms, char **args);
 void	ft_env(t_minishell *ms, t_environ *env);
 void	ft_echo(t_minishell *ms, char **args);

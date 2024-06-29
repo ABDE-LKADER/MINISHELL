@@ -19,7 +19,7 @@ void	expand_add(t_minishell *ms, t_expand **expand, void *value)
 
 	if (!value)
 		return ;
-	new = allocate(&ms->alloc, 1, sizeof(t_expand));
+	new = allocate(&ms->leaks, 1, sizeof(t_expand));
 	if (!new)
 		error_handler(ms);
 	new->value = value;

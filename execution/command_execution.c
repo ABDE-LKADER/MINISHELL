@@ -28,8 +28,8 @@ char	*fetch_path(t_minishell *ms, t_environ *env, char *cmd)
 	paths = ft_split(&ms->leaks, env->val, ':');
 	while (*paths)
 	{
-		*paths = ft_strjoin(&ms->alloc, *paths, "/");
-		*paths = ft_strjoin(&ms->alloc, *paths, cmd);
+		*paths = ft_strjoin(&ms->leaks, *paths, "/");
+		*paths = ft_strjoin(&ms->leaks, *paths, cmd);
 		if (!access(*paths, X_OK))
 			return (*paths);
 		paths++;

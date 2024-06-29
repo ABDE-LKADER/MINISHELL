@@ -36,27 +36,45 @@ char	*tilde_expander(t_environ *env)
 	return (NULL);
 }
 
-char	*wildcards_expander(t_minishell *ms)
+char	**convert_to_array(t_expand **expand)
 {
-	DIR				*dir;
-	char			*new;
-	t_expand		*expand;
+	char	**new;
+
+	return (new);
+}
+
+void	specified_wildcards(t_minishell *ms, t_expand **expand, char *value,
+	DIR *dir)
+{
 	struct dirent	*entries;
 
-	(TRUE) && (new = NULL, expand = NULL);
-	dir  = opendir(".");
-	if (!dir)
-		return (perror("opendir"), NULL);
 	entries = readdir(dir);
 	while (entries)
 	{
 		if (*entries->d_name != '.')
-		{
-			if (new)
-				new = ft_strjoin(&ms->leaks, new, " ");
-			new = ft_strjoin(&ms->leaks, new, entries->d_name);
-		}
+			;
 		entries = readdir(dir);
 	}
-	return (closedir(dir), new);
+}
+
+char	**wildcards_expander(t_minishell *ms, char **args)
+{
+	DIR			*dir;
+	t_expand	*expand;
+
+	(TRUE) && (expand = NULL, dir  = opendir("."));
+	if (!dir)
+	{
+		perror("opendir");
+		return ;
+	}
+	while (*args)
+	{
+		if (ft_strchr(*args, '*'))
+			specified_wildcards(ms, &expand, *args, dir);
+		else
+			expand_add(ms, &expand, *args);
+		args++;
+	}
+	return (closedir(dir), convert_to_array(expand));
 }

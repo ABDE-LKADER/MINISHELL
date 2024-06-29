@@ -43,7 +43,8 @@ t_expand	*splite_use_qoutes(t_minishell *ms, char *arg)
 char	*remove_qoutes(t_minishell *ms, char *value)
 {
 	if (*value == '\'' || *value == '\"')
-		return (value++, ft_substr(&ms->leaks, value, 0, ft_strlen(value) - 1));
+		return (value++, ft_substr(&ms->leaks, value, 0,
+			ft_strlen(value) - 1));
 	return (value);
 }
 
@@ -66,20 +67,20 @@ char	*splite_mult_args(t_minishell *ms, char *arg)
 void	expanding(t_minishell *ms, t_tree *tree)
 {
 	int		index;
+	bool	wildcards;
 
 	if (!tree->value)
 		return ;
-	index = -1;
+	(TRUE) && (index = -1, wildcards = 0);
 	while (tree->args[++index])
 	{
 		if (!ft_strncmp("~", tree->args[index], ft_strlen(tree->args[index])))
 			tree->args[index] = tilde_expander(ms->env);
-		if (ft_strchr(tree->args[index], '*')
-			&& !ft_strchr(tree->args[index], '\'')
-			&& !ft_strchr(tree->args[index], '\"'))
-			tree->args[index] = wildcards_expander(ms);
 		else
 			tree->args[index] = splite_mult_args(ms, tree->args[index]);
+		(ft_strchr(tree->args[index], '*')) && (wildcards = 1);
 	}
+	if (wildcards)
+		tree->args = wildcards_expander(ms, tree->args);
 	tree->value = *tree->args;
 }
