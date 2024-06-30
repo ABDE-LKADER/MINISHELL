@@ -25,7 +25,7 @@ void	parser(t_minishell *ms)
 		return ;
 	ms->tokens = ft_split_op(&ms->leaks, injected_spaces);
 	if (!ms->tokens)
-		error_handler(ms);
+		cleanup_handler(ms);
 	if (check_ops_and_cmds(ms) == -1)
 		return ;
 	parse_tree(ms);

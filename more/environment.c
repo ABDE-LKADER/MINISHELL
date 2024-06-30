@@ -19,7 +19,7 @@ void	environment_add(t_minishell *ms, t_environ **env, void *var, void *val)
 
 	new = allocate(&ms->alloc, 1, sizeof(t_environ));
 	if (!new)
-		error_handler(ms);
+		cleanup_handler(ms);
 	new->var = var;
 	new->val = val;
 	new->next = NULL;

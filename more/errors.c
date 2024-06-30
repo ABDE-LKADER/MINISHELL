@@ -36,7 +36,7 @@ int	check_par(char *s)
 	return (0);
 }
 
-void	error_handler(t_minishell *ms)
+void	cleanup_handler(t_minishell *ms)
 {
 	clear_history();
 	free(ms->read);
@@ -45,13 +45,27 @@ void	error_handler(t_minishell *ms)
 	exit(EXIT_FAILURE);
 }
 
+void	error_handler(t_minishell *ms, char *path)
+{
+	if (errno == ENOENT)
+		syntax_err(ms, path, "No such file or directory", 1);
+	else if (errno == EACCES)
+			syntax_err(ms, path, "Permission denied", 1);
+	else if (errno == EISDIR)
+		syntax_err(ms, path, "Is a directory", 1);
+	else if (errno == ENOTDIR)
+		syntax_err(ms, path, "Not a directory", 1);
+	else
+		perror("Minishell");
+}
+
 void	execution_errors(t_minishell *ms, t_tree *tree, char *path)
 {
 	DIR		*dir;
 
-	if (errno == 2)
+	if (errno == ENOENT)
 		(syntax_err(ms, path, "No such file or directory", 127), exit(127));
-	if (errno == 13)
+	if (errno == EACCES)
 	{
 		dir = opendir(path);
 		if (dir && !closedir(dir))

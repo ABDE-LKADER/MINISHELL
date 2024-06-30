@@ -16,62 +16,67 @@ static void	here_doc_redir(t_minishell *ms, int fd, bool option)
 {
 	if (!option)
 		fd = here_doc_expander(ms, fd);
-	if (dup2(fd, STDIN_FILENO) == -1)
+	if (dup2(fd, STDIN_FILENO) == ERROR)
 		perror("dup2");
 	close(fd);
 }
 
-static void	in_redirection(char *file)
+static int	in_redirection(t_minishell *ms, char *file)
 {
 	int		fd;
 
 	fd = open(file, O_RDONLY, 0777);
-	if (fd == -1)
-		perror("open");
-	else if (dup2(fd, STDIN_FILENO) == -1)
+	if (fd == ERROR)
+		return (error_handler(ms, file), ERROR);
+	else if (dup2(fd, STDIN_FILENO) == ERROR)
 		perror("dup2");
 	close(fd);
+	return (TRUE);
 }
 
-static void	out_redirection(char *file)
+static int	out_redirection(t_minishell *ms, char *file)
 {
 	int		fd;
 
 	fd = open(file, O_CREAT | O_TRUNC | O_WRONLY, 0777);
-	if (fd == -1)
-		perror("open");
-	else if (dup2(fd, STDOUT_FILENO) == -1)
+	if (fd == ERROR)
+		return (error_handler(ms, file), ERROR);
+	else if (dup2(fd, STDOUT_FILENO) == ERROR)
 		perror("dup2");
 	close(fd);
+	return (TRUE);
 }
 
-static void	append_out_redir(char *file)
+static int	append_out_redir(t_minishell *ms, char *file)
 {
 	int		fd;
 
 	fd = open(file, O_CREAT | O_APPEND | O_WRONLY, 0777);
-	if (fd == -1)
-		perror("open");
-	else if (dup2(fd, STDOUT_FILENO) == -1)
+	if (fd == ERROR)
+		return (error_handler(ms, file), ERROR);
+	else if (dup2(fd, STDOUT_FILENO) == ERROR)
 		perror("dup2");
 	close(fd);
+	return (TRUE);
 }
 
-void	redirection(t_minishell *ms, t_tree *tree)
+int	redirection(t_minishell *ms, t_tree *tree)
 {
 	int		index;
+	int		status;
 
-	index = -1;
-	while (++index < tree->redir_index)
+	(TRUE) && (index = -1, status = TRUE);
+	while (++index < tree->redir_index && status == 1)
 	{
 		if (tree->redir[index].redirection == IN_RED_T)
-			in_redirection(tree->redir[index].redir_name);
+			status = in_redirection(ms, tree->redir[index].redir_name);
 		if (tree->redir[index].redirection == OUT_RED_T)
-			out_redirection(tree->redir[index].redir_name);
+			status = out_redirection(ms, tree->redir[index].redir_name);
 		if (tree->redir[index].redirection == OUT_RED_APPEND_T)
-			append_out_redir(tree->redir[index].redir_name);
+			status = append_out_redir(ms, tree->redir[index].redir_name);
 		if (tree->redir[index].redirection == HERE_DOC_T)
 			here_doc_redir(ms, tree->redir[index].fd,
 				tree->redir[index].set_expand);
 	}
+	return (status);
 }

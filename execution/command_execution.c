@@ -40,11 +40,13 @@ char	**change_linked_to_double(t_minishell *ms)
 
 char	*fetch_path(t_minishell *ms, t_environ *env, char *cmd)
 {
+	DIR		*dir;
 	char	**paths;
 
 	if (!cmd)
 		return (NULL);
-	if (!ft_strncmp("./", cmd, ft_strlen("./"))
+	dir = opendir(cmd);
+	if (dir && !closedir(dir) || !ft_strncmp("./", cmd, ft_strlen("./"))
 		|| !ft_strncmp("/", cmd, ft_strlen("/")))
 		return (cmd);
 	while (env && ft_strncmp("PATH", env->var, ft_strlen("PATH")))
@@ -74,7 +76,8 @@ void	command_execute(t_minishell *ms, t_tree *tree)
 		return ;
 	if (pid == 0)
 	{
-		redirection(ms, tree);
+		if (redirection(ms, tree) == -1)
+			exit(EXIT_FAILURE);
 		expanding(ms, tree);
 		if (!tree->value || !*tree->value)
 			exit(EXIT_SUCCESS);

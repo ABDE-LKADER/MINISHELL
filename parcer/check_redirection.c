@@ -25,7 +25,8 @@ int	check_redirection_symbole(t_minishell *ms, int *i, int *redir_set)
 		if (check_if_operator(ms->tokens[*i + 1])
 			|| check_token_op(ms->tokens[*i + 1]))
 			return (1);
-		ms->tree->redir[ms->tree->redir_index].redir_name = ms->tokens[*i + 1];
+		ms->tree->redir[ms->tree->redir_index].redir_name =
+			splite_mult_args(ms, ms->tokens[*i + 1], FALSE);
 		ms->tree->redir_index++;
 		*redir_set = 1;
 		if (redir_set)

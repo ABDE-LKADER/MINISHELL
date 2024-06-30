@@ -26,7 +26,7 @@ char	*inject_spaces(t_minishell *ms, char *s)
 				, 258), NULL);
 	str = allocate(&ms->leaks, data.len + 1, sizeof(char));
 	if (!str)
-		error_handler(ms);
+		cleanup_handler(ms);
 	while (s[data.i])
 		copy_and_inject_spaces(&data, s, str);
 	str[data.j] = '\0';

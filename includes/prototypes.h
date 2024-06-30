@@ -67,10 +67,11 @@ int		modify_env_val(t_minishell *ms, char *env_var, char *val);
 
 ///////////////// ERROR PROTOTYPES /////////////////
 
-void	error_handler(t_minishell *ms);
+void	cleanup_handler(t_minishell *ms);
 int		check_syntax_err(t_minishell *ms);
 int		check_token_if_redir(char *token);
 void	execution_errors(t_minishell *ms, t_tree *tree, char *path);
+void	error_handler(t_minishell *ms, char *path);
 
 ///////////////// PIPES PROTOTYPES /////////////////
 
@@ -78,7 +79,7 @@ void	pipeline_handler(t_minishell *ms, t_tree *tree);
 
 ///////////////// REDIR PROTOTYPES /////////////////
 
-void	redirection(t_minishell *ms, t_tree *tree);
+int		redirection(t_minishell *ms, t_tree *tree);
 t_fds	save_fds(t_fds fds);
 void	restore_fds(t_fds fds);
 
