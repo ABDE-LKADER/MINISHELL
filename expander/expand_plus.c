@@ -12,9 +12,9 @@
 
 #include "minishell.h"
 
-bool	expand_option(char *value, char *sp)
+bool	expand_option(char *value, char *sp, bool option)
 {
-	if (!ft_strncmp("$", sp, ft_strlen(sp)))
+	if (option && !ft_strncmp("$", sp, ft_strlen(sp)))
 		return (FALSE);
 	if (*value == '\'')
 		return (FALSE);

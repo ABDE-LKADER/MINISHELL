@@ -17,6 +17,8 @@ char	*expand_val(t_minishell *ms, char *arg)
 	t_environ	*loop;
 
 	loop = ms->env;
+	if (ft_isdigit(*arg))
+		return (arg + 1);
 	while (loop)
 	{
 		if (!ft_strncmp(loop->var, arg, ft_strlen(arg)) 

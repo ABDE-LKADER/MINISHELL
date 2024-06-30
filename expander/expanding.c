@@ -42,8 +42,6 @@ char	*skip_to_var(t_minishell *ms, char *arg, int start, int *index)
 	sub = NULL;
 	while (arg[*index] && arg[*index] != '$')
 		(*index)++;
-	if (*index && arg[*index] == '$' && arg[*index - 1] == '\\')
-		(*index)--;
 	if (*index - start)
 		sub = ft_substr(&ms->leaks, arg, start, *index - start);
 	return (sub);
@@ -54,20 +52,19 @@ char	*get_to_expand(t_minishell *ms, char *arg, int start, int *index)
 	char	*sub;
 
 	sub = NULL;
-	if (arg[*index] && arg[*index] == '\\')
-		(*index) += 2;
 	if (arg[*index] && arg[*index] == '$')
 		(*index)++;
 	while (arg[*index] && (ft_isalnum(arg[*index]) || arg[*index] == '_'))
 		(*index)++;
-	if (arg[*index] && (arg[*index] == '$' || arg[*index] == '?'))
+	if (arg[*index] && arg[*index - 1] == '$'
+		&& (arg[*index] == '$' || arg[*index] == '?'))
 		(*index)++;
 	if (*index - start)
 		sub = ft_substr(&ms->leaks, arg, start, *index - start);
 	return (sub);
 }
 
-char	*splite_to_expand(t_minishell *ms, char *arg)
+char	*splite_to_expand(t_minishell *ms, char *arg, bool option)
 {
 	char		*new;
 	int			index;
@@ -87,9 +84,9 @@ char	*splite_to_expand(t_minishell *ms, char *arg)
 		else if (!ft_strncmp(expand->value, "$?", ft_strlen(expand->value))
 			&& ft_strlen("$?") == ft_strlen(expand->value))
 			expand->value = ft_itoa(&ms->leaks, ms->exit_status);
-		else if (*expand->value == '$' && expand_option(arg, expand->value))
+		else if (*expand->value == '$'
+			&& expand_option(arg, expand->value, option))
 			expand->value = expand_val(ms, expand->value + 1);
-		(*expand->value == '\\') && (expand->value += 1);
 		new = ft_strjoin(&ms->leaks, new, expand->value);
 		expand = expand->next;
 	}

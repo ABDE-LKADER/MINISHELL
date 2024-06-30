@@ -51,15 +51,19 @@ char	*remove_qoutes(t_minishell *ms, char *value)
 char	*splite_mult_args(t_minishell *ms, char *arg)
 {
 	char		*new;
+	bool		option;
 	t_expand	*expand;
 
-	(TRUE) && (new = NULL, expand = splite_use_qoutes(ms, arg));
+	(TRUE) && (new = NULL, option = 1, expand = splite_use_qoutes(ms, arg));
 	while (expand)
 	{
-		expand->value = splite_to_expand(ms, expand->value);
+		if (expand->next && (*expand->next->value == '\''
+			|| *expand->next->value == '\"'))
+			option = 0;
+		expand->value = splite_to_expand(ms, expand->value, option);
 		expand->value = remove_qoutes(ms, expand->value);
 		new = ft_strjoin(&ms->leaks, new, expand->value);
-		expand = expand->next;
+		(TRUE) && (expand = expand->next, option = 1);
 	}
 	return (new);
 }
