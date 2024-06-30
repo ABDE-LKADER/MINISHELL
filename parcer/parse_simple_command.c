@@ -17,7 +17,8 @@ void	set_redir(t_minishell *ms, int *i)
 	t_tree	*node;
 	char	**tokens;
 
-	(TRUE) && (node = ms->tree, tokens = ms->tokens, ms->tree->redir_ex = true);
+	(TRUE) && (node = ms->tree, tokens = ms->tokens, ms->tree->redir_ex = true,
+		node->redir[node->redir_index].set_expand = 0);
 	if (ft_strncmp(tokens[*i], ">", ft_strlen(tokens[*i])) == 0)
 		(TRUE) && (node->redir[node->redir_index].redirection = OUT_RED_T,
 			node->redir[node->redir_index].fd = -1);
@@ -31,7 +32,7 @@ void	set_redir(t_minishell *ms, int *i)
 		&& g_catch_signals == 0)
 		(TRUE) && (node->redir[node->redir_index].redirection = HERE_DOC_T,
 		node->redir[node->redir_index].fd = ft_open_here_doc(ms,
-		tokens[*i + 1]));
+		tokens[*i + 1], node));
 }
 
 int	count_redir(char **tokens)

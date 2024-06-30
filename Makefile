@@ -13,7 +13,7 @@
 NAME		=	minishell
 
 SRCS		=	more/minishell.c more/signal_handler.c \
-				more/here_doc.c more/errors.c more/environment.c \
+				more/errors.c more/environment.c \
 				tokinizer/inject_spaces.c tokinizer/check_tokens.c \
 				tokinizer/word_counter.c tokinizer/ft_split_op.c \
 				tokinizer/check_operate.c \
@@ -23,8 +23,9 @@ SRCS		=	more/minishell.c more/signal_handler.c \
 				execution/execution.c execution/builtins_execution.c \
 				execution/command_execution.c execution/pipeline.c \
 				expander/expander.c expander/expanding.c expander/expand_val.c \
-				expander/expand_plus.c \
+				expander/expand_plus.c expander/here_doc_ex.c \
 				redirection/redirection.c redirection/restore_fds.c \
+				redirection/here_doc.c \
 				builtins/echo.c builtins/pwd.c builtins/exit.c \
 				builtins/env.c builtins/export.c builtins/unset.c \
 				builtins/cd.c \

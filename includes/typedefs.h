@@ -62,6 +62,7 @@ typedef struct s_redir
 {
 	t_redirection		redirection;
 	char				*redir_name;
+	bool				set_expand;
 	int					fd;
 }						t_redir;
 

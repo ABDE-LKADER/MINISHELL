@@ -12,14 +12,16 @@
 
 #include "minishell.h"
 
-void	here_doc_redir(int fd)
+static void	here_doc_redir(t_minishell *ms, int fd, bool option)
 {
+	if (!option)
+		fd = here_doc_expander(ms, fd);
 	if (dup2(fd, STDIN_FILENO) == -1)
 		perror("dup2");
 	close(fd);
 }
 
-void	in_redirection(char *file)
+static void	in_redirection(char *file)
 {
 	int		fd;
 
@@ -31,7 +33,7 @@ void	in_redirection(char *file)
 	close(fd);
 }
 
-void	out_redirection(char *file)
+static void	out_redirection(char *file)
 {
 	int		fd;
 
@@ -43,7 +45,7 @@ void	out_redirection(char *file)
 	close(fd);
 }
 
-void	append_out_redir(char *file)
+static void	append_out_redir(char *file)
 {
 	int		fd;
 
@@ -55,7 +57,7 @@ void	append_out_redir(char *file)
 	close(fd);
 }
 
-void	redirection(t_tree *tree)
+void	redirection(t_minishell *ms, t_tree *tree)
 {
 	int		index;
 
@@ -69,6 +71,7 @@ void	redirection(t_tree *tree)
 		if (tree->redir[index].redirection == OUT_RED_APPEND_T)
 			append_out_redir(tree->redir[index].redir_name);
 		if (tree->redir[index].redirection == HERE_DOC_T)
-			here_doc_redir(tree->redir[index].fd);
+			here_doc_redir(ms, tree->redir[index].fd,
+				tree->redir[index].set_expand);
 	}
 }

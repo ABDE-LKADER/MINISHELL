@@ -74,7 +74,7 @@ void	command_execute(t_minishell *ms, t_tree *tree)
 		return ;
 	if (pid == 0)
 	{
-		redirection(tree);
+		redirection(ms, tree);
 		expanding(ms, tree);
 		if (!tree->value || !*tree->value)
 			exit(EXIT_SUCCESS);

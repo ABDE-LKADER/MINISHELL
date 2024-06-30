@@ -70,7 +70,7 @@ int	ft_here_doc_in_child(t_minishell *ms, pid_t pid, char *delimiter, int fds[])
 	return (0);
 }
 
-int	ft_open_here_doc(t_minishell *ms, char *delimiter)
+int	ft_open_here_doc(t_minishell *ms, char *delimiter, t_tree *node)
 {
 	int		fds[2];
 	int		len;
@@ -79,21 +79,20 @@ int	ft_open_here_doc(t_minishell *ms, char *delimiter)
 
 	unlink("here_doc");
 	fds[0] = open("here_doc", O_CREAT | O_TRUNC | O_WRONLY, 0777);
-	if (fds[0] < 0)
-		return (ft_putstr_fd(strerror(errno), 2), -1);
 	fds[1] = open("here_doc", O_RDONLY, 0644);
-	if (fds[1] < 0)
+	if (fds[0] < 0 && fds[1] < 0)
 		return (ft_putstr_fd(strerror(errno), 2), -1);
+	(ft_strchr(delimiter, '\'') || ft_strchr(delimiter, '\"'))
+		&& (node->redir[node->redir_index].set_expand = 1);
+	delimiter = splite_mult_args(ms, delimiter, FALSE);
 	(TRUE) && (unlink("here_doc"), len = ft_strlen(delimiter), pid = fork());
 	if (pid < 0)
 		return (-1);
 	if (ft_here_doc_in_child(ms, pid, delimiter, fds) == -1)
 		return (-1);
 	waitpid(pid, &status, 0);
-	if (WIFSIGNALED(status))
-		g_catch_signals = SIGINT;
-	if (g_catch_signals == SIGINT)
-		ms->exit_status = 1;
+	(WIFSIGNALED(status)) && (g_catch_signals = SIGINT);
+	(g_catch_signals == SIGINT) && (ms->exit_status = 1);
 	if (close(fds[0]) < 0)
 		return (ft_putstr_fd(strerror(errno), 2), -1);
 	return (fds[1]);

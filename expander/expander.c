@@ -48,7 +48,7 @@ char	*remove_qoutes(t_minishell *ms, char *value)
 	return (value);
 }
 
-char	*splite_mult_args(t_minishell *ms, char *arg)
+char	*splite_mult_args(t_minishell *ms, char *arg, bool status)
 {
 	char		*new;
 	bool		option;
@@ -60,7 +60,8 @@ char	*splite_mult_args(t_minishell *ms, char *arg)
 		if (expand->next && (*expand->next->value == '\''
 			|| *expand->next->value == '\"'))
 			option = 0;
-		expand->value = splite_to_expand(ms, expand->value, option);
+		if (status)
+			expand->value = splite_to_expand(ms, expand->value, option);
 		expand->value = remove_qoutes(ms, expand->value);
 		new = ft_strjoin(&ms->leaks, new, expand->value);
 		(TRUE) && (expand = expand->next, option = 1);
@@ -81,7 +82,7 @@ void	expanding(t_minishell *ms, t_tree *tree)
 		if (!ft_strncmp("~", tree->args[index], ft_strlen(tree->args[index])))
 			tree->args[index] = tilde_expander(ms->env);
 		else
-			tree->args[index] = splite_mult_args(ms, tree->args[index]);
+			tree->args[index] = splite_mult_args(ms, tree->args[index], TRUE);
 		(ft_strchr(tree->args[index], '*')) && (wildcards = 1);
 	}
 	if (wildcards)

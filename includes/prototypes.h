@@ -48,7 +48,7 @@ void	set_op(t_tree *tree, char *token);
 
 ///////////////// HERE_DOC /////////////////
 
-int		ft_open_here_doc(t_minishell *ms, char *delimiter);
+int		ft_open_here_doc(t_minishell *ms, char *delimiter, t_tree *node);
 t_tree	*parse_simple_command(t_minishell *ms, int *i);
 t_tree	*parse_exp(t_minishell *ms, int *i, int min_pr);
 t_tree	*parse_tree(t_minishell *ms);
@@ -78,7 +78,7 @@ void	pipeline_handler(t_minishell *ms, t_tree *tree);
 
 ///////////////// REDIR PROTOTYPES /////////////////
 
-void	redirection(t_tree *tree);
+void	redirection(t_minishell *ms, t_tree *tree);
 t_fds	save_fds(t_fds fds);
 void	restore_fds(t_fds fds);
 
@@ -93,10 +93,11 @@ char	*splite_to_expand(t_minishell *ms, char *arg, bool option);
 char	*tilde_expander(t_environ *env);
 char	*expand_val(t_minishell *ms, char *arg);
 void	expand_add(t_minishell *ms, t_expand **expand, void *value);
-char	*splite_mult_args(t_minishell *ms, char *arg);
+char	*splite_mult_args(t_minishell *ms, char *arg, bool status);
 void	expanding(t_minishell *ms, t_tree *tree);
 char	**wildcards_expander(t_minishell *ms, char **args);
 bool	expand_option(char *value, char *sp, bool option);
+int		here_doc_expander(t_minishell *ms, int fd);
 
 ///////////////// BUILTINS PROTOTYPES /////////////////
 
@@ -105,9 +106,9 @@ void	ft_export(t_minishell *ms, t_environ *env, char **args);
 void	ft_unset(t_minishell *ms, char **args);
 void	ft_env(t_minishell *ms, t_environ *env);
 void	ft_echo(t_minishell *ms, char **args);
-int		ft_exit(char **args);
 void	ft_pwd(t_minishell *ms);
 void	ft_cd(t_minishell *ms, char **args);
+void	ft_exit(char **args);
 
 ///////////////// OTHER PROTOTYPES /////////////////
 
