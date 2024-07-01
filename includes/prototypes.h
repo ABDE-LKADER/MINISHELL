@@ -109,7 +109,7 @@ void	ft_env(t_minishell *ms, t_environ *env);
 void	ft_echo(t_minishell *ms, char **args);
 void	ft_pwd(t_minishell *ms);
 void	ft_cd(t_minishell *ms, char **args);
-void	ft_exit(char **args);
+void	ft_exit(t_minishell *ms, char **args);
 bool	valid_identifier(char *str, int len);
 
 ///////////////// OTHER PROTOTYPES /////////////////

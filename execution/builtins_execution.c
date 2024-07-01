@@ -41,6 +41,6 @@ void	built_in_execute(t_minishell *ms, t_tree *tree)
 	else if (!ft_strncmp(*tree->args, "env", ft_strlen(*tree->args)))
 		ft_env(ms, ms->env);
 	else if (!ft_strncmp(*tree->args, "exit", ft_strlen(*tree->args)))
-		ft_exit(tree->args);
+		ft_exit(ms, tree->args);
 	restore_fds(fds);
 }
