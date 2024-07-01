@@ -74,7 +74,9 @@ void	create_to_export(t_minishell *ms, t_environ *env, char **args)
 {
 	while (*args)
 	{
-		if (!search_env(ms, env, *args))
+		if ((!ft_isalpha(**args) && **args != '_') || !valid_identifier(*args))
+			syntax_err(ms, *args, "not a valid identifier", 1);
+		else if (!search_env(ms, env, *args))
 		{
 			if (ft_strchr(*args, '='))
 				environment_add(ms, &ms->env,

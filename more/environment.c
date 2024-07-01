@@ -44,6 +44,17 @@ void	increase_shelvl(t_minishell *ms)
 	modify_env_val(ms, "SHLVL", str);
 }
 
+bool	valid_identifier(char *str)
+{
+	while (*str)
+	{
+		if (!ft_isalnum(*str) && *str != '_')
+			return (FALSE);
+		str++;
+	}
+	return (TRUE);
+}
+
 void	environment_init(t_minishell *ms, char **env, int ac, char **av)
 {
 	if (ac != 1 && av)

@@ -110,6 +110,7 @@ void	ft_echo(t_minishell *ms, char **args);
 void	ft_pwd(t_minishell *ms);
 void	ft_cd(t_minishell *ms, char **args);
 void	ft_exit(char **args);
+bool	valid_identifier(char *str);
 
 ///////////////// OTHER PROTOTYPES /////////////////
 
