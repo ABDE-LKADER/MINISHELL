@@ -12,17 +12,23 @@
 
 #include "minishell.h"
 
-char	*expand_val(t_minishell *ms, char *arg)
+char	*expand_val(t_minishell *ms, char *value)
 {
 	t_environ	*loop;
 
-	loop = ms->env;
-	if (ft_isdigit(*arg))
-		return (arg + 1);
+	if (!ft_strncmp(value, "$$", ft_strlen(value))
+		&& ft_strlen("$$") == ft_strlen(value))
+		return (value = ft_itoa(&ms->leaks, getpid()));
+	if (!ft_strncmp(value, "$?", ft_strlen(value))
+		&& ft_strlen("$?") == ft_strlen(value))
+		return (value = ft_itoa(&ms->leaks, ms->exit_status));
+	(TRUE) && (value++, loop = ms->env);
+	if (ft_isdigit(*value))
+		return (value + 1);
 	while (loop)
 	{
-		if (!ft_strncmp(loop->var, arg, ft_strlen(arg)) 
-			&& ft_strlen(arg) == ft_strlen(loop->var))
+		if (!ft_strncmp(loop->var, value, ft_strlen(value)) 
+			&& ft_strlen(value) == ft_strlen(loop->var))
 		{
 			if (!loop->val)
 				break ;

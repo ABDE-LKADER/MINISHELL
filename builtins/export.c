@@ -74,7 +74,8 @@ void	create_to_export(t_minishell *ms, t_environ *env, char **args, int *status)
 {
 	while (*args)
 	{
-		if ((!ft_isalpha(**args) && **args != '_') || !valid_identifier(*args))
+		if ((!ft_isalpha(**args) && **args != '_')
+			|| !valid_identifier(*args, strlen_set(*args, '=')))
 		{
 			syntax_err(ms, *args, "not a valid identifier", 1);
 			*status = 1;

@@ -78,15 +78,9 @@ char	*splite_to_expand(t_minishell *ms, char *arg, bool option)
 	}
 	while (expand)
 	{
-		if (!ft_strncmp(expand->value, "$$", ft_strlen(expand->value))
-			&& ft_strlen("$$") == ft_strlen(expand->value))
-			expand->value = ft_itoa(&ms->leaks, getpid());
-		else if (!ft_strncmp(expand->value, "$?", ft_strlen(expand->value))
-			&& ft_strlen("$?") == ft_strlen(expand->value))
-			expand->value = ft_itoa(&ms->leaks, ms->exit_status);
-		else if (*expand->value == '$'
+		if (*expand->value == '$'
 			&& expand_option(arg, expand->value, option))
-			expand->value = expand_val(ms, expand->value + 1);
+			expand->value = expand_val(ms, expand->value);
 		new = ft_strjoin(&ms->leaks, new, expand->value);
 		expand = expand->next;
 	}
