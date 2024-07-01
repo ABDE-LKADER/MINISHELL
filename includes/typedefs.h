@@ -74,6 +74,7 @@ typedef struct s_tree
 	int					args_index;
 	bool				redir_ex;
 	t_redir				*redir;
+	int				redir_err;
 	int					dis_error;
 	int					syntax_err;
 	int					redir_index;
