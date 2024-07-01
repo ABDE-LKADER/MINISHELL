@@ -86,7 +86,7 @@ void	expanding(t_minishell *ms, t_tree *tree)
 	}
 	if (wildcards)
 		tree->args = wildcards_expander(ms, tree->args);
-	if (!**tree->args)
+	if (!**tree->args && **(tree->args + 1))
 		tree->args++;
 	tree->value = *tree->args;
 }
