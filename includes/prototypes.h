@@ -63,7 +63,7 @@ void	sig_heredoc(void);
 void	environment_init(t_minishell *ms, char **env, int ac, char **av);
 void	environment_add(t_minishell *ms, t_environ **env, void *var, void *val);
 char	*get_env_val(t_minishell *ms, char *s);
-int		modify_env_val(t_minishell *ms, char *env_var, char *val);
+void	modify_env_val(t_minishell *ms, char *env_var, char *val);
 
 ///////////////// ERROR PROTOTYPES /////////////////
 

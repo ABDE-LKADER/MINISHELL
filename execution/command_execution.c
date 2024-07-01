@@ -30,8 +30,8 @@ char	**change_linked_to_double(t_minishell *ms)
 	i = 0;
 	while (tmp)
 	{
-		env[i] = ft_strjoin(ms->alloc, tmp->var, "=");
-		env[i] = ft_strjoin(ms->alloc, env[i], tmp->val);
+		env[i] = ft_strjoin(&ms->alloc, tmp->var, "=");
+		env[i] = ft_strjoin(&ms->alloc, env[i], tmp->val);
 		i++;
 		tmp = tmp->next;
 	}

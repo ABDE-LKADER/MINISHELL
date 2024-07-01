@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int	modify_env_val(t_minishell *ms, char *env_var, char *val)
+void	modify_env_val(t_minishell *ms, char *env_var, char *val)
 {
 	t_environ	*tmp;
 
@@ -10,11 +10,10 @@ int	modify_env_val(t_minishell *ms, char *env_var, char *val)
 		if (ft_strncmp(tmp->var, env_var, ft_strlen(tmp->var)) == 0)
 		{
 			tmp->val = ft_strdup(&ms->alloc, val);
-			return (0);
+			return ;
 		}
 		tmp = tmp->next;
 	}
-	return (1);
 }
 
 char	*get_env_val(t_minishell *ms, char *s)
@@ -37,6 +36,8 @@ void	change_directory(t_minishell *ms, char *path)
 		return ;
 	if (chdir(path) == -1)
 		error_handler(ms, path);
+	else
+		ms->exit_status = 0;
 }
 
 void	ft_cd(t_minishell *ms, char **args)
@@ -59,7 +60,7 @@ void	ft_cd(t_minishell *ms, char **args)
 	else
 		syntax_err(ms, *args, "too many arguments", 1);
 	modify_env_val(ms, "OLDPWD", get_env_val(ms, "PWD"));
-	(TRUE) && (path = getcwd(NULL, 0), modify_env_val(ms, "PWD", path));
+	path = getcwd(NULL, 0);
+	modify_env_val(ms, "PWD", path);
 	free(path);
-	ms->exit_status = 0;
 }
