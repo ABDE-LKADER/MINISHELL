@@ -44,13 +44,15 @@ void	increase_shelvl(t_minishell *ms)
 	modify_env_val(ms, "SHLVL", str);
 }
 
-bool	valid_identifier(char *str)
+bool	valid_identifier(char *str, int len)
 {
-	while (*str)
+	int		index;
+
+	index = -1;
+	while (++index < len)
 	{
-		if (!ft_isalnum(*str) && *str != '_')
+		if (!ft_isalnum(str[index]) && str[index] != '_')
 			return (FALSE);
-		str++;
 	}
 	return (TRUE);
 }
