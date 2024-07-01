@@ -79,7 +79,7 @@ int	count_args(char **tokens)
 int	check_op_and_allocate(t_minishell *ms, int *i, int *redir_set)
 {
 	if (check_token_op(ms->tokens[*i]))
-		return (syntax_err(ms, NULL, "syntax errorhere", 258), 1);
+		return (syntax_err(ms, NULL, "syntax error", 258), 1);
 	ms->tree = allocate(&ms->leaks, 1, sizeof(t_tree));
 	if (!ms->tree)
 		cleanup_handler(ms);
