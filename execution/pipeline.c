@@ -38,15 +38,15 @@ void	pipeline_handler(t_minishell *ms, t_tree *tree)
 	int		status;
 
 	if (pipe(fds) == -1)
-		(perror("pipe"), error_handler(ms));
+		(perror("pipe"), cleanup_handler(ms));
 	f_pid = fork();
 	if (f_pid == -1)
-		(perror("fork"), error_handler(ms));
+		(perror("fork"), cleanup_handler(ms));
 	if (f_pid == 0)
 		first_child_exec(ms, tree->left, fds);
 	s_pid = fork();
 	if (s_pid == -1)
-		(perror("fork"), error_handler(ms));
+		(perror("fork"), cleanup_handler(ms));
 	if (s_pid == 0)
 		second_child_exec(ms, tree->right, fds);
 	close(fds[1]);

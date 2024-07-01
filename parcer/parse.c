@@ -37,7 +37,7 @@ t_tree	*make_tree(t_minishell *ms, t_tree *left, t_tree *right, char *op)
 
 	node = allocate(&ms->leaks, 1, sizeof(t_tree));
 	if (!node)
-		error_handler(ms);
+		cleanup_handler(ms);
 	set_op(node, op);
 	if (ft_strncmp(op, "|", ft_strlen(op)) == 0
 		&& ft_strlen(op) == ft_strlen("|"))
@@ -104,7 +104,7 @@ t_tree	*parse_tree(t_minishell *ms)
 		return (NULL);
 	ms->tree = allocate(&ms->leaks, 1, sizeof(t_tree));
 	if (!ms->tree)
-		error_handler(ms);
+		cleanup_handler(ms);
 	ms->tree = parse_exp(ms, &i, 0);
 	return (ms->tree);
 }

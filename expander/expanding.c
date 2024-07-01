@@ -21,7 +21,7 @@ void	expand_add(t_minishell *ms, t_expand **expand, void *value)
 		return ;
 	new = allocate(&ms->leaks, 1, sizeof(t_expand));
 	if (!new)
-		error_handler(ms);
+		cleanup_handler(ms);
 	new->value = value;
 	new->next = NULL;
 	if (!*expand)

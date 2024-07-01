@@ -36,12 +36,7 @@ void	change_directory(t_minishell *ms, char *path)
 	if (!path)
 		return ;
 	if (chdir(path) == -1)
-	{
-		if (errno == 2)
-			syntax_err(ms, path, "No such file or directory", 1);
-		if (errno == 13)
-			syntax_err(ms, path, "Permission denied", 1);
-	}
+		error_handler(ms, path);
 }
 
 void	ft_cd(t_minishell *ms, char **args)

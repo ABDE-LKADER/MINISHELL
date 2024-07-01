@@ -82,17 +82,17 @@ int	check_op_and_allocate(t_minishell *ms, int *i, int *redir_set)
 		return (syntax_err(ms, NULL, "syntax error", 258), 1);
 	ms->tree = allocate(&ms->leaks, 1, sizeof(t_tree));
 	if (!ms->tree)
-		error_handler(ms);
+		cleanup_handler(ms);
 	(1) && (*redir_set = 0, ms->tree->redir_index = 0,
 	ms->tree->syntax_err = 0, ms->tree->redir_ex = false);
 	ms->tree->redir = allocate(&ms->leaks, count_redir(ms->tokens) + 1,
 			sizeof(t_redir));
 	if (!ms->tree->redir)
-		error_handler(ms);
+		cleanup_handler(ms);
 	ms->tree->args = allocate(&ms->leaks, count_args(ms->tokens + *i) + 1,
 			sizeof(char *));
 	if (!ms->tree->args)
-		error_handler(ms);
+		cleanup_handler(ms);
 	return (0);
 }
 

@@ -30,6 +30,7 @@
 
 # define TRUE 1
 # define FALSE 0
+# define ERROR -1
 
 # define GREEN "\033[1;32m"
 # define YELOW "\033[1;33m"
