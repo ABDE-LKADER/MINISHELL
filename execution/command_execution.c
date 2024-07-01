@@ -46,7 +46,8 @@ char	*fetch_path(t_minishell *ms, t_environ *env, char *cmd)
 	if (!cmd)
 		return (NULL);
 	dir = opendir(cmd);
-	if (dir && !closedir(dir) || !ft_strncmp("./", cmd, ft_strlen("./"))
+	if ((dir && !closedir(dir) && ft_strchr(cmd, '/'))
+		|| !ft_strncmp("./", cmd, ft_strlen("./"))
 		|| !ft_strncmp("/", cmd, ft_strlen("/")))
 		return (cmd);
 	while (env && ft_strncmp("PATH", env->var, ft_strlen("PATH")))
