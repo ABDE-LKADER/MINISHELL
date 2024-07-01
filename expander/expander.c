@@ -79,10 +79,9 @@ void	expanding(t_minishell *ms, t_tree *tree)
 	(TRUE) && (index = -1, wildcards = 0);
 	while (tree->args[++index])
 	{
-		if (!ft_strncmp("~", tree->args[index], ft_strlen(tree->args[index])))
-			tree->args[index] = tilde_expander(ms->env);
-		else
-			tree->args[index] = splite_mult_args(ms, tree->args[index], TRUE);
+		if (*tree->args[index] == '~')
+			tree->args[index] = tilde_expander(ms, tree->args[index]);
+		tree->args[index] = splite_mult_args(ms, tree->args[index], TRUE);
 		(ft_strchr(tree->args[index], '*')) && (wildcards = 1);
 	}
 	if (wildcards)

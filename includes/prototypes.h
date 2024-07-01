@@ -91,7 +91,7 @@ void	built_in_execute(t_minishell *ms, t_tree *tree);
 ///////////////// EXPAND PROTOTYPES /////////////////
 
 char	*splite_to_expand(t_minishell *ms, char *arg, bool option);
-char	*tilde_expander(t_environ *env);
+char	*tilde_expander(t_minishell *ms, char *value);
 char	*expand_val(t_minishell *ms, char *arg);
 void	expand_add(t_minishell *ms, t_expand **expand, void *value);
 char	*splite_mult_args(t_minishell *ms, char *arg, bool status);

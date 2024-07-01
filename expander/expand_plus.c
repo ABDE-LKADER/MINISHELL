@@ -21,19 +21,25 @@ bool	expand_option(char *value, char *sp, bool option)
 	return (TRUE);
 }
 
-char	*tilde_expander(t_environ *env)
+char	*tilde_expander(t_minishell *ms, char *value)
 {
 	t_environ	*loop;
 
-	loop = env;
+	loop = ms->env;
 	while (loop)
 	{
 		if (!ft_strncmp(loop->var, "HOME", ft_strlen(loop->var))
 			&& ft_strlen(loop->var) == ft_strlen("HOME"))
-			return (loop->val);
+		{
+			if (!ft_strncmp("~", value, ft_strlen(value)))
+				return (loop->val);
+			if (*(value + 1) == '/')
+				return (ft_strjoin(&ms->leaks, loop->val, value + 1));
+			return (value);
+		}
 		loop = loop->next;
 	}
-	return (NULL);
+	return (value);
 }
 
 char	**convert_to_array(t_expand **expand)

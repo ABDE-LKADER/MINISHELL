@@ -23,3 +23,6 @@ Example :
 	REDIRECTION 1
 	usage: ls [-@ABCFGHLOPRSTUWabcdefghiklmnopqrstuwx1%] [file ...]
 }
+
+New:
+When unset HOME and print ~ Bash Print The Path But I Just Print ~
