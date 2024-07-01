@@ -70,12 +70,15 @@ bool	search_env(t_minishell *ms, t_environ *env, char *arg)
 	return (FALSE);
 }
 
-void	create_to_export(t_minishell *ms, t_environ *env, char **args)
+void	create_to_export(t_minishell *ms, t_environ *env, char **args, int *status)
 {
 	while (*args)
 	{
 		if ((!ft_isalpha(**args) && **args != '_') || !valid_identifier(*args))
+		{
 			syntax_err(ms, *args, "not a valid identifier", 1);
+			*status = 1;
+		}
 		else if (!search_env(ms, env, *args))
 		{
 			if (ft_strchr(*args, '='))
@@ -94,13 +97,15 @@ void	create_to_export(t_minishell *ms, t_environ *env, char **args)
 void	ft_export(t_minishell *ms, t_environ *env, char **args)
 {
 	int		len;
+	int		status;
 
-	len = 0;
+	(TRUE) && (len = 0, status = 0);
 	while (args[len])
 		len++;
 	if (len == 1)
 		export_list(env);
 	if (len != 1)
-		create_to_export(ms, env, ++args);
-	ms->exit_status = 0;
+		create_to_export(ms, env, ++args, &status);
+	if (!status)
+		ms->exit_status = status;
 }
