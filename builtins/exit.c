@@ -16,6 +16,16 @@ void	ft_exit(char **args)
 		exit(1);
 	}
 	else if (len == 2)
+	{
+		len = 0;
+		while (args[1][len])
+		{
+			if (!(args[1][len] >= '0' && args[1][len] <= '9'))
+				(ft_printf("Minishell: exit: %s: numeric argument required\n", args[1]),
+				exit(2));
+			len++;
+		}
 		exit_status = ft_atoi(args[1]);
+	}
 	exit(exit_status);
 }

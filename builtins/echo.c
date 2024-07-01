@@ -31,18 +31,23 @@ void	ft_echo(t_minishell *ms, char **args)
 {
 	int	i;
 	int	option;
+	char	*str;
 
 	i = 1;
 	option = 0;
 	check_options(args, &i, &option);
 	while (args[i])
 	{
-		ft_printf("%s", args[i]);
+		str = ft_strdup(&ms->leaks, args[i]);
+		// ft_putstr_fd(args[i], 1);
 		if (args[i + 1])
-			ft_printf(" ");
+			str = ft_strjoin(&ms->leaks, str, " ");
+			// ft_putstr_fd(" ", 1);
 		i++;
 	}
 	if (!option)
-		ft_printf("\n");
+		str = ft_strjoin(&ms->leaks, str, "\n");
+		// ft_putstr_fd("\n", 1);
+	ft_putstr_fd(str, 1);
 	ms->exit_status = 0;
 }

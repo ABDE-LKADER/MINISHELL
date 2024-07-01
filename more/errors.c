@@ -16,11 +16,20 @@ int	check_par(char *s)
 {
 	int	i;
 	int	level;
+	int	quotes;
 
 	i = 0;
 	level = 0;
 	while (s[i])
 	{
+		if (s[i] == '\'' || s[i] == '"')
+		{
+			(1) && (quotes = s[i], i++);
+			while (s[i] && s[i] != quotes)
+				i++;
+		}
+		if (s[i] == '\0')
+			break;
 		if (s[i] == '(')
 		{
 			level++;
@@ -79,18 +88,25 @@ void	execution_errors(t_minishell *ms, t_tree *tree, char *path)
 void	syntax_err(t_minishell *ms, char *option, char *error_msg,
 		int exit_status)
 {
+	char	*str;
 	if (g_catch_signals != SIGINT)
 	{
 		if (ms->tree && !ms->tree->dis_error)
 		{
-			ft_putstr_fd("Minishell: ", 2);
+			str = ft_strdup(&ms->leaks, "Minishell: ");
+			// ft_putstr_fd("Minishell: ", 2);
 			if (option)
 			{
-				ft_putstr_fd(option, 2);
-				ft_putstr_fd(": ", 2);
+				str = ft_strjoin(&ms->leaks, str, option);
+				str = ft_strjoin(&ms->leaks, str, ": ");
+				// ft_putstr_fd(option, 2);
+				// ft_putstr_fd(": ", 2);
 			}
-			ft_putstr_fd(error_msg, 2);
-			ft_putstr_fd("\n", 2);
+			str = ft_strjoin(&ms->leaks, str, error_msg);
+			str = ft_strjoin(&ms->leaks, str, "\n");
+			// ft_putstr_fd(error_msg, 2);
+			// ft_putstr_fd("\n", 2);
+			ft_putstr_fd(str, 2);
 		}
 		else if (!ms->tree)
 		{
