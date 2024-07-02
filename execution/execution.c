@@ -24,6 +24,7 @@ void	execution(t_minishell *ms, t_tree *tree)
 	execution(ms, tree->left);
 	if (tree->type == CMD_T)
 	{
+		expanding(ms, tree);
 		if (check_if_builtins(tree->value))
 			built_in_execute(ms, tree);
 		else

@@ -79,7 +79,6 @@ void	command_execute(t_minishell *ms, t_tree *tree)
 	{
 		if (redirection(ms, tree) == -1)
 			exit(EXIT_FAILURE);
-		expanding(ms, tree);
 		if (!tree->value || !*tree->value)
 			exit(EXIT_SUCCESS);
 		path = fetch_path(ms, ms->env, tree->value);

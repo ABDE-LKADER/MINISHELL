@@ -27,7 +27,8 @@ void	built_in_execute(t_minishell *ms, t_tree *tree)
 	t_fds	fds;
 
 	fds = save_fds(fds);
-	(redirection(ms, tree), expanding(ms, tree));
+	if (redirection(ms, tree) == -1)
+		return ;
 	if (!ft_strncmp(*tree->args, "echo", ft_strlen(*tree->args)))
 		ft_echo(ms, tree->args);
 	else if (!ft_strncmp(*tree->args, "cd", ft_strlen(*tree->args)))

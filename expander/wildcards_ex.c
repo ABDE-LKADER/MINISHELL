@@ -12,46 +12,45 @@
 
 #include "minishell.h"
 
-bool	expand_option(char *value, char *sp, bool option)
+char	**convert_to_array(t_expand **expand)
 {
-	if (option && !ft_strncmp("$", sp, ft_strlen(sp)))
-		return (FALSE);
-	if (*value == '\'')
-		return (FALSE);
-	return (TRUE);
+	char	**new;
+
+	return (new);
 }
 
-bool	only_var(char *arg)
+void	specified_wildcards(t_minishell *ms, t_expand **expand, char *value,
+	DIR *dir)
 {
-	if (*arg == '$')
+	struct dirent	*entries;
+
+	entries = readdir(dir);
+	while (entries)
 	{
-		while (*arg)
-		{
-			if (!ft_isalnum(*arg) && *arg != '_')
-				return (FALSE);
-			arg++;
-		}
+		if (*entries->d_name != '.')
+			;
+		entries = readdir(dir);
 	}
-	return (TRUE);
 }
 
-char	*tilde_expander(t_minishell *ms, char *value)
+char	**wildcards_expander(t_minishell *ms, char **args, int *index)
 {
-	t_environ	*loop;
+	DIR			*dir;
+	t_expand	*expand;
 
-	loop = ms->env;
-	while (loop)
+	(TRUE) && (expand = NULL, dir  = opendir("."));
+	if (!dir)
 	{
-		if (!ft_strncmp(loop->var, "HOME", ft_strlen(loop->var))
-			&& ft_strlen(loop->var) == ft_strlen("HOME"))
-		{
-			if (!ft_strncmp("~", value, ft_strlen(value)))
-				return (loop->val);
-			if (*(value + 1) == '/')
-				return (ft_strjoin(&ms->leaks, loop->val, value + 1));
-			return (value);
-		}
-		loop = loop->next;
+		perror("opendir");
+		return ;
 	}
-	return (value);
+	while (*args)
+	{
+		if (ft_strchr(*args, '*'))
+			specified_wildcards(ms, &expand, *args, dir);
+		else
+			expand_add(ms, &expand, *args);
+		args++;
+	}
+	return (closedir(dir), convert_to_array(expand));
 }

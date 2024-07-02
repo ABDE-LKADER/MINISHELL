@@ -84,7 +84,7 @@ int	ft_open_here_doc(t_minishell *ms, char *delimiter, t_tree *node)
 		return (ft_putstr_fd(strerror(errno), 2), -1);
 	(ft_strchr(delimiter, '\'') || ft_strchr(delimiter, '\"'))
 		&& (node->redir[node->redir_index].set_expand = 1);
-	delimiter = splite_mult_args(ms, delimiter, FALSE);
+	delimiter = splite_mult_args(ms, delimiter, FALSE, TRUE);
 	(TRUE) && (unlink("here_doc"), len = ft_strlen(delimiter), pid = fork());
 	if (pid < 0)
 		return (-1);

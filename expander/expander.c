@@ -48,45 +48,44 @@ char	*remove_qoutes(t_minishell *ms, char *value)
 	return (value);
 }
 
-char	*splite_mult_args(t_minishell *ms, char *arg, bool status)
+char	*splite_mult_args(t_minishell *ms, char *arg, bool status, bool option)
 {
+	bool		op;
 	char		*new;
-	bool		option;
 	t_expand	*expand;
 
-	(TRUE) && (new = NULL, option = 1, expand = splite_use_qoutes(ms, arg));
+	(TRUE) && (new = NULL, op = 1, expand = splite_use_qoutes(ms, arg));
 	while (expand)
 	{
-		if (expand->next && (*expand->next->value == '\''
-			|| *expand->next->value == '\"'))
-			option = 0;
-		if (status)
-			expand->value = splite_to_expand(ms, expand->value, option);
-		expand->value = remove_qoutes(ms, expand->value);
+		(expand->next && (*expand->next->value == '\''
+			|| *expand->next->value == '\"')) && (op = 0);
+		(status) && (expand->value = splite_to_expand(ms, expand->value, op));
+		(option) && (expand->value = remove_qoutes(ms, expand->value));
 		new = ft_strjoin(&ms->leaks, new, expand->value);
-		(TRUE) && (expand = expand->next, option = 1);
+		(TRUE) && (expand = expand->next, op = 1);
 	}
 	return (new);
 }
 
 void	expanding(t_minishell *ms, t_tree *tree)
 {
+	bool	only;
 	int		index;
-	bool	wildcards;
 
 	if (!tree->value)
 		return ;
-	(TRUE) && (index = -1, wildcards = 0);
+	index = -1;
 	while (tree->args[++index])
 	{
+		only = only_var(tree->args[index]);
 		if (*tree->args[index] == '~')
 			tree->args[index] = tilde_expander(ms, tree->args[index]);
-		tree->args[index] = splite_mult_args(ms, tree->args[index], TRUE);
-		(ft_strchr(tree->args[index], '*')) && (wildcards = 1);
+		tree->args[index] = splite_mult_args(ms, tree->args[index], TRUE, only);
+		// (only) && (splited());
+		if (ft_strchr(tree->args[index], '*'))
+			tree->args = wildcards_expander(ms, tree->args, &index);
 	}
-	if (wildcards)
-		tree->args = wildcards_expander(ms, tree->args);
-	if (!**tree->args && **(tree->args + 1))
+	while (*tree->args && !**tree->args)
 		tree->args++;
 	tree->value = *tree->args;
 }
