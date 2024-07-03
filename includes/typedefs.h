@@ -74,7 +74,7 @@ typedef struct s_tree
 	int					args_index;
 	bool				redir_ex;
 	t_redir				*redir;
-	int				redir_err;
+	int					redir_err;
 	int					dis_error;
 	int					syntax_err;
 	int					redir_index;
@@ -91,7 +91,7 @@ typedef struct s_minishell
 	t_allocate		*leaks;
 	t_allocate		*alloc;
 	t_environ		*env;
-	char			*read;
+	char			*prompt;
 	char			**tokens;
 	int				exit_status;
 }					t_minishell;

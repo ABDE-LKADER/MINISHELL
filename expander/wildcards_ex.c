@@ -38,7 +38,7 @@ char	**wildcards_expander(t_minishell *ms, char **args, int *index)
 	DIR			*dir;
 	t_expand	*expand;
 
-	(TRUE) && (expand = NULL, dir  = opendir("."));
+	(TRUE) && (expand = NULL, dir = opendir("."));
 	if (!dir)
 	{
 		perror("opendir");

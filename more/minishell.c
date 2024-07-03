@@ -12,15 +12,15 @@
 
 #include "minishell.h"
 
-int g_catch_signals = 0;
+int	g_catch_signals = 0;
 
 void	parser(t_minishell *ms)
 {
 	char	*injected_spaces;
 
-	if (*ms->read)
-		add_history(ms->read);
-	injected_spaces = inject_spaces(ms, ms->read);
+	if (*ms->prompt)
+		add_history(ms->prompt);
+	injected_spaces = inject_spaces(ms, ms->prompt);
 	if (!injected_spaces)
 		return ;
 	ms->tokens = ft_split_op(&ms->leaks, injected_spaces);
@@ -39,19 +39,20 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		(TRUE) && (g_catch_signals = 0, ms.tree = NULL,
-		ms.read = readline("Minishell >$ "));
-		if (!ms.read)
-			return (ft_printf(EXIT), cleanup(&ms.leaks),
-				cleanup(&ms.alloc), EXIT_SUCCESS);
+		ms.prompt = readline("Minishell >$ "));
+		if (!ms.prompt)
+			return (ft_printf(EXIT), clear_history(),
+				cleanup(&ms.leaks), cleanup(&ms.alloc), EXIT_SUCCESS);
 		(g_catch_signals == SIGINT) && (ms.exit_status = 1,
 			g_catch_signals = 0);
-		if (!(*ms.read))
+		if (!(*ms.prompt))
 		{
-			free(ms.read);
+			(free(ms.prompt));
 			continue ;
 		}
 		(parser(&ms), execution(&ms, ms.tree),
-			cleanup(&ms.leaks), free(ms.read));
+			cleanup(&ms.leaks), free(ms.prompt));
 	}
-	return (cleanup(&ms.leaks), cleanup(&ms.alloc), EXIT_SUCCESS);
+	return (clear_history(), cleanup(&ms.leaks),
+		cleanup(&ms.alloc), EXIT_SUCCESS);
 }

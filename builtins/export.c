@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   unset.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: |||||||| <||||||||@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/05 14:55:24 by ||||||||          #+#    #+#             */
+/*   Updated: 2024/06/11 14:46:14 by ||||||||         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static void	sort_export_vars(t_environ **export)
@@ -62,7 +74,7 @@ bool	search_env(t_minishell *ms, t_environ *env, char *arg)
 		{
 			if (ft_strchr(arg, '='))
 				env->val = ft_substr(&ms->alloc, arg, strlen_set(arg, '=')
-					+ 1, ft_strlen(arg));
+						+ 1, ft_strlen(arg));
 			return (TRUE);
 		}
 		env = env->next;
@@ -70,7 +82,8 @@ bool	search_env(t_minishell *ms, t_environ *env, char *arg)
 	return (FALSE);
 }
 
-void	create_to_export(t_minishell *ms, t_environ *env, char **args, int *status)
+void	create_to_export(t_minishell *ms, t_environ *env, char **args,
+	int *status)
 {
 	while (*args)
 	{
@@ -85,11 +98,11 @@ void	create_to_export(t_minishell *ms, t_environ *env, char **args, int *status)
 			if (ft_strchr(*args, '='))
 				environment_add(ms, &ms->env,
 					ft_substr(&ms->alloc, *args, 0, strlen_set(*args, '=')),
-					ft_substr(&ms->alloc, *args, strlen_set(*args, '=') + 1,
-					ft_strlen(*args)));
+					ft_substr(&ms->alloc, *args, strlen_set(*args, '=')
+						+ 1, ft_strlen(*args)));
 			else
 				environment_add(ms, &ms->env, ft_substr(&ms->alloc, *args,
-					0, strlen_set(*args, '=')), NULL);
+						0, strlen_set(*args, '=')), NULL);
 		}
 		args++;
 	}

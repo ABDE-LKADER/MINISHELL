@@ -27,7 +27,7 @@ char	*expand_val(t_minishell *ms, char *value)
 		return (value + 1);
 	while (loop)
 	{
-		if (!ft_strncmp(loop->var, value, ft_strlen(value)) 
+		if (!ft_strncmp(loop->var, value, ft_strlen(value))
 			&& ft_strlen(value) == ft_strlen(loop->var))
 		{
 			if (!loop->val)
