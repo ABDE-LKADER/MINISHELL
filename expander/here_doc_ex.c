@@ -18,12 +18,12 @@ void	update_here_doc(t_minishell *ms, pid_t pid, int fds[], int fd)
 
 	if (pid == 0)
 	{
-        line = get_next_line(&ms->leaks, fd);
+		line = get_next_line(&ms->leaks, fd);
 		while (line)
 		{
-            line = splite_to_expand(ms, line, TRUE);
-            write(fds[0], line, ft_strlen(line));
-            line = get_next_line(&ms->leaks, fd);
+			line = splite_to_expand(ms, line, TRUE);
+			write(fds[0], line, ft_strlen(line));
+			line = get_next_line(&ms->leaks, fd);
 		}
 		if (close(fds[0]) == -1 || close(fds[1]) == -1)
 			(ft_putstr_fd(strerror(errno), 2), exit(EXIT_FAILURE));
@@ -31,7 +31,7 @@ void	update_here_doc(t_minishell *ms, pid_t pid, int fds[], int fd)
 	}
 }
 
-int here_doc_expander(t_minishell *ms, int fd)
+int	here_doc_expander(t_minishell *ms, int fd)
 {
 	pid_t	pid;
 	int		fds[2];

@@ -25,14 +25,17 @@ bool	only_var(char *arg)
 {
 	if (*arg == '$')
 	{
+		arg++;
 		while (*arg)
 		{
 			if (!ft_isalnum(*arg) && *arg != '_')
-				return (FALSE);
+				return (TRUE);
 			arg++;
 		}
 	}
-	return (TRUE);
+	else
+		return (TRUE);
+	return (FALSE);
 }
 
 char	*tilde_expander(t_minishell *ms, char *value)

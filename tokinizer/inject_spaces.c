@@ -24,7 +24,8 @@ int	count_spaces(char quotes, char *s, int i, int *space_counter)
 			&& !cmp_operators(s[i])) && (cmp_operators(s[i + 1])))
 		(*space_counter)++;
 	else if (quotes == -1 && (cmp_operators(s[i]) && (s[i + 1]
-				&& !check_sep(s[i + 1]) && cmp_operators(s[i + 1]) && s[i] != s[i + 1])))
+				&& !check_sep(s[i + 1]) && cmp_operators(s[i + 1])
+				&& s[i] != s[i + 1])))
 		(*space_counter)++;
 	else if (quotes == -1 && (cmp_operators(s[i]) && (s[i + 1]
 				&& !check_sep(s[i + 1]) && !cmp_operators(s[i + 1]))))

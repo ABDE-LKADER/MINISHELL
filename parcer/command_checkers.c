@@ -79,7 +79,7 @@ void	check_args(t_tree *node, char **tokens, int len)
 	{
 		if (tokens[i] && tokens[i + 1] && check_if_operator(tokens[i]))
 			i += 2;
-		else if (tokens[i] && (ft_strncmp(tokens[i], "(", ft_strlen(tokens[i])) == 0
+		else if (tokens[i] && (ft_strncmp(tokens[i], "(", !ft_strlen(tokens[i]))
 				|| ft_strncmp(tokens[i], ")", ft_strlen(tokens[i])) == 0))
 			i++;
 		else if (tokens[i])
