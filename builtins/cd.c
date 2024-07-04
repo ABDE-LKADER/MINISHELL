@@ -5,6 +5,8 @@ void	modify_env_val(t_minishell *ms, char *env_var, char *val)
 	t_environ	*tmp;
 
 	tmp = ms->env;
+	if (!val)
+		return ;
 	while (tmp)
 	{
 		if (ft_strncmp(tmp->var, env_var, ft_strlen(tmp->var)) == 0)
@@ -59,8 +61,13 @@ void	ft_cd(t_minishell *ms, char **args)
 		change_directory(ms, *(args + 1));
 	else
 		syntax_err(ms, *args, "too many arguments", 1);
+	if (ms->exit_status != 0)
+		return ;
 	modify_env_val(ms, "OLDPWD", get_env_val(ms, "PWD"));
 	path = getcwd(NULL, 0);
-	modify_env_val(ms, "PWD", path);
+	if (path)
+		modify_env_val(ms, "PWD", path);
+	else
+		modify_env_val(ms, "PWD", ft_strjoin(&ms->alloc, get_env_val(ms, "PWD"), "/.."));
 	free(path);
 }
