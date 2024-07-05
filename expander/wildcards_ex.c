@@ -12,45 +12,72 @@
 
 #include "minishell.h"
 
-char	**convert_to_array(t_expand **expand)
+void	join_doubles(t_minishell *ms, char **join, int *index)
 {
+	int		len;
+	int		_len;
 	char	**new;
 
+	if (!join)
+		return ;
+	(TRUE) && (len = 0, _len = 0);
+	while (ms->tree->args[len])
+		len++;
+	while (join[_len])
+		_len++;
+	new = allocate(&ms->leaks, len + _len + 1, sizeof(char *));
+	if (!new)
+		cleanup_handler(ms);
+	len = -1;
+	while (++len < *index && ms->tree->args[len])
+		new[len] = ms->tree->args[len];
+	_len = (*index) + 1;
+	while (*join)
+		(TRUE) && (new[len] = *join, len++, join++);
+	while (ms->tree->args[_len])
+		new[len++] = ms->tree->args[_len++];
+	new[len] = NULL;
+	ms->tree->args = new;
+}
+
+char	**convert_to_array(t_minishell *ms, t_expand *expand)
+{
+	int			len;
+	char		**new;
+	t_expand	*loop;
+
+	(TRUE) && (len = 0, loop = expand);
+	while (loop)
+		(TRUE) && (len++, loop = loop->next);
+	new = allocate(&ms->leaks, len + 1, sizeof(char *));
+	if (!new)
+		cleanup_handler(ms);
+	(TRUE) && (len = 0, loop = expand);
+	while (expand)
+		(TRUE) && (new[len++] = expand->value,
+			expand = expand->next);
+	new[len] = NULL;
 	return (new);
 }
 
-void	specified_wildcards(t_minishell *ms, t_expand **expand, char *value,
-	DIR *dir)
+char	**wildcards_expander(t_minishell *ms, char *arg)
 {
+	DIR				*dir;
+	t_expand		*expand;
 	struct dirent	*entries;
-
-	entries = readdir(dir);
-	while (entries)
-	{
-		if (*entries->d_name != '.')
-			;
-		entries = readdir(dir);
-	}
-}
-
-char	**wildcards_expander(t_minishell *ms, char **args, int *index)
-{
-	DIR			*dir;
-	t_expand	*expand;
 
 	(TRUE) && (expand = NULL, dir = opendir("."));
 	if (!dir)
 	{
 		perror("opendir");
-		return ;
+		return (NULL);
 	}
-	while (*args)
+	entries = readdir(dir);
+	while (entries)
 	{
-		if (ft_strchr(*args, '*'))
-			specified_wildcards(ms, &expand, *args, dir);
-		else
-			expand_add(ms, &expand, *args);
-		args++;
+		if (*entries->d_name != '.')
+			expand_add(ms, &expand, ft_strdup(&ms->leaks, entries->d_name));
+		entries = readdir(dir);
 	}
-	return (closedir(dir), convert_to_array(expand));
+	return (closedir(dir), convert_to_array(ms, expand));
 }

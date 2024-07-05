@@ -96,10 +96,11 @@ char	*expand_val(t_minishell *ms, char *arg);
 void	expand_add(t_minishell *ms, t_expand **expand, void *value);
 char	*splite_mult_args(t_minishell *ms, char *arg, bool status, bool option);
 void	expanding(t_minishell *ms, t_tree *tree);
-char	**wildcards_expander(t_minishell *ms, char **args, int *index);
 bool	expand_option(char *value, char *sp, bool option);
 int		here_doc_expander(t_minishell *ms, int fd);
 bool	only_var(char *arg);
+void	join_doubles(t_minishell *ms, char **join, int *index);
+char	**wildcards_expander(t_minishell *ms, char *arg);
 
 ///////////////// BUILTINS PROTOTYPES /////////////////
 
