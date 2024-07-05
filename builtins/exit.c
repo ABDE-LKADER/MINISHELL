@@ -12,6 +12,18 @@
 
 #include "minishell.h"
 
+static void	check_numerical(t_minishell *ms, char **args, int len)
+{
+	if (!((args[1][len] >= '0' && args[1][len] <= '9')
+	|| ((args[1][len] == '-' || args[1][len] == '+') && len == 0))
+	|| (ft_strlen(args[1]) == 19
+		&& ft_strncmp(args[1], "9223372036854775807", ft_strlen(args[1])) > 0)
+	|| (ft_strlen(args[1]) == 20
+		&& ft_strncmp(args[1], "-9223372036854775808", ft_strlen(args[1])) > 0))
+		(syntax_err(ms, args[1], "numeric argument required", 2),
+			exit(2));
+}
+
 void	ft_exit(t_minishell *ms, char **args)
 {
 	int	len;
@@ -20,8 +32,7 @@ void	ft_exit(t_minishell *ms, char **args)
 	len = 0;
 	while (args[len])
 		len++;
-	ft_printf("exit\n");
-	exit_status = 0;
+	(1) && (ft_printf("exit\n"), exit_status = 0);
 	if (len > 2)
 		(syntax_err(ms, "exit", "too many arguments", 1),
 			exit(1));
@@ -30,10 +41,7 @@ void	ft_exit(t_minishell *ms, char **args)
 		len = 0;
 		while (args[1][len])
 		{
-			if (!((args[1][len] >= '0' && args[1][len] <= '9')
-				|| ((args[1][len] == '-' || args[1][len] == '+') && len == 0)))
-				(syntax_err(ms, args[1], "numeric argument required", 2),
-					exit(2));
+			check_numerical(ms, args, len);
 			len++;
 		}
 		exit_status = ft_atoi(args[1]);
