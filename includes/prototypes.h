@@ -99,7 +99,7 @@ void	expanding(t_minishell *ms, t_tree *tree);
 bool	expand_option(char *value, char *sp, bool option);
 int		here_doc_expander(t_minishell *ms, int fd);
 bool	only_var(char *arg);
-void	join_doubles(t_minishell *ms, char **join, int *index);
+void	join_doubles(t_minishell *ms, t_tree *tree, char **join, int *index);
 char	**wildcards_expander(t_minishell *ms, char *arg);
 
 ///////////////// BUILTINS PROTOTYPES /////////////////

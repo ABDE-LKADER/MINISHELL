@@ -62,19 +62,27 @@ static void	export_list(t_environ *env)
 	waitpid(pid, NULL, 0);
 }
 
-bool	search_env(t_minishell *ms, t_environ *env, char *arg)
+bool	search_env(t_minishell *ms, t_environ *env, char *arg, int _len)
 {
+	int		len;
+	char	*new_val;
 	char	*to_find;
 
-	to_find = ft_substr(&ms->alloc, arg, 0, strlen_set(arg, '='));
+	to_find = ft_substr(&ms->alloc, arg, 0, _len);
 	while (env)
 	{
 		if (!ft_strncmp(env->var, to_find, ft_strlen(to_find))
 			&& ft_strlen(to_find) == ft_strlen(env->var))
 		{
 			if (ft_strchr(arg, '='))
-				env->val = ft_substr(&ms->alloc, arg, strlen_set(arg, '=')
-						+ 1, ft_strlen(arg));
+			{
+				(TRUE) && (len = strlen_set(arg, '='), new_val =
+					ft_substr(&ms->alloc, arg, len + 1, ft_strlen(arg)));
+				if (arg[len - 1] == '+' && arg[len] == '=')
+					env->val = ft_strjoin(&ms->alloc, env->val, new_val);
+				else
+					env->val = new_val;
+			}
 			return (TRUE);
 		}
 		env = env->next;
@@ -85,24 +93,27 @@ bool	search_env(t_minishell *ms, t_environ *env, char *arg)
 void	create_to_export(t_minishell *ms, t_environ *env, char **args,
 	int *status)
 {
+	int		len;
+
 	while (*args)
 	{
+		len = strlen_set(*args, '=');
+		((*args)[len - 1] == '+' && (*args)[len] == '=') && (len--);
 		if ((!ft_isalpha(**args) && **args != '_')
 			|| !valid_identifier(*args, strlen_set(*args, '=')))
 		{
 			syntax_err(ms, *args, "not a valid identifier", 1);
 			*status = 1;
 		}
-		else if (!search_env(ms, env, *args))
+		else if (!search_env(ms, env, *args, len))
 		{
 			if (ft_strchr(*args, '='))
-				environment_add(ms, &ms->env,
-					ft_substr(&ms->alloc, *args, 0, strlen_set(*args, '=')),
-					ft_substr(&ms->alloc, *args, strlen_set(*args, '=')
+				environment_add(ms, &ms->env, ft_substr(&ms->alloc, *args, 0,
+					len), ft_substr(&ms->alloc, *args, strlen_set(*args, '=')
 						+ 1, ft_strlen(*args)));
 			else
 				environment_add(ms, &ms->env, ft_substr(&ms->alloc, *args,
-						0, strlen_set(*args, '=')), NULL);
+						0, len), NULL);
 		}
 		args++;
 	}

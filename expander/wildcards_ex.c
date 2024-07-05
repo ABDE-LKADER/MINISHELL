@@ -12,16 +12,16 @@
 
 #include "minishell.h"
 
-void	join_doubles(t_minishell *ms, char **join, int *index)
+void	join_doubles(t_minishell *ms, t_tree *tree, char **join, int *index)
 {
 	int		len;
 	int		_len;
 	char	**new;
 
-	if (!join)
+	if (!join || !*join)
 		return ;
 	(TRUE) && (len = 0, _len = 0);
-	while (ms->tree->args[len])
+	while (tree->args[len])
 		len++;
 	while (join[_len])
 		_len++;
@@ -29,15 +29,15 @@ void	join_doubles(t_minishell *ms, char **join, int *index)
 	if (!new)
 		cleanup_handler(ms);
 	len = -1;
-	while (++len < *index && ms->tree->args[len])
-		new[len] = ms->tree->args[len];
+	while (++len < *index && tree->args[len])
+		new[len] = tree->args[len];
 	_len = (*index) + 1;
 	while (*join)
 		(TRUE) && (new[len] = *join, len++, join++);
-	while (ms->tree->args[_len])
+	while (tree->args[_len])
 		new[len++] = ms->tree->args[_len++];
 	new[len] = NULL;
-	ms->tree->args = new;
+	tree->args = new;
 }
 
 char	**convert_to_array(t_minishell *ms, t_expand *expand)

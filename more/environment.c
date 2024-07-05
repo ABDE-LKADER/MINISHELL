@@ -51,6 +51,8 @@ bool	valid_identifier(char *str, int len)
 	index = -1;
 	while (++index < len)
 	{
+		if (index == len - 1 && str[index] == '+')
+			return (TRUE);
 		if (!ft_isalnum(str[index]) && str[index] != '_')
 			return (FALSE);
 	}
