@@ -25,13 +25,13 @@ char	**change_linked_to_double(t_minishell *ms)
 		len++;
 		tmp = tmp->next;
 	}
-	env = allocate(&ms->alloc, len, sizeof(char *));
+	env = allocate(&ms->leaks, len, sizeof(char *));
 	tmp = ms->env;
 	i = 0;
 	while (tmp)
 	{
-		env[i] = ft_strjoin(&ms->alloc, tmp->var, "=");
-		env[i] = ft_strjoin(&ms->alloc, env[i], tmp->val);
+		env[i] = ft_strjoin(&ms->leaks, tmp->var, "=");
+		env[i] = ft_strjoin(&ms->leaks, env[i], tmp->val);
 		i++;
 		tmp = tmp->next;
 	}
