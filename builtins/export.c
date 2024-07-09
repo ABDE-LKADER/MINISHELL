@@ -68,7 +68,7 @@ bool	search_env(t_minishell *ms, t_environ *env, char *arg, int _len)
 	char	*new_val;
 	char	*to_find;
 
-	to_find = ft_substr(&ms->alloc, arg, 0, _len);
+	to_find = ft_substr(&ms->leaks, arg, 0, _len);
 	while (env)
 	{
 		if (!ft_strncmp(env->var, to_find, ft_strlen(to_find))
