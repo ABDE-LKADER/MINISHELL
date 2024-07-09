@@ -54,7 +54,7 @@ void	change_directory(t_minishell *ms, char *path)
 		ms->exit_status = 0;
 }
 
-void	modify_PWD_val(t_minishell *ms)
+void	modify_pwd_val(t_minishell *ms)
 {
 	char	*path;
 
@@ -62,7 +62,8 @@ void	modify_PWD_val(t_minishell *ms)
 	if (path)
 		modify_env_val(ms, "PWD", path);
 	else
-		modify_env_val(ms, "PWD", ft_strjoin(&ms->alloc, get_env_val(ms, "PWD"), "/.."));
+		modify_env_val(ms, "PWD", ft_strjoin(&ms->alloc,
+				get_env_val(ms, "PWD"), "/.."));
 	free(path);
 }
 
@@ -88,5 +89,5 @@ void	ft_cd(t_minishell *ms, char **args)
 	if (ms->exit_status != 0)
 		return ;
 	modify_env_val(ms, "OLDPWD", get_env_val(ms, "PWD"));
-	modify_PWD_val(ms);
+	modify_pwd_val(ms);
 }

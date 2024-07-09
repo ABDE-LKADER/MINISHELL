@@ -98,7 +98,7 @@ void	create_to_export(t_minishell *ms, t_environ *env, char **args,
 	while (*args)
 	{
 		if (**args && ((!ft_isalpha(**args) && **args != '_')
-			|| !valid_identifier(*args, strlen_set(*args, '='))))
+				|| !valid_identifier(*args, strlen_set(*args, '='))))
 		{
 			syntax_err(ms, *args, "not a valid identifier", 1);
 			*status = 1;
@@ -109,8 +109,8 @@ void	create_to_export(t_minishell *ms, t_environ *env, char **args,
 			((*args)[len - 1] == '+' && (*args)[len] == '=') && (len--);
 			if (ft_strchr(*args, '='))
 				environment_add(ms, &ms->env, ft_substr(&ms->alloc, *args, 0,
-					len), ft_substr(&ms->alloc, *args, strlen_set(*args, '=')
-						+ 1, ft_strlen(*args)));
+						len), ft_substr(&ms->alloc, *args, strlen_set(*args,
+							'=') + 1, ft_strlen(*args)));
 			else
 				environment_add(ms, &ms->env, ft_substr(&ms->alloc, *args,
 						0, len), NULL);
