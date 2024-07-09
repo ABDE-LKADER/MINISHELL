@@ -60,6 +60,35 @@ char	**convert_to_array(t_minishell *ms, t_expand *expand)
 	return (new);
 }
 
+bool	pattern_matching(char *name, char *pattern)
+{
+	int		n_len;
+	int		p_len;
+
+	n_len = ft_strlen(name);
+	p_len = ft_strlen(pattern);
+	if (!ft_strncmp(pattern, "*", p_len) && *name != '.')
+		return (TRUE);
+	if (!ft_strncmp(pattern, "*", p_len) && *name == '.')
+		return (FALSE);
+	if (*pattern != '*' && *pattern != *name)
+		return (FALSE);
+	if (pattern[--p_len] != '*' && pattern[p_len] != name[--n_len])
+		return (FALSE);
+	while (*name)
+	{
+		while (*pattern == '*')
+			pattern++;
+		if (*name++ == *pattern)
+			pattern++;
+		while (*pattern == '*')
+			pattern++;
+	}
+	if (!*pattern)
+		return (TRUE);
+	return (FALSE);
+}
+
 char	**wildcards_expander(t_minishell *ms, char *arg)
 {
 	DIR				*dir;
@@ -75,7 +104,7 @@ char	**wildcards_expander(t_minishell *ms, char *arg)
 	entries = readdir(dir);
 	while (entries)
 	{
-		if (*entries->d_name != '.')
+		if (pattern_matching((char *)entries->d_name, arg))
 			expand_add(ms, &expand, ft_strdup(&ms->leaks, entries->d_name));
 		entries = readdir(dir);
 	}
