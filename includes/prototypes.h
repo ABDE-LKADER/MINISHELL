@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   prototypes.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: darkab <darkab@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:24 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/13 20:14:16 by darkab           ###   ########.fr       */
+/*   Updated: 2024/07/11 06:16:35 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ void	restore_fds(t_fds fds);
 
 ///////////////// EXEC PROTOTYPES /////////////////
 
+void	command_execute(t_minishell *ms, t_tree *tree);
 void	execution(t_minishell *ms, t_tree *tree);
 void	built_in_execute(t_minishell *ms, t_tree *tree);
 

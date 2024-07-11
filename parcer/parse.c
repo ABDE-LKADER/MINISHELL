@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:11 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/12 01:21:23 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/10 23:29:19 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,11 +100,11 @@ t_tree	*parse_tree(t_minishell *ms)
 		return (NULL);
 	i = 0;
 	j = 0;
-	if (check_closed_quotes(ms, i, j))
-		return (NULL);
 	ms->tree = allocate(&ms->leaks, 1, sizeof(t_tree));
 	if (!ms->tree)
 		cleanup_handler(ms);
 	ms->tree = parse_exp(ms, &i, 0);
+	if (check_closed_quotes(ms, 0, 0))
+		return (NULL);
 	return (ms->tree);
 }

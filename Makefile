@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: darkab <darkab@student.42.fr>              +#+  +:+       +#+         #
+#    By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/19 17:23:22 by abadouab          #+#    #+#              #
-#    Updated: 2024/06/13 21:14:27 by darkab           ###   ########.fr        #
+#    Updated: 2024/07/10 00:38:21 by abbaraka         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ MYLB		=	MYLIB
 MYAR		=	MYLIB/libar.a
 
 CC			=	cc
-FLAGS		=	-Wall -Wextra -g -fsanitize=address -fsanitize=leak # -Werror
+FLAGS		=	-Wall -Wextra -g -fsanitize=address #-fsanitize=leak # -Werror
 SHORT		=	-L$(MYLB) -lar -L ~/.brew/opt/readline/lib -lreadline
 RM			=	rm -fr
 

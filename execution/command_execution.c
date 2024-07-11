@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execution.c                                        :+:      :+:    :+:   */
+/*   command_execution.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: darkab <darkab@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:54:33 by abadouab          #+#    #+#             */
-/*   Updated: 2024/06/13 20:15:03 by darkab           ###   ########.fr       */
+/*   Updated: 2024/07/11 06:15:27 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@ char	**change_linked_to_double(t_minishell *ms)
 	t_environ	*tmp;
 	char		**env;
 
-	tmp = ms->env;
+	(1) && (tmp = ms->env, len = 0);
 	while (tmp)
 	{
 		len++;
 		tmp = tmp->next;
 	}
-	env = allocate(&ms->leaks, len, sizeof(char *));
+	env = allocate(&ms->leaks, len + 1, sizeof(char *));
 	tmp = ms->env;
 	i = 0;
 	while (tmp)
@@ -35,6 +35,7 @@ char	**change_linked_to_double(t_minishell *ms)
 		i++;
 		tmp = tmp->next;
 	}
+	env[i] = NULL;
 	return (env);
 }
 

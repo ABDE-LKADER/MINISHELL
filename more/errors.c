@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:44:21 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/13 08:39:56 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/11 06:16:55 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,5 +103,7 @@ void	syntax_err(t_minishell *ms, char *option, char *error_msg,
 			ft_putstr_fd(error_msg, 2);
 		}
 		ms->exit_status = exit_status;
+		if (ms->tree)
+			ms->tree->dis_error = 1;
 	}
 }

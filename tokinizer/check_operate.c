@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_operate.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 01:12:48 by abadouab          #+#    #+#             */
-/*   Updated: 2024/06/12 01:23:02 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/10 23:16:27 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,13 @@ int	check_ops_and_cmds(t_minishell *ms)
 	int	i;
 	int	cmd;
 	int	ops;
+	int	here;
 
-	(1) && (i = 0, cmd = 0, ops = 0);
+	(1) && (i = 0, cmd = 0, ops = 0, here = 0);
 	while (ms->tokens[i])
 	{
+		if (ft_strncmp(ms->tokens[i], "<<", ft_strlen(ms->tokens[i])) == 0)
+			here = 1;
 		if (check_token_op(ms->tokens[i]))
 			ops++;
 		else if (ms->tokens[i][0] != '(' && ms->tokens[i][0] != ')')
@@ -54,7 +57,7 @@ int	check_ops_and_cmds(t_minishell *ms)
 		}
 		i++;
 	}
-	if (ops + 1 != cmd)
+	if (!here && ops + 1 != cmd)
 		return (syntax_err(ms, NULL,
 				"syntax error near unexpected token\n", 258), -1);
 	return (0);

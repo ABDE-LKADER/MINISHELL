@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   unset.c                                            :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: |||||||| <||||||||@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:55:24 by ||||||||          #+#    #+#             */
-/*   Updated: 2024/06/11 14:46:14 by ||||||||         ###   ########.fr       */
+/*   Updated: 2024/07/10 01:33:34 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ static void	check_numerical(t_minishell *ms, char **args, int len)
 		&& ft_strncmp(args[1], "9223372036854775807", ft_strlen(args[1])) > 0)
 	|| (ft_strlen(args[1]) == 20
 		&& ft_strncmp(args[1], "-9223372036854775808", ft_strlen(args[1])) > 0))
-		(syntax_err(ms, args[1], "numeric argument required", 2),
-			exit(2));
+		(syntax_err(ms, args[1], "numeric argument required", 255),
+			exit(255));
 }
 
 void	ft_exit(t_minishell *ms, char **args)
