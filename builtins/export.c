@@ -49,7 +49,7 @@ static void	export_list(t_environ *env)
 	if (!pid)
 	{
 		sort_export_vars(&env);
-		while (!pid && env)
+		while (env)
 		{
 			if (!env->val)
 				ft_printf("declare -x %s\n", env->var);
@@ -68,6 +68,7 @@ bool	search_env(t_minishell *ms, t_environ *env, char *arg, int _len)
 	char	*new_val;
 	char	*to_find;
 
+	((arg)[_len - 1] == '+' && arg[_len] == '=') && (_len--);
 	to_find = ft_substr(&ms->leaks, arg, 0, _len);
 	while (env)
 	{
