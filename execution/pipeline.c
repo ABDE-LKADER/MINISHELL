@@ -49,10 +49,7 @@ void	pipeline_handler(t_minishell *ms, t_tree *tree)
 		(perror("fork"), cleanup_handler(ms));
 	if (s_pid == 0)
 		second_child_exec(ms, tree->right, fds);
-	close(fds[1]);
-	close(fds[0]);
-	waitpid(f_pid, &status, 0);
-	waitpid(s_pid, &status, 0);
-	if (WIFEXITED(status))
-		ms->exit_status = WEXITSTATUS(status);
+	(TRUE) && (close(fds[1]), close(fds[0]));
+	(TRUE) && (waitpid(s_pid, &status, 0), waitpid(f_pid, NULL, 0));
+	(WIFEXITED(status)) && (ms->exit_status = WEXITSTATUS(status));
 }
