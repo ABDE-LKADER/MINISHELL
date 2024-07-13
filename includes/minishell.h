@@ -27,6 +27,7 @@
 
 # define EXIT "\033[AMinishell >$ exit\n"
 # define INIT "\033[A\n>   \n"
+# define AMBG "ambiguous redirect"
 
 # define TRUE 1
 # define FALSE 0

@@ -84,6 +84,8 @@ void	expanding(t_minishell *ms, t_tree *tree)
 		if (!only)
 			join_doubles(ms, tree, ft_split(&ms->leaks, tree->args[index], ' '),
 				&index);
+		while (!only && *tree->args[index] == ' ')
+			tree->args[index]++;
 		if (ft_strchr(tree->args[index], '*'))
 			join_doubles(ms, tree, wildcards_expander(ms, tree->args[index]),
 				&index);
