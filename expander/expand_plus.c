@@ -28,7 +28,8 @@ bool	only_var(char *arg)
 		arg++;
 		while (*arg)
 		{
-			if (!ft_isalnum(*arg) && *arg != '_' && *arg != '$' && *arg != '=')
+			if (!ft_isalnum(*arg) && *arg != '_' && *arg != '$'
+				&& (*arg != '=' && *arg != '+'))
 				return (TRUE);
 			arg++;
 		}

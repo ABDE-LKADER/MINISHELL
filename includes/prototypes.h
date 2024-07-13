@@ -81,6 +81,7 @@ void	pipeline_handler(t_minishell *ms, t_tree *tree);
 ///////////////// REDIR PROTOTYPES /////////////////
 
 int		redirection(t_minishell *ms, t_tree *tree);
+int		redir_to_dev_null(t_minishell *ms);
 t_fds	save_fds(t_fds fds);
 void	restore_fds(t_fds fds);
 

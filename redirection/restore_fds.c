@@ -29,3 +29,17 @@ void	restore_fds(t_fds fds)
 	if (close(fds.std_in) == -1 || close(fds.std_out) == -1)
 		perror("close");
 }
+
+int	redir_to_dev_null(t_minishell *ms)
+{
+	int		null;
+
+	null = open("/dev/null", O_RDWR);
+	if (null == ERROR)
+		return (error_handler(ms, "/dev/null"), ERROR);
+	else if (dup2(null, STDOUT_FILENO) == ERROR
+		|| dup2(null, STDIN_FILENO) == ERROR)
+		perror("dup2");
+	close(null);
+	return (TRUE);
+}

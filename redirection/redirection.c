@@ -68,6 +68,11 @@ int	redirection(t_minishell *ms, t_tree *tree)
 	(TRUE) && (index = -1, status = TRUE);
 	while (++index < tree->redir_index && status == 1)
 	{
+		if (tree->redir[index].ambiguous && (tree->redir[index].redirection
+			== IN_RED_T || tree->redir[index].redirection == OUT_RED_T
+			|| tree->redir[index].redirection == OUT_RED_APPEND_T))
+				return (status = redir_to_dev_null(ms) ,syntax_err(ms,
+					tree->redir[index].ambig_var, AMBG, status), status);
 		if (tree->redir[index].redirection == IN_RED_T)
 			status = in_redirection(ms, tree->redir[index].redir_name);
 		if (tree->redir[index].redirection == OUT_RED_T)
