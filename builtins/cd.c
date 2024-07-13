@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   unset.c                                            :+:      :+:    :+:   */
+/*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: |||||||| <||||||||@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:55:24 by ||||||||          #+#    #+#             */
-/*   Updated: 2024/06/11 14:46:14 by ||||||||         ###   ########.fr       */
+/*   Updated: 2024/07/13 03:58:22 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,15 @@ void	modify_pwd_val(t_minishell *ms)
 
 	path = getcwd(NULL, 0);
 	if (path)
-		modify_env_val(ms, "PWD", path);
+	{
+		if (get_env_val(ms, "PWD") == NULL)
+		{	
+			environment_add(ms, &ms->env, "PWD", path);
+			modify_env_val(ms, "PWD", path);
+		}
+		else	
+			modify_env_val(ms, "PWD", path);
+	}
 	else
 		modify_env_val(ms, "PWD", ft_strjoin(&ms->alloc,
 				get_env_val(ms, "PWD"), "/.."));

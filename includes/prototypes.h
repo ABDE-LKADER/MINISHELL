@@ -6,7 +6,7 @@
 /*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:24 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/07/11 06:16:35 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/07/12 20:06:38 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int		check_redir_at_end(t_minishell *ms, int *i, int *redir_set);
 int		check_closed_quotes(t_minishell *ms, int i, int j);
 int		check_valid_op(char *token);
 void	set_op(t_tree *tree, char *token);
+int		check_op_syntax(char *token);
 
 ///////////////// HERE_DOC /////////////////
 

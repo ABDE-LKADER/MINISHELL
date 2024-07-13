@@ -6,7 +6,7 @@
 /*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:32 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/07/10 23:33:44 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/07/12 20:25:43 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,9 @@ int	check_closed_quotes(t_minishell *ms, int i, int j)
 			}
 			j++;
 		}
-		if (quotes > -1)
+		if (quotes > -1 && ms->tree && ms->tree->dis_error == 0)
 			return (syntax_err(ms, NULL,
-					"unexpected EOF while looking for matching `", 258),
-				write(2, &quotes, 1), ft_putstr_fd("'\n", 2), 1);
+					"syntax error: unexpected end of file", 258), 1);
 		i++;
 	}
 	return (0);

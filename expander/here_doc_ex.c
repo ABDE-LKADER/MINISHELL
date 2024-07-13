@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redirection.c                                      :+:      :+:    :+:   */
+/*   here_doc_ex.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 14:45:58 by abadouab          #+#    #+#             */
-/*   Updated: 2024/06/11 20:00:56 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/13 03:27:20 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	here_doc_expander(t_minishell *ms, int fd)
 		return (ft_putstr_fd(strerror(errno), 2), -1);
 	(TRUE) && (unlink("here_doc"), pid = fork());
 	if (pid == -1)
-		return (perror("dup2"), -1);
+		return (perror("fork"), cleanup_handler(ms), -1);
 	update_here_doc(ms, pid, fds, fd);
 	waitpid(pid, NULL, 0);
 	if (close(fds[0]) == -1 && close(fd) == -1)

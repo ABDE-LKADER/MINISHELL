@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 21:18:31 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/12 01:21:36 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/13 03:28:09 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,23 @@ int	ft_here_doc_in_child(t_minishell *ms, pid_t pid, char *delimiter, int fds[])
 	return (0);
 }
 
+void	check_syntax_err_in_heredoc(t_minishell *ms)
+{
+	int	i;
+
+	i = 0;
+	while (ms &&  ms->tokens[i])
+	{
+		if ((check_op_syntax(ms->tokens[i]) == 0 && ms->tokens[i + 1]
+		&& check_op_syntax(ms->tokens[i + 1]) == 0)
+		|| (check_token_op(ms->tokens[i]) && ms->tokens[i + 1]
+		&& check_token_op(ms->tokens[i + 1])))
+			syntax_err(ms, NULL, "syntax error", 258);
+		i++;
+	}
+	// check_closed_quotes(ms, 0, 0);
+}
+
 int	ft_open_here_doc(t_minishell *ms, char *delimiter, t_tree *node)
 {
 	int		fds[2];
@@ -77,6 +94,7 @@ int	ft_open_here_doc(t_minishell *ms, char *delimiter, t_tree *node)
 	pid_t	pid;
 	int		status;
 
+	check_syntax_err_in_heredoc(ms);
 	unlink("here_doc");
 	fds[0] = open("here_doc", O_CREAT | O_TRUNC | O_WRONLY, 0777);
 	fds[1] = open("here_doc", O_RDONLY, 0644);
@@ -87,7 +105,7 @@ int	ft_open_here_doc(t_minishell *ms, char *delimiter, t_tree *node)
 	delimiter = splite_mult_args(ms, delimiter, FALSE, TRUE);
 	(TRUE) && (unlink("here_doc"), len = ft_strlen(delimiter), pid = fork());
 	if (pid < 0)
-		return (-1);
+		return (perror("fork"), cleanup_handler(ms), -1);
 	if (ft_here_doc_in_child(ms, pid, delimiter, fds) == -1)
 		return (-1);
 	waitpid(pid, &status, 0);
