@@ -6,7 +6,7 @@
 /*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:55:24 by ||||||||          #+#    #+#             */
-/*   Updated: 2024/07/10 01:33:34 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/07/16 02:03:25 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,10 @@ void	ft_exit(t_minishell *ms, char **args)
 			exit(1));
 	else if (len == 2)
 	{
+		if (len == 2 && (args[1] == NULL || *args[1] == '\0'))
+			(syntax_err(ms, args[1], "numeric argument required", 255)
+			, exit(255));
+		printf("number:%s|\n", args[1]);
 		len = 0;
 		while (args[1][len])
 		{

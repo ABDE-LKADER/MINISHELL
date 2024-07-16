@@ -6,7 +6,7 @@
 /*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:11 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/07/12 20:14:10 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/07/16 01:23:59 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,20 @@ t_tree	*make_tree(t_minishell *ms, t_tree *left, t_tree *right, char *op)
 	set_op(node, op);
 	if (ft_strncmp(op, "|", ft_strlen(op)) == 0
 		&& ft_strlen(op) == ft_strlen("|"))
+	{
+		if (left->type == PIPE_T)
+		{
+			ft_treeadd_back(&left, right);
+			return (left);
+		}
+		node->value = op;
 		node->type = PIPE_T;
+		node->left = NULL;
+		node->right = NULL;
+		ft_treeadd_back(&node, left);
+		ft_treeadd_back(&node, right);
+		return (node);
+	}
 	if (ft_strncmp(op, "||", ft_strlen(op)) == 0
 		&& ft_strlen(op) == ft_strlen("||"))
 		node->type = OR_T;

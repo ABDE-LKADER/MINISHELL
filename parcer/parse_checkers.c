@@ -6,7 +6,7 @@
 /*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:32 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/07/12 20:25:43 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/07/15 02:19:15 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,29 @@ int	check_closed_quotes(t_minishell *ms, int i, int j)
 		i++;
 	}
 	return (0);
+}
+
+t_tree	*ft_treelast(t_tree *lst)
+{
+	if (!lst)
+		return (NULL);
+	while (lst->next)
+		lst = lst->next;
+	return (lst);
+}
+
+void	ft_treeadd_back(t_tree **lst, t_tree *new)
+{
+	t_tree	*node;
+
+	if (!lst || !new)
+		return ;
+	if (!(*lst))
+	{
+		*lst = new;
+		return ;
+	}
+	node = *lst;
+	node = ft_treelast(node);
+	node->next = new;
 }

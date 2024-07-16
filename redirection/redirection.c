@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 14:45:58 by abadouab          #+#    #+#             */
-/*   Updated: 2024/06/11 20:00:56 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/16 03:50:53 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	redirection(t_minishell *ms, t_tree *tree)
 			== IN_RED_T || tree->redir[index].redirection == OUT_RED_T
 			|| tree->redir[index].redirection == OUT_RED_APPEND_T))
 				return (status = redir_to_dev_null(ms) ,syntax_err(ms,
-					tree->redir[index].ambig_var, AMBG, status), status);
+					tree->redir[index].ambig_var, AMBG, 1), ms->exit_status = 1, -1);
 		if (tree->redir[index].redirection == IN_RED_T)
 			status = in_redirection(ms, tree->redir[index].redir_name);
 		if (tree->redir[index].redirection == OUT_RED_T)

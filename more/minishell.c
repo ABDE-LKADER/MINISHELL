@@ -6,7 +6,7 @@
 /*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:44:46 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/07/10 23:02:48 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/07/14 01:36:23 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	main(int ac, char **av, char **env)
 		ms.prompt = readline("Minishell >$ "));
 		if (!ms.prompt)
 			return (ft_printf(EXIT), clear_history(),
-				cleanup(&ms.leaks), cleanup(&ms.alloc), EXIT_SUCCESS);
+				cleanup(&ms.leaks), cleanup(&ms.alloc), ms.exit_status);
 		(g_catch_signals == SIGINT) && (ms.exit_status = 1,
 			g_catch_signals = 0);
 		if (!(*ms.prompt))

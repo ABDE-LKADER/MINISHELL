@@ -6,7 +6,7 @@
 /*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:24 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/07/12 20:06:38 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/07/15 05:04:07 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ int		check_closed_quotes(t_minishell *ms, int i, int j);
 int		check_valid_op(char *token);
 void	set_op(t_tree *tree, char *token);
 int		check_op_syntax(char *token);
+t_tree	*ft_treelast(t_tree *lst);
+void	ft_treeadd_back(t_tree **lst, t_tree *new);
 
 ///////////////// HERE_DOC /////////////////
 
@@ -87,6 +89,8 @@ void	restore_fds(t_fds fds);
 
 ///////////////// EXEC PROTOTYPES /////////////////
 
+char	**change_linked_to_double(t_minishell *ms);
+char	*fetch_path(t_minishell *ms, t_environ *env, char *cmd);
 void	command_execute(t_minishell *ms, t_tree *tree);
 void	execution(t_minishell *ms, t_tree *tree);
 void	built_in_execute(t_minishell *ms, t_tree *tree);

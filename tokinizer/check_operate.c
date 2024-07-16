@@ -6,7 +6,7 @@
 /*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 01:12:48 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/10 23:16:27 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/07/16 00:58:33 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,15 @@ char	*inject_spaces(t_minishell *ms, char *s)
 	return (str);
 }
 
+void	cmds_checker(t_minishell *ms, int *cmd, int *i)
+{
+	(*cmd)++;
+	while (ms->tokens[*i + 1] && ms->tokens[*i + 1][0] != '('
+		&& ms->tokens[*i + 1][0] != ')'
+		&& !check_token_op(ms->tokens[*i + 1]))
+		(*i)++;
+}
+
 int	check_ops_and_cmds(t_minishell *ms)
 {
 	int	i;
@@ -48,16 +57,10 @@ int	check_ops_and_cmds(t_minishell *ms)
 		if (check_token_op(ms->tokens[i]))
 			ops++;
 		else if (ms->tokens[i][0] != '(' && ms->tokens[i][0] != ')')
-		{
-			cmd++;
-			while (ms->tokens[i + 1] && ms->tokens[i + 1][0] != '('
-				&& ms->tokens[i + 1][0] != ')'
-				&& !check_token_op(ms->tokens[i + 1]))
-				i++;
-		}
+			cmds_checker(ms, &cmd, &i);
 		i++;
 	}
-	if (!here && ops + 1 != cmd)
+	if (ms->tokens[0] != NULL && !here && ops + 1 != cmd)
 		return (syntax_err(ms, NULL,
 				"syntax error near unexpected token\n", 258), -1);
 	return (0);
