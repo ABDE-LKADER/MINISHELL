@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 14:45:58 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/18 10:32:24 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/18 13:02:11 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ int	redirection(t_minishell *ms, t_tree *tree)
 		if (tree->redir[index].redirection == HERE_DOC_T)
 			here_doc_redir(ms, tree->redir[index].fd,
 				tree->redir[index].set_expand);
-		printf("lol\n");
 	}
 	return (status);
 }
