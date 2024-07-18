@@ -6,26 +6,39 @@
 /*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:30:49 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/18 06:36:22 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/07/18 10:00:08 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+int	find_redir_type(t_tree *tmp, t_redirection type)
+{
+	int	i;
+
+	i = 0;
+	while (i < tmp->redir_index)
+	{
+		if (tmp->redir[i].redirection == type)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 void	execute_child(t_minishell *ms, t_tree *tree, int pipefd[2])
 {
 	char	*path;
 
-	dup2(pipefd[1], STDOUT_FILENO);
 	close(pipefd[0]);
+	if (!find_redir_type(tree, OUT_RED_T))
+		dup2(pipefd[1], STDOUT_FILENO);
 	close(pipefd[1]);
 	if (tree->type != CMD_T)
 		execution(ms, tree);
 	else
 	{
 		expanding(ms, tree);
-		if (redirection(ms, tree) == -1)
-			exit(EXIT_FAILURE);
 		if (check_if_builtins(tree->value))
 			(built_in_execute(ms, tree),exit(ms->exit_status));
 		else
@@ -46,6 +59,8 @@ void	create_process(t_minishell *ms, t_tree *tree)
 
 	if (pipe(pipefd) == -1)
 		(perror("pipe"), exit(1), cleanup_handler(ms));
+	if (redirection(ms, tree) == -1)
+		exit(EXIT_FAILURE);
 	pid = fork();
 	if (pid == -1)
 		(perror("fork"), exit(1), cleanup_handler(ms));
@@ -53,9 +68,9 @@ void	create_process(t_minishell *ms, t_tree *tree)
 		execute_child(ms, tree, pipefd);
 	else
 	{
+		close(pipefd[1]);
 		dup2(pipefd[0], STDIN_FILENO);
 		close(pipefd[0]);
-		close(pipefd[1]);
 	}
 }
 
@@ -68,8 +83,8 @@ void	execute_last(t_minishell *ms, t_tree *tree)
 	else
 	{
 		expanding(ms, tree);
-		if (redirection(ms, tree) == -1)
-			exit(EXIT_FAILURE);
+		// if (redirection(ms, tree) == -1)
+		// 	exit(EXIT_FAILURE);
 		if (check_if_builtins(tree->value))
 			(built_in_execute(ms, tree),exit(ms->exit_status));
 		else
@@ -88,6 +103,8 @@ void	last_command(t_minishell *ms, t_tree *tree, int *std)
 	int		pid;
 	int		status;
 
+	// if (redirection(ms, tree) == -1)
+	// 	exit(EXIT_FAILURE);
 	pid = fork();
 	if (pid == -1)
 		(perror("fork"), exit(1), cleanup_handler(ms));
@@ -114,15 +131,10 @@ void	pipeline_handler(t_minishell *ms, t_tree *tree)
 	std[0] = dup(STDIN_FILENO);
 	std[1] = dup(STDOUT_FILENO);
 	tmp = tree->next;
-	while (tmp)
+	while (tmp->next)
 	{
-		if (tmp->next == NULL)
-		{
-			last_command(ms, tmp, std);
-			break;
-		}
 		create_process(ms, tmp);
 		tmp = tmp->next;
 	}
-	tmp = tree->next;
+	last_command(ms, tmp, std);
 }
