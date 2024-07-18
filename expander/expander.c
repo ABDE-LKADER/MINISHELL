@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expanding.c                                        :+:      :+:    :+:   */
+/*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:55:24 by abadouab          #+#    #+#             */
-/*   Updated: 2024/06/11 14:46:14 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/18 09:54:11 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,8 @@ void	expanding(t_minishell *ms, t_tree *tree)
 			tree->args[index] = tilde_expander(ms, tree->args[index]);
 		tree->args[index] = splite_mult_args(ms, tree->args[index], TRUE, only);
 		if (!only)
-			join_doubles(ms, tree, ft_split(&ms->leaks, tree->args[index], ' '),
-				&index);
+			join_doubles(ms, tree, split_args(&ms->leaks, tree->args[index],
+				" \t\n"), &index);
 		while (!only && *tree->args[index] == ' ')
 			tree->args[index]++;
 		if (ft_strchr(tree->args[index], '*'))
