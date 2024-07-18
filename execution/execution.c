@@ -6,7 +6,7 @@
 /*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:54:33 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/13 03:26:37 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/07/18 11:47:23 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	execution(t_minishell *ms, t_tree *tree)
 {
-	if (!tree || g_catch_signals == 2)
+	if (!tree || g_catch_signals == SIGINT)
 		return ;
 	if (tree->type == PIPE_T)
 	{

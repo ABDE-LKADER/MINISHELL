@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: darkab <darkab@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:24 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/06/13 20:14:16 by darkab           ###   ########.fr       */
+/*   Updated: 2024/07/18 11:39:53 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,6 @@
 # define REDCL "\033[1;31m"
 # define RESET "\033[0m"
 
-extern int	g_catch_signals;
+int	g_catch_signals;
 
 #endif

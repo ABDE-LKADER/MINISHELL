@@ -6,13 +6,11 @@
 /*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:44:46 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/07/14 01:36:23 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/07/18 11:48:05 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	g_catch_signals = 0;
 
 void	parser(t_minishell *ms)
 {
@@ -28,7 +26,8 @@ void	parser(t_minishell *ms)
 		cleanup_handler(ms);
 	if (check_ops_and_cmds(ms) == -1)
 		return ;
-	parse_tree(ms);
+	if (parse_tree(ms) == NULL)
+		ms->tree = NULL;
 }
 
 int	main(int ac, char **av, char **env)

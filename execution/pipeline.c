@@ -6,7 +6,7 @@
 /*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:30:49 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/18 10:00:08 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/07/18 11:26:28 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,16 @@ void	execute_child(t_minishell *ms, t_tree *tree, int pipefd[2])
 	char	*path;
 
 	close(pipefd[0]);
-	if (!find_redir_type(tree, OUT_RED_T))
-		dup2(pipefd[1], STDOUT_FILENO);
+	// if (!find_redir_type(tree, OUT_RED_T))
+	dup2(pipefd[1], STDOUT_FILENO);
 	close(pipefd[1]);
 	if (tree->type != CMD_T)
 		execution(ms, tree);
 	else
 	{
 		expanding(ms, tree);
+		if (redirection(ms, tree) == -1)
+			exit(EXIT_FAILURE);
 		if (check_if_builtins(tree->value))
 			(built_in_execute(ms, tree),exit(ms->exit_status));
 		else
@@ -59,8 +61,8 @@ void	create_process(t_minishell *ms, t_tree *tree)
 
 	if (pipe(pipefd) == -1)
 		(perror("pipe"), exit(1), cleanup_handler(ms));
-	if (redirection(ms, tree) == -1)
-		exit(EXIT_FAILURE);
+	// if (redirection(ms, tree) == -1)
+	// 	exit(EXIT_FAILURE);
 	pid = fork();
 	if (pid == -1)
 		(perror("fork"), exit(1), cleanup_handler(ms));
@@ -69,8 +71,14 @@ void	create_process(t_minishell *ms, t_tree *tree)
 	else
 	{
 		close(pipefd[1]);
+		if (!find_redir_type(tree->next, IN_RED_T))
+			redirection(ms, tree->next);
+		// else
 		dup2(pipefd[0], STDIN_FILENO);
+			
 		close(pipefd[0]);
+		dup2(4, 1);
+		
 	}
 }
 
@@ -83,8 +91,8 @@ void	execute_last(t_minishell *ms, t_tree *tree)
 	else
 	{
 		expanding(ms, tree);
-		// if (redirection(ms, tree) == -1)
-		// 	exit(EXIT_FAILURE);
+		if (redirection(ms, tree) == -1)
+			exit(EXIT_FAILURE);
 		if (check_if_builtins(tree->value))
 			(built_in_execute(ms, tree),exit(ms->exit_status));
 		else
@@ -105,6 +113,7 @@ void	last_command(t_minishell *ms, t_tree *tree, int *std)
 
 	// if (redirection(ms, tree) == -1)
 	// 	exit(EXIT_FAILURE);
+	// 	;
 	pid = fork();
 	if (pid == -1)
 		(perror("fork"), exit(1), cleanup_handler(ms));
