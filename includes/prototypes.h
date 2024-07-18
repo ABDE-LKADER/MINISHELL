@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prototypes.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:24 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/07/15 05:04:07 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/07/18 06:46:36 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,9 @@ void	pipeline_handler(t_minishell *ms, t_tree *tree);
 
 ///////////////// REDIR PROTOTYPES /////////////////
 
+t_fds	save_fds(void);
 int		redirection(t_minishell *ms, t_tree *tree);
 int		redir_to_dev_null(t_minishell *ms);
-t_fds	save_fds(t_fds fds);
 void	restore_fds(t_fds fds);
 
 ///////////////// EXEC PROTOTYPES /////////////////

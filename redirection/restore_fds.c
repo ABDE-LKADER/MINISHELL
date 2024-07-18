@@ -3,17 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   restore_fds.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 14:45:58 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/16 03:33:58 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/07/18 06:46:41 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_fds	save_fds(t_fds fds)
+t_fds	save_fds(void)
 {
+	t_fds	fds;
+
 	fds.std_in = dup(STDIN_FILENO);
 	fds.std_out = dup(STDIN_FILENO);
 	if (fds.std_in == -1 || fds.std_out == -1)

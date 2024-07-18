@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_execution.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:55:24 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/16 00:45:26 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/07/18 06:47:04 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,7 @@ void	built_in_execute(t_minishell *ms, t_tree *tree)
 {
 	t_fds	fds;
 
-	(1) && (fds.std_in = -1, fds.std_out = -1);
-	fds = save_fds(fds);
+	fds = save_fds();
 	if (redirection(ms, tree) == -1)
 		return ;
 	if (!ft_strncmp(*tree->args, "echo", ft_strlen(*tree->args)))
