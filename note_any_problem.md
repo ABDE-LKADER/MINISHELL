@@ -26,3 +26,6 @@ Example :
 
 New:
 When unset HOME and print ~ Bash Print The Path But I Just Print ~
+
+--> ""
+--> export x="export x='cat Makefile'"

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+         #
+#    By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/19 17:23:22 by abadouab          #+#    #+#              #
-#    Updated: 2024/07/18 06:36:48 by abbaraka         ###   ########.fr        #
+#    Updated: 2024/07/18 07:56:32 by abadouab         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,8 @@ SRCS		=	more/minishell.c more/signal_handler.c \
 				execution/execution.c execution/builtins_execution.c \
 				execution/command_execution.c execution/pipeline.c \
 				expander/expander.c expander/expanding.c expander/expand_val.c \
-				expander/expand_plus.c expander/here_doc_ex.c expander/wildcards_ex.c \
+				expander/expand_plus.c expander/here_doc_ex.c \
+				expander/wildcards_ex.c expander/split_args.c \
 				redirection/redirection.c redirection/restore_fds.c \
 				redirection/here_doc.c \
 				builtins/echo.c builtins/pwd.c builtins/exit.c \
