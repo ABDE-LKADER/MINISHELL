@@ -12,6 +12,8 @@
 
 #include "minishell.h"
 
+int	g_catch_signals;
+
 void	parser(t_minishell *ms)
 {
 	char	*injected_spaces;
