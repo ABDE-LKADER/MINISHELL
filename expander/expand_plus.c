@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:55:24 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/18 08:43:06 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/19 17:06:46 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,24 +19,6 @@ bool	expand_option(char *value, char *sp, bool option)
 	if (*value == '\'')
 		return (FALSE);
 	return (TRUE);
-}
-
-bool	only_var(char *arg)
-{
-	if (*arg == '$')
-	{
-		arg++;
-		while (*arg)
-		{
-			if (!ft_isalnum(*arg) && *arg != '_' && *arg != '$'
-				&& (*arg != '=' && *arg != '+'))
-				return (TRUE);
-			arg++;
-		}
-	}
-	else
-		return (TRUE);
-	return (FALSE);
 }
 
 char	*tilde_expander(t_minishell *ms, char *value)

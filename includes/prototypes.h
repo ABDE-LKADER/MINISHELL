@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:24 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/07/18 07:58:59 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/19 17:06:50 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,6 @@ char	*splite_mult_args(t_minishell *ms, char *arg, bool status, bool option);
 void	expanding(t_minishell *ms, t_tree *tree);
 bool	expand_option(char *value, char *sp, bool option);
 int		here_doc_expander(t_minishell *ms, int fd);
-bool	only_var(char *arg);
 char	**split_args(t_allocate **leaks, char *str, char *charset);
 void	join_doubles(t_minishell *ms, t_tree *tree, char **join, int *index);
 char	**wildcards_expander(t_minishell *ms, char *arg);

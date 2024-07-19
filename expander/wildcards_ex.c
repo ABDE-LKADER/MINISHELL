@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:55:24 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/19 09:16:43 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/19 17:33:04 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ void	join_doubles(t_minishell *ms, t_tree *tree, char **join, int *index)
 	(*index) = len - 1;
 	while (tree->args[_len])
 		new[len++] = tree->args[_len++];
-	(TRUE) && (new[len] = NULL, tree->args = new);
+	(TRUE) && (new[len] = NULL);
+	tree->args = new;
 }
 
 char	**convert_to_array(t_minishell *ms, t_expand *expand)
