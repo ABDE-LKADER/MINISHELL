@@ -6,7 +6,7 @@
 /*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:54:33 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/16 02:37:32 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/07/19 10:56:59 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	command_execute(t_minishell *ms, t_tree *tree)
 
 	pid = fork();
 	if (pid == -1)
-		(perror("fork"));
+		(perror("1 fork"), kill(0, SIGINT), g_catch_signals = 2);
 	if (pid == 0)
 	{
 		if (redirection(ms, tree) == -1)
