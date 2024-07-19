@@ -64,13 +64,13 @@ char	*get_to_expand(t_minishell *ms, char *arg, int start, int *index)
 	return (sub);
 }
 
-char	*splite_to_expand(t_minishell *ms, char *arg, bool option)
+char	*splite_to_expand(t_minishell *ms, char *arg, int option)
 {
 	char		*new;
 	int			index;
 	t_expand	*expand;
 
-	(TRUE) && (index = 0, new = NULL, expand = NULL);
+	(TRUE) && (index = 0, new = NULL, expand = NULL, option = 2);
 	while (arg[index])
 	{
 		expand_add(ms, &expand, skip_to_var(ms, arg, index, &index));

@@ -97,13 +97,13 @@ void	built_in_execute(t_minishell *ms, t_tree *tree);
 
 ///////////////// EXPAND PROTOTYPES /////////////////
 
-char	*splite_to_expand(t_minishell *ms, char *arg, bool option);
+char	*splite_to_expand(t_minishell *ms, char *arg, int option);
 char	*tilde_expander(t_minishell *ms, char *value);
 char	*expand_val(t_minishell *ms, char *arg);
 void	expand_add(t_minishell *ms, t_expand **expand, void *value);
 char	*splite_mult_args(t_minishell *ms, char *arg, bool status, bool option);
 void	expanding(t_minishell *ms, t_tree *tree);
-bool	expand_option(char *value, char *sp, bool option);
+bool	expand_option(char *value, char *sp, int option);
 int		here_doc_expander(t_minishell *ms, int fd);
 bool	only_var(char *arg);
 char	**split_args(t_allocate **leaks, char *str, char *charset);
