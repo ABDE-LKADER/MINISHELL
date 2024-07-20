@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:30:49 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/19 11:09:21 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/07/20 08:40:25 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@
 // 	(WIFEXITED(status)) && (ms->exit_status = WEXITSTATUS(status));
 // }
 
-void	execute_child(t_minishell *ms, t_tree *tree, int pipefd[2])
+void	execute_child(t_minishell *ms, t_tree *tree)
 {
 	char	*path;
 
@@ -118,10 +118,11 @@ int	create_process(t_minishell *ms, t_tree *tree)
 			}
 
 		else
-			execute_child(ms, tree, pipefd);
+			execute_child(ms, tree);
 	}
 	else
 		(dup2(pipefd[0], STDIN_FILENO), close(pipefd[1]), close(pipefd[0]));
+	return (FALSE);
 }
 
 void	execute_last(t_minishell *ms, t_tree *tree)
@@ -176,7 +177,6 @@ void	pipeline_handler(t_minishell *ms, t_tree *tree)
 	t_tree	*tmp;
 	int		std[2];
 	int		pid;
-	int		status;
 
 	std[0] = dup(STDIN_FILENO);
 	std[1] = dup(STDOUT_FILENO);

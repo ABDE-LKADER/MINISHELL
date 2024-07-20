@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:55:24 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/19 17:33:51 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/20 08:42:02 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ t_expand	*splite_use_qoutes(t_minishell *ms, char *arg)
 	int			qoutes;
 	t_expand	*expand;
 
-	(TRUE) && (index = 0, start = 0, new = NULL, expand = NULL);
+	(TRUE) && (index = FALSE, start = FALSE, new = NULL, expand = NULL);
 	while (arg[index])
 	{
-		(TRUE) && (start = index, qoutes = 0);
+		(TRUE) && (start = index, qoutes = FALSE);
 		(arg[index] == '\'' && !qoutes) && (qoutes = 1, index++);
 		(arg[index] == '\"' && !qoutes) && (qoutes = 2, index++);
 		while ((qoutes == 1 && arg[index] && arg[index] != '\'')
@@ -40,30 +40,23 @@ t_expand	*splite_use_qoutes(t_minishell *ms, char *arg)
 	return (expand);
 }
 
-char	*remove_qoutes(t_minishell *ms, char *value)
-{
-	if (*value == '\'' || *value == '\"')
-		return (value++, ft_substr(&ms->leaks, value, 0,
-				ft_strlen(value) - 1));
-	return (value);
-}
-
 char	*splite_mult_args(t_minishell *ms, char *arg, bool status, bool option)
 {
 	bool		op;
 	char		*new;
 	t_expand	*expand;
 
-	(TRUE) && (new = NULL, op = 1, expand = splite_use_qoutes(ms, arg));
+	(TRUE) && (new = NULL, op = TRUE, expand = splite_use_qoutes(ms, arg));
 	while (expand)
 	{
-		(!option && *expand->value != '$') && (option = TRUE);
+		(!option && (*expand->value == '\'' || *expand->value == '\"'))
+			&& (option = TRUE);
 		(expand->next && (*expand->next->value == '\''
-				|| *expand->next->value == '\"')) && (op = 0);
+				|| *expand->next->value == '\"')) && (op = FALSE);
 		(status) && (expand->value = splite_to_expand(ms, expand->value, op));
 		(option) && (expand->value = remove_qoutes(ms, expand->value));
 		new = ft_strjoin(&ms->leaks, new, expand->value);
-		(TRUE) && (expand = expand->next, op = 1);
+		(TRUE) && (expand = expand->next, op = TRUE);
 	}
 	return (new);
 }

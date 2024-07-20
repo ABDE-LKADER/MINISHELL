@@ -6,11 +6,19 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:55:24 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/19 17:06:46 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/20 08:36:29 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	*remove_qoutes(t_minishell *ms, char *value)
+{
+	if (*value == '\'' || *value == '\"')
+		return (value++, ft_substr(&ms->leaks, value, 0,
+				ft_strlen(value) - 1));
+	return (value);
+}
 
 bool	expand_option(char *value, char *sp, int option)
 {

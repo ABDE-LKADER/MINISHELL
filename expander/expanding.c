@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:55:24 by abadouab          #+#    #+#             */
-/*   Updated: 2024/06/11 14:46:14 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/20 08:32:06 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ char	*splite_to_expand(t_minishell *ms, char *arg, int option)
 	int			index;
 	t_expand	*expand;
 
-	(TRUE) && (index = 0, new = NULL, expand = NULL, option = 2);
+	(TRUE) && (index = 0, new = NULL, expand = NULL);
 	while (arg[index])
 	{
 		expand_add(ms, &expand, skip_to_var(ms, arg, index, &index));
