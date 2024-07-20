@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_execution.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:54:33 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/20 09:16:58 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/07/20 18:39:27 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	command_execute(t_minishell *ms, t_tree *tree)
 	{
 		if (redirection(ms, tree) == -1)
 			exit(EXIT_FAILURE);
-		if (!tree->value || !*tree->value)
+		if (!tree->value)
 			exit(EXIT_SUCCESS);
 		path = fetch_path(ms, ms->env, tree->value);
 		if (tree->dis_error)

@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:24 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/07/20 08:37:58 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/20 19:32:13 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ char	**split_args(t_allocate **leaks, char *str, char *charset);
 void	join_doubles(t_minishell *ms, t_tree *tree, char **join, int *index);
 char	**wildcards_expander(t_minishell *ms, char *arg);
 char	*remove_qoutes(t_minishell *ms, char *value);
+void	convert_to_eot(t_expand *expand);
 
 ///////////////// BUILTINS PROTOTYPES /////////////////
 

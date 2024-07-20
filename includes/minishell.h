@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:24 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/07/18 11:39:53 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/07/20 19:10:20 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,9 @@
 # define TRUE 1
 # define FALSE 0
 # define ERROR -1
+
+# define EOT "\x03"
+# define EOT_MARKER '\x03'
 
 # define GREEN "\033[1;32m"
 # define YELOW "\033[1;33m"

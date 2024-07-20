@@ -6,11 +6,26 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:55:24 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/20 08:36:29 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/20 19:29:37 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	convert_to_eot(t_expand *expand)
+{
+	int		index;
+
+	index = -1;
+	if (*expand->value == '\'' || *expand->value == '\"')
+		return ;
+	while (expand->value[++index])
+	{
+		if (expand->value[index] == ' ' || expand->value[index] == '\t'
+			|| expand->value[index] == '\n')
+			expand->value[index] = EOT_MARKER;
+	}
+}
 
 char	*remove_qoutes(t_minishell *ms, char *value)
 {
@@ -22,9 +37,10 @@ char	*remove_qoutes(t_minishell *ms, char *value)
 
 bool	expand_option(char *value, char *sp, int option)
 {
-	if (option && !ft_strncmp("$", sp, ft_strlen(sp)))
+	if ((option == FALSE || option == ERROR)
+		&& !ft_strncmp("$", sp, ft_strlen(sp)))
 		return (FALSE);
-	if (!option && *value == '\'')
+	if (option != ERROR && *value == '\'')
 		return (FALSE);
 	return (TRUE);
 }
