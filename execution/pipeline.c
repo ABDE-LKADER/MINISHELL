@@ -6,7 +6,7 @@
 /*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:30:49 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/19 11:09:21 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/07/20 09:17:28 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,24 +101,13 @@ int	create_process(t_minishell *ms, t_tree *tree)
 	if (pipe(pipefd) == -1)
 		exit(EXIT_FAILURE);
 	else if ((pid = fork()) == -1)
-		(perror("1 fork"), kill(0, SIGINT), g_catch_signals = 2);
+		(perror("fork"), kill(0, SIGINT), g_catch_signals = 2);
 	else if (pid == 0)
 	{
 		if (tree->next != NULL)
 			dup2(pipefd[1], STDOUT_FILENO);
 		(close(pipefd[1]), close(pipefd[0]));
-		if (find_redir_type(tree, OUT_RED_T)
-			||  find_redir_type(tree, IN_RED_T))
-			{
-				command_execute(ms, tree);
-				if (g_catch_signals == 2)
-					return (1);
-				exit(ms->exit_status);
-				g_catch_signals = 2;
-			}
-
-		else
-			execute_child(ms, tree, pipefd);
+		execute_child(ms, tree, pipefd);
 	}
 	else
 		(dup2(pipefd[0], STDIN_FILENO), close(pipefd[1]), close(pipefd[0]));
@@ -183,10 +172,11 @@ void	pipeline_handler(t_minishell *ms, t_tree *tree)
 	tmp = tree->next;
 	while (tmp->next)
 	{
-		if (g_catch_signals == 2 || pid == 1)
+		if (tmp->next == NULL)
+			last_command(ms, tmp, std);
+		if (g_catch_signals == 2)
 			break ;
 		pid = create_process(ms, tmp);
 		tmp = tmp->next;
 	}
-	last_command(ms, tmp, std);
 }
