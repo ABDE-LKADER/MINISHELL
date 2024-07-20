@@ -6,7 +6,7 @@
 /*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:30:49 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/20 17:56:11 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/07/20 20:36:17 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,6 +177,7 @@ void	pipeline_handler(t_minishell *ms, t_tree *tree)
 		pid = create_process(ms, tmp);
 		tmp = tmp->next;
 	}
+	last_command(ms, tmp, std);
 	last_command(ms, tmp, std);
 	if (g_catch_signals == 2)
 		ms->exit_status = 1;

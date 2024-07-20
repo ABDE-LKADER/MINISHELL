@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:44:21 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/07/17 07:58:38 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/07/20 18:32:46 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,9 @@ void	execution_errors(t_minishell *ms, t_tree *tree, char *path)
 {
 	DIR		*dir;
 
-	if (errno == ENOENT)
+	if (errno == ENOENT && *tree->value)
 		(syntax_err(ms, path, "No such file or directory", 127), exit(127));
-	if (errno == EACCES)
+	if (errno == EACCES && *tree->value)
 	{
 		dir = opendir(path);
 		if (dir && !closedir(dir))

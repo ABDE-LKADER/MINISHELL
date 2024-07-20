@@ -6,7 +6,7 @@
 /*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:54:33 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/20 09:51:40 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/07/20 20:35:12 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	command_execute(t_minishell *ms, t_tree *tree)
 	{
 		if (redirection(ms, tree) == -1)
 			exit(EXIT_FAILURE);
-		if (!tree->value || !*tree->value)
+		if (!tree->value)
 			exit(EXIT_SUCCESS);
 		path = fetch_path(ms, ms->env, tree->value);
 		if (tree->dis_error)

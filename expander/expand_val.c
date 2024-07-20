@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expanding.c                                        :+:      :+:    :+:   */
+/*   expand_val.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:55:24 by abadouab          #+#    #+#             */
-/*   Updated: 2024/06/11 14:46:14 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/20 18:43:27 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,5 @@ char	*expand_val(t_minishell *ms, char *value)
 		}
 		loop = loop->next;
 	}
-	return (ft_strdup(&ms->leaks, ""));
+	return (ft_strdup(&ms->leaks, EOT));
 }
