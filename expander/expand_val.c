@@ -37,5 +37,5 @@ char	*expand_val(t_minishell *ms, char *value)
 		}
 		loop = loop->next;
 	}
-	return (ft_strdup(&ms->leaks, EOT));
+	return (ft_strdup(&ms->leaks, ""));
 }
