@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expanding.c                                        :+:      :+:    :+:   */
+/*   wildcards_ex.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:55:24 by abadouab          #+#    #+#             */
-/*   Updated: 2024/06/11 14:46:14 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/19 17:33:04 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,15 @@ void	join_doubles(t_minishell *ms, t_tree *tree, char **join, int *index)
 	new = allocate(&ms->leaks, len + _len + 1, sizeof(char *));
 	if (!new)
 		cleanup_handler(ms);
-	len = -1;
-	while (++len < *index && tree->args[len])
+	(TRUE) && (len = -1, _len = (*index) + 1);
+	while (++len < _len - 1 && tree->args[len])
 		new[len] = tree->args[len];
-	_len = (*index) + 1;
 	while (*join)
-		(TRUE) && (new[len] = *join, len++, join++);
+		(TRUE) && (new[len] = *join++, len++);
+	(*index) = len - 1;
 	while (tree->args[_len])
-		new[len++] = ms->tree->args[_len++];
-	new[len] = NULL;
+		new[len++] = tree->args[_len++];
+	(TRUE) && (new[len] = NULL);
 	tree->args = new;
 }
 

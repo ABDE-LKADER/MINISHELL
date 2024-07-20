@@ -6,7 +6,7 @@
 #    By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/19 17:23:22 by abadouab          #+#    #+#              #
-#    Updated: 2024/07/18 07:56:32 by abadouab         ###   ########.fr        #
+#    Updated: 2024/07/19 16:05:25 by abadouab         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,7 @@ MYAR		=	MYLIB/libar.a
 
 CC			=	cc
 FLAGS		=	-Wall -Wextra -g -fsanitize=address,undefined #-fsanitize=leak #Werror
-SHORT		=	-L$(MYLB) -lar -L ~/.brew/opt/readline/lib -lreadline
+SHORT		=	-L$(MYLB) -lar -lreadline
 RM			=	rm -fr
 
 GREEN		=	"\033[1;32m"
@@ -67,7 +67,7 @@ $(NAME): $(OBJS)
 	@$(CC) $(FLAGS) $^ $(SHORT) -o $(NAME)
 
 $(OBJS): %.o: %.c $(HEADER) $(MYAR)
-	@$(CC) $(FLAGS) -c -I $(MYLB) -I includes -I ~/.brew/opt/readline/include $< -o $@
+	@$(CC) $(FLAGS) -c -I $(MYLB) -I includes $< -o $@
 	@printf $(GREEN)"."$(RESET)
 
 clean:

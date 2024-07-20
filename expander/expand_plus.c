@@ -6,37 +6,27 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:55:24 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/18 08:43:06 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/20 08:36:29 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	expand_option(char *value, char *sp, bool option)
+char	*remove_qoutes(t_minishell *ms, char *value)
+{
+	if (*value == '\'' || *value == '\"')
+		return (value++, ft_substr(&ms->leaks, value, 0,
+				ft_strlen(value) - 1));
+	return (value);
+}
+
+bool	expand_option(char *value, char *sp, int option)
 {
 	if (option && !ft_strncmp("$", sp, ft_strlen(sp)))
 		return (FALSE);
-	if (*value == '\'')
+	if (!option && *value == '\'')
 		return (FALSE);
 	return (TRUE);
-}
-
-bool	only_var(char *arg)
-{
-	if (*arg == '$')
-	{
-		arg++;
-		while (*arg)
-		{
-			if (!ft_isalnum(*arg) && *arg != '_' && *arg != '$'
-				&& (*arg != '=' && *arg != '+'))
-				return (TRUE);
-			arg++;
-		}
-	}
-	else
-		return (TRUE);
-	return (FALSE);
 }
 
 char	*tilde_expander(t_minishell *ms, char *value)

@@ -21,7 +21,7 @@ void	update_here_doc(t_minishell *ms, pid_t pid, int fds[], int fd)
 		line = get_next_line(&ms->leaks, fd);
 		while (line)
 		{
-			line = splite_to_expand(ms, line, TRUE);
+			line = splite_to_expand(ms, line, ERROR);
 			write(fds[0], line, ft_strlen(line));
 			line = get_next_line(&ms->leaks, fd);
 		}

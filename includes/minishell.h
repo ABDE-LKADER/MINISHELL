@@ -38,6 +38,6 @@
 # define REDCL "\033[1;31m"
 # define RESET "\033[0m"
 
-int	g_catch_signals;
+extern int	g_catch_signals;
 
 #endif

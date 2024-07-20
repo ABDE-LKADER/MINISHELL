@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:55:24 by abadouab          #+#    #+#             */
-/*   Updated: 2024/06/11 14:46:14 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/20 08:32:06 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char	*get_to_expand(t_minishell *ms, char *arg, int start, int *index)
 	return (sub);
 }
 
-char	*splite_to_expand(t_minishell *ms, char *arg, bool option)
+char	*splite_to_expand(t_minishell *ms, char *arg, int option)
 {
 	char		*new;
 	int			index;
