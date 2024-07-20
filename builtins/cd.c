@@ -6,7 +6,7 @@
 /*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:55:24 by ||||||||          #+#    #+#             */
-/*   Updated: 2024/07/13 03:58:22 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/07/20 10:00:26 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,17 @@ void	change_directory(t_minishell *ms, char *path)
 {
 	if (!path)
 		return ;
-	if (chdir(path) == -1)
+	if (ft_strncmp(path, "-", ft_strlen(path)) == 0)
+	{
+		path = get_env_val(ms, "OLDPWD");
+		if (!path)
+			syntax_err(ms, "cd", "OLDPWD not set", 1);
+		else
+			printf("%s\n", path);
+	}
+	if (path && chdir(path) == -1)
 		error_handler(ms, path);
-	else
+	else if (path)
 		ms->exit_status = 0;
 }
 

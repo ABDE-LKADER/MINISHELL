@@ -6,7 +6,7 @@
 /*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:30:49 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/20 09:20:44 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/07/20 17:56:11 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ int	create_process(t_minishell *ms, t_tree *tree)
 		if (tree->next != NULL)
 			dup2(pipefd[1], STDOUT_FILENO);
 		(close(pipefd[1]), close(pipefd[0]));
-		execute_child(ms, tree, pipefd);
+		execute_child(ms, tree);
 	}
 	else
 		(dup2(pipefd[0], STDIN_FILENO), close(pipefd[1]), close(pipefd[0]));
@@ -172,11 +172,12 @@ void	pipeline_handler(t_minishell *ms, t_tree *tree)
 	tmp = tree->next;
 	while (tmp->next)
 	{
-		if (tmp->next == NULL)
-			last_command(ms, tmp, std);
 		if (g_catch_signals == 2)
 			break ;
 		pid = create_process(ms, tmp);
 		tmp = tmp->next;
 	}
+	last_command(ms, tmp, std);
+	if (g_catch_signals == 2)
+		ms->exit_status = 1;
 }
