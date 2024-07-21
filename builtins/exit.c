@@ -6,7 +6,7 @@
 /*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:55:24 by ||||||||          #+#    #+#             */
-/*   Updated: 2024/07/20 20:01:38 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/07/21 11:28:55 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,17 @@ static void	check_numerical(t_minishell *ms, char **args, int len)
 void	ft_exit(t_minishell *ms, char **args)
 {
 	int	len;
+	int	i;
 	int	exit_status;
 
-	len = 0;
+	(1) && (len = 0, i = 0);
 	while (args[len])
 		len++;
 	(1) && (ft_printf("exit\n"), exit_status = 0);
-	while (len > 1 && args[1][len])
+	while (len > 1 && args[1][i])
 	{
-		check_numerical(ms, args, len);
-		len++;
+		check_numerical(ms, args, i);
+		i++;
 	}
 	if (len > 2)
 		return (syntax_err(ms, "exit", "too many arguments", 1));

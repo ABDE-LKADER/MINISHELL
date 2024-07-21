@@ -29,3 +29,14 @@ When unset HOME and print ~ Bash Print The Path But I Just Print ~
 
 --> ""
 --> export x="export x='cat Makefile'"
+
+
+export x="'+=+=+=+=+=+==+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+"
+ls > $x
+rm $x
+
+export x="ls -la"
+export y=$x
+
+ls >> *
+rm '*'
