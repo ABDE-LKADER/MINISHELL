@@ -33,8 +33,7 @@
 # define FALSE 0
 # define ERROR -1
 
-# define EOT "\x03"
-# define EOT_MARKER '\x03'
+# define EOT 3
 
 # define GREEN "\033[1;32m"
 # define YELOW "\033[1;33m"

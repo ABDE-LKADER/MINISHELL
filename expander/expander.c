@@ -75,7 +75,7 @@ void	expanding(t_minishell *ms, t_tree *tree)
 			tree->args[index] = tilde_expander(ms, tree->args[index]);
 		tree->args[index] = splite_mult_args(ms, tree->args[index], TRUE, FALSE);
 		join_doubles(ms, tree, ft_split(&ms->leaks, tree->args[index],
-			EOT_MARKER), &index);
+			EOT), &index);
 		if (ft_strchr(tree->args[index], '*'))
 			join_doubles(ms, tree, wildcards_expander(ms, tree->args[index]),
 				&index);

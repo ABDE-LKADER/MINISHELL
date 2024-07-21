@@ -21,9 +21,8 @@ void	convert_to_eot(t_expand *expand)
 		return ;
 	while (expand->value[++index])
 	{
-		if (expand->value[index] == ' ' || expand->value[index] == '\t'
-			|| expand->value[index] == '\n')
-			expand->value[index] = EOT_MARKER;
+		if (is_whitespace(expand->value[index]))
+			expand->value[index] = EOT;
 	}
 }
 
