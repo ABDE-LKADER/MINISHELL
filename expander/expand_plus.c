@@ -6,7 +6,7 @@
 /*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:55:24 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/20 20:36:24 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/07/21 20:10:21 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,11 @@ void	convert_to_eot(t_expand *expand)
 
 char	*remove_qoutes(t_minishell *ms, char *value)
 {
-	if (*value == '\'' || *value == '\"')
+	int	len;
+
+	len = ft_strlen(value) - 1;
+	if ((*value == '\'' && value[len] == '\'')
+		|| (*value == '\"' && value[len] == '\"'))
 		return (value++, ft_substr(&ms->leaks, value, 0,
 				ft_strlen(value) - 1));
 	return (value);

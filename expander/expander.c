@@ -6,7 +6,7 @@
 /*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:55:24 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/20 20:36:35 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/07/21 20:12:05 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,19 +64,21 @@ char	*splite_mult_args(t_minishell *ms, char *arg, bool status, bool option)
 
 void	expanding(t_minishell *ms, t_tree *tree)
 {
-	int		index;
+	int	index;
+	int	option;
 
 	if (!tree->value)
 		return ;
-	index = -1;
+	(TRUE) && (index = -1, option = FALSE);
 	while (tree->args[++index])
 	{
+		(*tree->args[index] == '*') && (option = TRUE);
 		if (*tree->args[index] == '~')
 			tree->args[index] = tilde_expander(ms, tree->args[index]);
 		tree->args[index] = splite_mult_args(ms, tree->args[index], TRUE, FALSE);
 		join_doubles(ms, tree, ft_split(&ms->leaks, tree->args[index],
 			EOT), &index);
-		if (ft_strchr(tree->args[index], '*'))
+		if (option && ft_strchr(tree->args[index], '*'))
 			join_doubles(ms, tree, wildcards_expander(ms, tree->args[index]),
 				&index);
 	}
