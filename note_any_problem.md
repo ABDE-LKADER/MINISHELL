@@ -6,11 +6,11 @@
 # HEAP CLEANER
 
 * Need To Fix The Problem Of "env" When You Clean The Heap == So Split Between The Heap Cleaner Of env And Other Allocations;
-
+-----------------------------------------------
 
 syntax error:
 	wrong operator
-
+-----------------------------------------------
 Error On Redirect Symbol Parce:
 	ls > file > file_in > file_tow > tree
 
@@ -23,14 +23,14 @@ Example :
 	REDIRECTION 1
 	usage: ls [-@ABCFGHLOPRSTUWabcdefghiklmnopqrstuwx1%] [file ...]
 }
-
+-----------------------------------------------
 New:
 When unset HOME and print ~ Bash Print The Path But I Just Print ~
 
 --> ""
 --> export x="export x='cat Makefile'"
 
-
+-----------------------------------------------
 export x="'+=+=+=+=+=+==+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+"
 ls > $x
 rm $x
@@ -40,3 +40,5 @@ export y=$x
 
 ls >> *
 rm '*'
+-----------------------------------------------
+

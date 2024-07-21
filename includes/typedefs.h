@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   typedefs.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:24 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/07/20 14:25:16 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/21 16:36:37 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ typedef struct s_tree
 	int					dis_error;
 	int					syntax_err;
 	int					redir_index;
+	int					no_print;
 	struct s_tree		*left;
 	struct s_tree		*right;
 	struct s_tree		*next;

@@ -6,7 +6,7 @@
 /*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:24 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/07/20 20:36:42 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/07/21 16:49:40 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ void	ft_env(t_minishell *ms, t_environ *env);
 void	ft_echo(t_minishell *ms, char **args);
 void	ft_pwd(t_minishell *ms);
 void	ft_cd(t_minishell *ms, char **args);
-void	ft_exit(t_minishell *ms, char **args);
+void	ft_exit(t_minishell *ms, t_tree *tree, char **args);
 bool	valid_identifier(char *str, int len);
 
 ///////////////// OTHER PROTOTYPES /////////////////

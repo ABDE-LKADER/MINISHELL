@@ -6,7 +6,7 @@
 /*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:30:49 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/21 11:30:39 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/07/21 17:08:33 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	execute_child(t_minishell *ms, t_tree *tree)
 		execution(ms, tree);
 	else
 	{
+		tree->no_print = 1;
 		expanding(ms, tree);
 		if (redirection(ms, tree) == -1)
 			exit(EXIT_FAILURE);
@@ -122,6 +123,7 @@ void	execute_last(t_minishell *ms, t_tree *tree)
 		(execution(ms, tree), exit(ms->exit_status));
 	else
 	{
+		tree->no_print = 1;
 		expanding(ms, tree);
 		if (redirection(ms, tree) == -1)
 			exit(EXIT_FAILURE);
@@ -157,7 +159,12 @@ void	last_command(t_minishell *ms, t_tree *tree, int *std)
 		waitpid(pid, &status, 0);
 		while (wait(NULL) != -1)
 			;
-		(WIFEXITED(status)) && (ms->exit_status = WEXITSTATUS(status));
+		if (ms->exit_status == 1)
+			return ;
+		if (WIFSIGNALED(status))
+			ms->exit_status = g_catch_signals + 128;
+		else if (WIFEXITED(status))
+			ms->exit_status = WEXITSTATUS(status);
 	}
 }
 
@@ -173,11 +180,12 @@ void	pipeline_handler(t_minishell *ms, t_tree *tree)
 	while (tmp->next)
 	{
 		if (g_catch_signals == 2)
+		{
+			ms->exit_status = 1;
 			break ;
+		}
 		pid = create_process(ms, tmp);
 		tmp = tmp->next;
 	}
 	last_command(ms, tmp, std);
-	if (g_catch_signals == 2)
-		ms->exit_status = 1;
 }
