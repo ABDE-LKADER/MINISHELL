@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:44:46 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/07/22 09:31:40 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/07/22 15:03:13 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	main(int ac, char **av, char **env)
 	(sig_handler(), environment_init(&ms, env, ac, av), check_if_tty());
 	while (1)
 	{
-		(TRUE) && (g_catch_signals = 0, ms.tree = NULL,
+		(TRUE) && (g_catch_signals = 0, ms.tree = NULL, ms.to_check = NULL,
 		ms.prompt = readline("Minishell >$ "));
 		if (!ms.prompt)
 			return (ft_printf(EXIT), clear_history(),
