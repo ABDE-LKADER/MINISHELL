@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:44:46 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/07/19 17:31:09 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/22 09:31:40 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,21 @@ void	parser(t_minishell *ms)
 		ms->tree = NULL;
 }
 
+void	check_if_tty(void)
+{
+	if (isatty(0) == 0 || isatty(1) == 0 || isatty(2) == 0)
+	{
+		printf("Please use a tty :)\n");
+		exit(2);
+	}
+		
+}
+
 int	main(int ac, char **av, char **env)
 {
 	t_minishell		ms;
 
-	(sig_handler(), environment_init(&ms, env, ac, av));
+	(sig_handler(), environment_init(&ms, env, ac, av), check_if_tty());
 	while (1)
 	{
 		(TRUE) && (g_catch_signals = 0, ms.tree = NULL,
