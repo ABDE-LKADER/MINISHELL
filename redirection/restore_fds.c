@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 14:45:58 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/22 18:40:28 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/22 19:28:13 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ bool	check_ambiguous_redir(t_minishell *ms, t_redirection redirection,
 			name++;
 		}
 	}
-	if (ft_strchr(expand, ' '))
+	if (!*expand || ft_strchr(expand, ' '))
 		return (TRUE);
 	return (FALSE);
 }
