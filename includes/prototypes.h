@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prototypes.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:24 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/07/21 16:49:40 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/07/22 10:44:09 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ void	join_doubles(t_minishell *ms, t_tree *tree, char **join, int *index);
 char	**wildcards_expander(t_minishell *ms, char *arg);
 char	*remove_qoutes(t_minishell *ms, char *value);
 void	convert_to_eot(t_expand *expand);
+bool	split_expansion_checker(t_minishell *ms);
 
 ///////////////// BUILTINS PROTOTYPES /////////////////
 

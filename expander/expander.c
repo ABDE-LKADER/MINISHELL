@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:55:24 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/21 20:12:05 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/07/22 11:37:39 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,19 +43,24 @@ t_expand	*splite_use_qoutes(t_minishell *ms, char *arg)
 char	*splite_mult_args(t_minishell *ms, char *arg, bool status, bool option)
 {
 	bool		op;
+	bool		spex;
 	char		*new;
 	t_expand	*expand;
 
-	(TRUE) && (new = NULL, op = FALSE, expand = splite_use_qoutes(ms, arg));
+	(TRUE) && (new = NULL, op = FALSE, spex = FALSE,
+		expand = splite_use_qoutes(ms, arg));
 	while (expand)
 	{
 		(!option && (*expand->value == '\'' || *expand->value == '\"'))
 			&& (option = TRUE);
 		(expand->next && (*expand->next->value == '\''
 				|| *expand->next->value == '\"')) && (op = TRUE);
+		(!option) && (spex = split_expansion_checker(ms));
 		(status) && (expand->value = splite_to_expand(ms, expand->value, op));
-		convert_to_eot(expand);
-		(option) && (expand->value = remove_qoutes(ms, expand->value));
+		if (!option && spex)
+			convert_to_eot(expand), spex = FALSE;
+		(option) && (expand->value = remove_qoutes(ms, expand->value),
+			option = FALSE);
 		new = ft_strjoin(&ms->leaks, new, expand->value);
 		(TRUE) && (expand = expand->next, op = FALSE);
 	}
@@ -69,7 +74,8 @@ void	expanding(t_minishell *ms, t_tree *tree)
 
 	if (!tree->value)
 		return ;
-	(TRUE) && (index = -1, option = FALSE);
+	(TRUE) && (ms->to_check = tree->args, ms->current = &index,
+		index = -1, option = FALSE);
 	while (tree->args[++index])
 	{
 		(*tree->args[index] == '*') && (option = TRUE);
@@ -82,5 +88,5 @@ void	expanding(t_minishell *ms, t_tree *tree)
 			join_doubles(ms, tree, wildcards_expander(ms, tree->args[index]),
 				&index);
 	}
-	tree->value = *tree->args;
+	tree->value = *ms->to_check;
 }

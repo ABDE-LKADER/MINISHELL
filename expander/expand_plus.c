@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_plus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:55:24 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/21 20:10:21 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/07/22 11:37:34 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ void	convert_to_eot(t_expand *expand)
 	int		index;
 
 	index = -1;
-	if (*expand->value == '\'' || *expand->value == '\"')
-		return ;
 	while (expand->value[++index])
 	{
 		if (is_whitespace(expand->value[index]))
@@ -46,6 +44,23 @@ bool	expand_option(char *value, char *sp, int option)
 	if (option != ERROR && *value == '\'')
 		return (FALSE);
 	return (TRUE);
+}
+
+bool	split_expansion_checker(t_minishell *ms)
+{
+	int		index;
+
+	if ((ft_strncmp(*ms->to_check, "export", ft_strlen("export"))
+			&& ft_strlen(*ms->to_check) == ft_strlen("export"))
+			|| !ft_strchr(ms->to_check[*ms->current], '='))
+		return (TRUE);
+	(TRUE) && (index = -1);
+	while (ms->to_check[*ms->current][++index] != '=')
+	{
+		if (ms->to_check[*ms->current][index] == '$')
+			return (TRUE);
+	}
+	return (FALSE);
 }
 
 char	*tilde_expander(t_minishell *ms, char *value)
