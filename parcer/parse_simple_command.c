@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_simple_command.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:37 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/07/21 16:41:42 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/07/22 13:02:43 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,8 +114,8 @@ t_tree	*parse_simple_command(t_minishell *ms, int *i)
 	(1) && (ms->tree->left = NULL, ms->tree->right = NULL);
 	(1) && (redir_set = 0);
 	if (ms->tokens[*i] && !check_token_op(ms->tokens[*i])
-		&& count_args(ms->tokens + *i))
-		check_args(ms->tree, ms->tokens + *i, count_args(ms->tokens + *i));
+		&& count_args(ms->tokens + *i)) check_args(ms, ms->tree,
+			ms->tokens + *i, count_args(ms->tokens + *i));
 	if (check_redir_at_end(ms, i, &redir_set))
 		return (NULL);
 	if (ms->tree->syntax_err == 1)

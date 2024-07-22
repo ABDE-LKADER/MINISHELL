@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:24 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/07/22 10:44:09 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/22 13:02:45 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	syntax_err(t_minishell *ms, char *option,
 void	set_redir(t_minishell *ms, int *i);
 int		check_if_operator(char *token);
 int		check_redirection(t_minishell *ms, int *i, int *redir_set);
-void	check_args(t_tree *node, char **tokens, int len);
+void	check_args(t_minishell *ms, t_tree *node, char **tokens, int len);
 int		check_redir_at_end(t_minishell *ms, int *i, int *redir_set);
 int		check_closed_quotes(t_minishell *ms, int i, int j);
 int		check_valid_op(char *token);
@@ -111,6 +111,7 @@ char	**wildcards_expander(t_minishell *ms, char *arg);
 char	*remove_qoutes(t_minishell *ms, char *value);
 void	convert_to_eot(t_expand *expand);
 bool	split_expansion_checker(t_minishell *ms);
+bool	only_var(t_minishell *ms, char *arg);
 
 ///////////////// BUILTINS PROTOTYPES /////////////////
 

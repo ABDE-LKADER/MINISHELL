@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:55:24 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/22 11:37:39 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/22 13:02:42 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,5 +88,5 @@ void	expanding(t_minishell *ms, t_tree *tree)
 			join_doubles(ms, tree, wildcards_expander(ms, tree->args[index]),
 				&index);
 	}
-	tree->value = *ms->to_check;
+	tree->value = *tree->args;
 }
