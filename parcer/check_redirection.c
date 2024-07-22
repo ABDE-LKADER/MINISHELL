@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 14:18:54 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/22 13:27:00 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/22 16:58:00 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,7 @@ int	check_redirection_symbole(t_minishell *ms, int *i, int *redir_set)
 		if (check_if_operator(ms->tokens[*i + 1])
 			|| check_token_op(ms->tokens[*i + 1]))
 			return (1);
-		ms->tree->redir[ms->tree->redir_index].ambig_var = ms->tokens[*i + 1];
-		ms->tree->redir[ms->tree->redir_index].redir_name = splite_mult_args
-			(ms, ms->tokens[*i + 1], TRUE, TRUE);
-		if (ft_strchr(ms->tokens[*i + 1], '$') && !ft_strchr(ms->tokens[*i + 1],
-			'\'') && !ft_strchr(ms->tokens[*i + 1], '\"') && ft_strchr(ms->tree
-			->redir[ms->tree->redir_index].redir_name, ' '))
-			ms->tree->redir[ms->tree->redir_index].ambiguous = 1;
+		ms->tree->redir[ms->tree->redir_index].redir_name = ms->tokens[*i + 1];
 		ms->tree->redir_index++;
 		*redir_set = 1;
 		if (redir_set)

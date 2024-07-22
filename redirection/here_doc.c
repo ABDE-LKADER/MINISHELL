@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 21:18:31 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/07/19 16:52:01 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/22 15:13:09 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ void	check_syntax_err_in_heredoc(t_minishell *ms)
 			syntax_err(ms, NULL, "syntax error", 258);
 		i++;
 	}
-	// check_closed_quotes(ms, 0, 0);
 }
 
 int	ft_open_here_doc(t_minishell *ms, char *delimiter, t_tree *node)

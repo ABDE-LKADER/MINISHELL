@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 14:45:58 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/18 06:46:41 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/22 18:17:21 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,48 @@ int	redir_to_dev_null(t_minishell *ms)
 		perror("dup2");
 	close(null);
 	return (TRUE);
+}
+
+bool	wildcards_ambiguous(t_minishell *ms, char *name)
+{
+	int		len;
+	char	**wildcards;
+
+	wildcards = wildcards_expander(ms, name);
+	len = -1;
+	while (wildcards[++len])
+		;
+	if (len == 1)
+		return (FALSE);
+	return (TRUE);
+}
+
+bool	check_ambiguous_redir(t_minishell *ms, t_redirection redirection,
+	char *name)
+{
+	int		find;
+	char	*hold;
+	char	*expand;
+
+	(TRUE) && (find = FALSE, hold = name,
+		expand = splite_to_expand(ms, hold, FALSE));
+	if (ft_strchr(expand, '*') && wildcards_ambiguous(ms, expand))
+		return (TRUE);
+	if (redirection == HERE_DOC_T || !ft_strchr(name, '$'))
+		return (FALSE);
+	while (*name && *name != '\'' && *name != '\"')
+		name++;
+	if (*name && (*name == '\'' || *name == '\"'))
+	{
+		while (*name)
+		{
+			(*name == '$') && (find = TRUE);
+			if (find && (*name == '\'' || *name == '\"'))
+				return (FALSE);
+			name++;
+		}
+	}
+	if (ft_strchr(expand, ' '))
+		return (TRUE);
+	return (FALSE);
 }

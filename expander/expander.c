@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:55:24 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/22 13:02:42 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/22 18:11:53 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ char	*splite_mult_args(t_minishell *ms, char *arg, bool status, bool option)
 		(status) && (expand->value = splite_to_expand(ms, expand->value, op));
 		if (!option && spex)
 			convert_to_eot(expand), spex = FALSE;
+		((ft_strchr(expand->value, '\'') || ft_strchr(expand->value, '\"'))
+			&& (ft_strchr(expand->value, '*'))) && (ms->wildcards = FALSE);
 		(option) && (expand->value = remove_qoutes(ms, expand->value),
 			option = FALSE);
 		new = ft_strjoin(&ms->leaks, new, expand->value);
@@ -70,21 +72,20 @@ char	*splite_mult_args(t_minishell *ms, char *arg, bool status, bool option)
 void	expanding(t_minishell *ms, t_tree *tree)
 {
 	int	index;
-	int	option;
 
 	if (!tree->value)
 		return ;
 	(TRUE) && (ms->to_check = tree->args, ms->current = &index,
-		index = -1, option = FALSE);
+		index = -1);
 	while (tree->args[++index])
 	{
-		(*tree->args[index] == '*') && (option = TRUE);
+		ms->wildcards = TRUE;
 		if (*tree->args[index] == '~')
 			tree->args[index] = tilde_expander(ms, tree->args[index]);
 		tree->args[index] = splite_mult_args(ms, tree->args[index], TRUE, FALSE);
 		join_doubles(ms, tree, ft_split(&ms->leaks, tree->args[index],
 			EOT), &index);
-		if (option && ft_strchr(tree->args[index], '*'))
+		if (ms->wildcards && ft_strchr(tree->args[index], '*'))
 			join_doubles(ms, tree, wildcards_expander(ms, tree->args[index]),
 				&index);
 	}

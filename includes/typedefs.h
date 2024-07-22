@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:24 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/07/22 10:30:32 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/22 18:07:41 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,6 @@ typedef struct s_redir
 	t_redirection		redirection;
 	char				*redir_name;
 	bool				set_expand;
-	char				*ambig_var;
-	bool				ambiguous;
 	int					fd;
 }						t_redir;
 
@@ -99,6 +97,7 @@ typedef struct s_minishell
 	char			**tokens;
 	int				*current;
 	char			**to_check;
+	bool			wildcards;
 	int				exit_status;
 }					t_minishell;
 
