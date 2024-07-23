@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_operate.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 01:12:48 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/16 00:58:33 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/07/23 09:46:51 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ int	check_ops_and_cmds(t_minishell *ms)
 	(1) && (i = 0, cmd = 0, ops = 0, here = 0);
 	while (ms->tokens[i])
 	{
-		if (ft_strncmp(ms->tokens[i], "<<", ft_strlen(ms->tokens[i])) == 0)
+		if (!ft_strncmp(ms->tokens[i], "<<", ft_strlen(ms->tokens[i]))
+			&& ft_strlen(ms->tokens[i]) == ft_strlen("<<"))
 			here = 1;
 		if (check_token_op(ms->tokens[i]))
 			ops++;

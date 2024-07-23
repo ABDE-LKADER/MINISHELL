@@ -6,11 +6,23 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:54:33 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/23 06:56:03 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/23 09:53:14 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	clean_fds(t_tree *tree)
+{
+	int		index;
+
+	index = -1;
+	while (++index < tree->redir_index)
+	{
+		if (tree->redir[index].fd != -1)
+			close(tree->redir[index].fd);
+	}
+}
 
 void	update_env_values(t_minishell *ms, char **args)
 {
@@ -40,6 +52,7 @@ void	execution(t_minishell *ms, t_tree *tree)
 			built_in_execute(ms, tree);
 		else
 			command_execute(ms, tree);
+		clean_fds(tree);
 	}
 	if ((tree->type == AND_T && !ms->exit_status)
 		|| (tree->type == OR_T && ms->exit_status))
