@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:55:24 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/07/23 09:57:36 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/23 13:42:42 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	create_to_export(t_minishell *ms, t_environ *env, char **args,
 
 	while (*args)
 	{
-		if (**args && ((!ft_isalpha(**args) && **args != '_')
+		if (((!ft_isalpha(**args) && **args != '_')
 				|| !valid_identifier(*args, strlen_set(*args, '='))))
 		{
 			syntax_err(ms, *args, "not a valid identifier", 1);
@@ -128,7 +128,7 @@ void	ft_export(t_minishell *ms, t_environ *env, char **args)
 
 	(TRUE) && (len = 0, index = -1, status = 0);
 	while (args[++index])
-		(*args[index]) && (len++);
+		len++;
 	if (len == 1)
 		export_list(env);
 	if (len != 1)
