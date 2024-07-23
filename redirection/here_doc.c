@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 21:18:31 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/07/22 15:13:09 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/23 10:58:05 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,12 +75,12 @@ void	check_syntax_err_in_heredoc(t_minishell *ms)
 	int	i;
 
 	i = 0;
-	while (ms &&  ms->tokens[i])
+	while (ms && ms->tokens[i])
 	{
 		if ((check_op_syntax(ms->tokens[i]) == 0 && ms->tokens[i + 1]
-		&& check_op_syntax(ms->tokens[i + 1]) == 0)
-		|| (check_token_op(ms->tokens[i]) && ms->tokens[i + 1]
-		&& check_token_op(ms->tokens[i + 1])))
+				&& check_op_syntax(ms->tokens[i + 1]) == 0)
+			|| (check_token_op(ms->tokens[i]) && ms->tokens[i + 1]
+				&& check_token_op(ms->tokens[i + 1])))
 			syntax_err(ms, NULL, "syntax error", 258);
 		i++;
 	}

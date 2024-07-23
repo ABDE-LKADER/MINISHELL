@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:55:24 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/23 09:56:41 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/23 10:48:26 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,11 @@ void	modify_pwd_val(t_minishell *ms)
 	if (path)
 	{
 		if (get_env_val(ms, "PWD") == NULL)
-		{	
+		{
 			environment_add(ms, &ms->env, "PWD", path);
 			modify_env_val(ms, "PWD", path);
 		}
-		else	
+		else
 			modify_env_val(ms, "PWD", path);
 	}
 	else

@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 15:35:38 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/23 06:55:13 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/23 11:05:28 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,8 @@ bool	valid_identifier(char *str, int len)
 	return (TRUE);
 }
 
-void	environment_init(t_minishell *ms, char **env, int ac, char **av)
+void	environment_init(t_minishell *ms, char **env)
 {
-	if (ac != 1 && av)
-		(ft_putendl_fd("./minishell <empty>", 2), exit(EXIT_FAILURE));
 	ft_bzero(ms, sizeof(t_minishell));
 	if (!env || !*env)
 	{
@@ -84,7 +82,7 @@ void	environment_init(t_minishell *ms, char **env, int ac, char **av)
 			env++;
 		}
 		if (get_env_val(ms, "OLDPWD") == NULL)
-			environment_add(ms, &ms->env, "OLDPWD", NULL);	
+			environment_add(ms, &ms->env, "OLDPWD", NULL);
 	}
 	increase_shelvl(ms);
 }

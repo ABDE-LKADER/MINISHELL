@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:55:24 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/07/23 09:57:41 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/23 10:48:44 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ void	ft_exit(t_minishell *ms, t_tree *tree, char **args)
 	else if (len == 2)
 	{
 		if (len == 2 && (args[1] == NULL || *args[1] == '\0'))
-			(syntax_err(ms, args[1], "numeric argument required", 255)
-			, exit(255));
+			(syntax_err(ms, args[1], "numeric argument required", 255),
+				exit(255));
 		len = 0;
 		exit_status = ft_atoi(args[1]);
 	}

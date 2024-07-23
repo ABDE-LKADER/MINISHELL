@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:54:33 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/23 09:53:14 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/23 10:49:47 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void	update_env_values(t_minishell *ms, char **args)
 
 void	execution(t_minishell *ms, t_tree *tree)
 {
-
 	if (!tree || g_catch_signals == SIGINT)
 		return ;
 	if (tree->type == PIPE_T)

@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:30:49 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/23 09:58:17 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/23 11:14:07 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	execute_child(t_minishell *ms, t_tree *tree)
 {
 	char	*path;
-
 
 	if (tree->type != CMD_T)
 		execution(ms, tree);
@@ -26,7 +25,7 @@ void	execute_child(t_minishell *ms, t_tree *tree)
 		if (redirection(ms, tree) == -1)
 			exit(EXIT_FAILURE);
 		if (check_if_builtins(tree->value))
-			(built_in_execute(ms, tree),exit(ms->exit_status));
+			(built_in_execute(ms, tree), exit(ms->exit_status));
 		else
 		{
 			if (!tree->value || !*tree->value)
@@ -54,12 +53,13 @@ int	find_redir_type(t_tree *tmp, t_redirection type)
 
 int	create_process(t_minishell *ms, t_tree *tree)
 {
-	pid_t pid;
-	int pipefd[2];
+	pid_t	pid;
+	int		pipefd[2];
 
 	if (pipe(pipefd) == -1)
 		exit(EXIT_FAILURE);
-	else if ((pid = fork()) == -1)
+	pid = fork();
+	if (pid == -1)
 		(perror("fork"), kill(0, SIGINT), g_catch_signals = 2);
 	else if (pid == 0)
 	{
@@ -86,7 +86,7 @@ void	execute_last(t_minishell *ms, t_tree *tree)
 		if (redirection(ms, tree) == -1)
 			exit(EXIT_FAILURE);
 		if (check_if_builtins(tree->value))
-			(built_in_execute(ms, tree),exit(ms->exit_status));
+			(built_in_execute(ms, tree), exit(ms->exit_status));
 		else
 		{
 			if (!tree->value || !*tree->value)

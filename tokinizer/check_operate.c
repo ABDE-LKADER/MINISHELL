@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 01:12:48 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/23 09:46:51 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/23 10:43:57 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,21 +47,17 @@ int	check_ops_and_cmds(t_minishell *ms)
 	int	i;
 	int	cmd;
 	int	ops;
-	int	here;
 
-	(1) && (i = 0, cmd = 0, ops = 0, here = 0);
+	(1) && (i = 0, cmd = 0, ops = 0);
 	while (ms->tokens[i])
 	{
-		if (!ft_strncmp(ms->tokens[i], "<<", ft_strlen(ms->tokens[i]))
-			&& ft_strlen(ms->tokens[i]) == ft_strlen("<<"))
-			here = 1;
 		if (check_token_op(ms->tokens[i]))
 			ops++;
 		else if (ms->tokens[i][0] != '(' && ms->tokens[i][0] != ')')
 			cmds_checker(ms, &cmd, &i);
 		i++;
 	}
-	if (ms->tokens[0] != NULL && !here && ops + 1 != cmd)
+	if (ms->tokens[0] != NULL && ops + 1 != cmd)
 		return (syntax_err(ms, NULL,
 				"syntax error near unexpected token\n", 258), -1);
 	return (0);

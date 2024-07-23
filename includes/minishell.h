@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:24 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/07/20 19:10:20 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/23 11:20:00 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,6 @@
 # define REDCL "\033[1;31m"
 # define RESET "\033[0m"
 
-extern int	g_catch_signals;
+int	g_catch_signals;
 
 #endif
