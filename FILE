@@ -1,0 +1,14 @@
+FILE
+MYLIB
+Makefile
+README.md
+builtins
+execution
+expander
+includes
+minishell
+more
+note_any_problem.md
+parcer
+redirection
+tokinizer
