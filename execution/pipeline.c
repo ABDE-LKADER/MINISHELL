@@ -17,7 +17,7 @@ void	execute_child(t_minishell *ms, t_tree *tree)
 	char	*path;
 
 	if (tree->type != CMD_T)
-		(execution(ms, tree), exit(ms->exit_status));
+		(printf("HERE\n"), execution(ms, tree), exit(ms->exit_status));
 	else
 	{
 		tree->no_print = 1;
@@ -37,16 +37,16 @@ void	execute_child(t_minishell *ms, t_tree *tree)
 	}
 }
 
-void	create_process(t_minishell *ms, t_tree *tree)
+int	create_process(t_minishell *ms, t_tree *tree)
 {
 	pid_t	pid;
 	int		pipefd[2];
 
 	if (pipe(pipefd) == -1)
-		exit(EXIT_FAILURE);
+		return (perror("pipe"), -1);
 	pid = fork();
 	if (pid == -1)
-		(perror("fork"), kill(0, SIGINT), g_catch_signals = 2);
+		return (perror("fork"), kill(0, SIGINT), -1);
 	else if (pid == 0)
 	{
 		if (tree->next != NULL)
@@ -56,6 +56,7 @@ void	create_process(t_minishell *ms, t_tree *tree)
 	}
 	else
 		(dup2(pipefd[0], STDIN_FILENO), close(pipefd[1]), close(pipefd[0]));
+	return (1);
 }
 
 void	last_command(t_minishell *ms, t_tree *tree, t_fds fds)
@@ -74,8 +75,6 @@ void	last_command(t_minishell *ms, t_tree *tree, t_fds fds)
 		waitpid(pid, &status, 0);
 		while (wait(NULL) != -1)
 			;
-		if (ms->exit_status == 1)
-			return ;
 		if (WIFSIGNALED(status))
 			ms->exit_status = g_catch_signals + 128;
 		else if (WIFEXITED(status))
@@ -87,17 +86,19 @@ void	pipeline_handler(t_minishell *ms, t_tree *tree)
 {
 	t_tree	*tmp;
 	t_fds	fds;
+	int		pid;
 
 	fds = save_fds();
 	tmp = tree->next;
+	pid = 0;
 	while (tmp->next)
 	{
-		if (g_catch_signals == 2)
+		if (pid == -1)
 		{
 			ms->exit_status = 1;
 			break ;
 		}
-		create_process(ms, tmp);
+		pid = create_process(ms, tmp);
 		tmp = tmp->next;
 	}
 	last_command(ms, tmp, fds);
