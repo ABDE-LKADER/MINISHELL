@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:55:24 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/24 10:36:21 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/24 15:57:17 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ char	*expand_doller(t_minishell *ms)
 	if (pid == 0)
 	{
 		(dup2(pipes[1], STDOUT_FILENO), close(pipes[1]), close(pipes[0]));
-		execve(fetch_path(ms, ms->env, args[0]), args, change_linked_to_double(ms));
+		execve(fetch_path(ms, ms->env, args[0]), args,
+			change_linked_to_double(ms));
 		exit (EXIT_FAILURE);
 	}
 	(waitpid(pid, NULL, 0), id = get_next_line(&ms->leaks, pipes[0]),
