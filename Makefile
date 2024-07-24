@@ -6,7 +6,7 @@
 #    By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/19 17:23:22 by abadouab          #+#    #+#              #
-#    Updated: 2024/07/24 14:32:09 by abbaraka         ###   ########.fr        #
+#    Updated: 2024/07/24 15:44:15 by abbaraka         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ SRCS		=	more/minishell.c more/signal_handler.c \
 				builtins/echo.c builtins/pwd.c builtins/exit.c \
 				builtins/env.c builtins/export.c builtins/unset.c \
 				builtins/cd.c \
-				tools/tokens_tools.c \
+				tools/tokens_tools.c tools/split_args.c \
 
 OBJS		=	$(SRCS:.c=.o)
 HEADER		=	includes/minishell.h

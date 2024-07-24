@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_val.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:55:24 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/24 10:36:21 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/24 15:48:40 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char	*expand_doller(t_minishell *ms)
 		close(pipes[0]), close(pipes[1]), restore_fds(fds));
 	return (*ft_split(&ms->leaks, id, '\n'));
 }
-
+ 
 bool	only_var(t_minishell *ms, char *arg)
 {
 	char	**hold;
