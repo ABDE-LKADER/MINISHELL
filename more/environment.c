@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 15:35:38 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/23 11:05:28 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/24 10:19:54 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,55 +34,56 @@ void	environment_add(t_minishell *ms, t_environ **env, void *var, void *val)
 	node->next = new;
 }
 
-void	increase_shelvl(t_minishell *ms)
+static void	increase_shelvl(t_minishell *ms)
 {
 	int		num;
 	char	*str;
+	char	*shl;
 
-	num = ft_atoi(get_env_val(ms, "SHLVL")) + 1;
+	shl = get_env_val(ms, "SHLVL");
+	if (!shl)
+		return (environment_add(ms, &ms->env,
+			ft_strdup(&ms->alloc, "SHLVL"), ft_strdup(&ms->alloc, "1")));
+	num = ft_atoi(shl) + 1;
 	str = ft_itoa(&ms->alloc, num);
 	modify_env_val(ms, "SHLVL", str);
 }
 
-bool	valid_identifier(char *str, int len)
+static void	create_environment(t_minishell *ms)
 {
-	int		index;
+	char	*path;
 
-	index = -1;
-	while (++index < len)
-	{
-		if (index + 1 == len && str[index] == '+')
-			return (TRUE);
-		if (!ft_isalnum(str[index]) && str[index] != '_')
-			return (FALSE);
-	}
-	return (TRUE);
+	path = getcwd(NULL, 0);
+	if (!search_env_var(ms->env, "PWD"))
+		environment_add(ms, &ms->env, ft_strdup(&ms->alloc, "PWD"), NULL);
+	modify_env_val(ms, "PWD", path);
+	if (!search_env_var(ms->env, "SHLVL"))
+		environment_add(ms, &ms->env, ft_strdup(&ms->alloc, "SHLVL"),
+			ft_strdup(&ms->alloc, "0"));
+	if (!search_env_var(ms->env, "_"))
+		environment_add(ms, &ms->env, ft_strdup(&ms->alloc, "_"), NULL);
+	modify_env_val(ms, "_", ft_strdup(&ms->alloc, "./minishell"));
+	if (!search_env_var(ms->env, "OLDPWD"))
+		environment_add(ms, &ms->env, "OLDPWD", NULL);
+	free(path);
 }
 
 void	environment_init(t_minishell *ms, char **env)
 {
 	ft_bzero(ms, sizeof(t_minishell));
-	if (!env || !*env)
+	if (!env)
+		create_environment(ms);
+	while (env && *env)
 	{
 		environment_add(ms, &ms->env,
-			ft_strdup(&ms->alloc, "PWD"), getcwd(NULL, 0));
-		environment_add(ms, &ms->env,
-			ft_strdup(&ms->alloc, "SHLVL"), ft_strdup(&ms->alloc, "0"));
-		environment_add(ms, &ms->env,
-			ft_strdup(&ms->alloc, "_"), ft_strdup(&ms->alloc, "./minishell"));
+			ft_substr(&ms->alloc, *env, 0, strlen_set(*env, '=')),
+			ft_substr(&ms->alloc, *env, strlen_set(*env, '=') + 1,
+				ft_strlen(*env)));
+		env++;
 	}
-	else
-	{
-		while (*env)
-		{
-			environment_add(ms, &ms->env,
-				ft_substr(&ms->alloc, *env, 0, strlen_set(*env, '=')),
-				ft_substr(&ms->alloc, *env, strlen_set(*env, '=') + 1,
-					ft_strlen(*env)));
-			env++;
-		}
-		if (get_env_val(ms, "OLDPWD") == NULL)
-			environment_add(ms, &ms->env, "OLDPWD", NULL);
-	}
-	increase_shelvl(ms);
+	if(!search_env_var(ms->env, "PWD")
+		|| !search_env_var(ms->env, "SHLVL")
+		|| !search_env_var(ms->env, "OLDPWD"))
+		create_environment(ms);
+	(ms->saved = get_env_val(ms, "PWD"), increase_shelvl(ms));
 }

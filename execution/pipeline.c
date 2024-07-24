@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:30:49 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/23 11:42:01 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/24 10:36:25 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	execute_child(t_minishell *ms, t_tree *tree)
 	char	*path;
 
 	if (tree->type != CMD_T)
-		(printf("HERE\n"), execution(ms, tree), exit(ms->exit_status));
+		(execution(ms, tree), exit(ms->exit_status));
 	else
 	{
 		tree->no_print = 1;
@@ -28,7 +28,7 @@ void	execute_child(t_minishell *ms, t_tree *tree)
 			(built_in_execute(ms, tree), exit(ms->exit_status));
 		else
 		{
-			if (!tree->value || !*tree->value)
+			if (!tree->value)
 				exit(EXIT_SUCCESS);
 			path = fetch_path(ms, ms->env, tree->value);
 			if (execve(path, tree->args, change_linked_to_double(ms)) == -1)

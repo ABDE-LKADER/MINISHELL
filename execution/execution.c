@@ -6,13 +6,13 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:54:33 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/23 10:49:47 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/24 14:07:22 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	clean_fds(t_tree *tree)
+static void	clean_fds(t_tree *tree)
 {
 	int		index;
 
@@ -24,16 +24,72 @@ void	clean_fds(t_tree *tree)
 	}
 }
 
-void	update_env_values(t_minishell *ms, char **args)
+static void	update_env_values(t_minishell *ms, t_tree *tree)
 {
 	int		index;
 
 	index = -1;
-	if (!args || !*args)
+	if (!tree->args || !*tree->args)
 		return ;
-	while (args[++index])
+	while (tree->args[++index])
 		;
-	modify_env_val(ms, "_", args[index - 1]);
+	modify_env_val(ms, "_", tree->args[index - 1]);
+}
+
+char	*fetch_path(t_minishell *ms, t_environ *env, char *cmd)
+{
+	DIR		*dir;
+	char	**paths;
+
+	if (!cmd)
+		return (NULL);
+	dir = opendir(cmd);
+	if ((dir && !closedir(dir) && ft_strchr(cmd, '/'))
+		|| !ft_strncmp("./", cmd, ft_strlen("./"))
+		|| !ft_strncmp("/", cmd, ft_strlen("/")))
+		return (cmd);
+	while (env && ft_strncmp("PATH", env->var, ft_strlen("PATH")))
+		env = env->next;
+	if (!env || !env->val || !*env->val)
+		(syntax_err(ms, cmd, "No such file or directory", 127), exit(127));
+	paths = ft_split(&ms->leaks, env->val, ':');
+	while (*paths)
+	{
+		*paths = ft_strjoin(&ms->leaks, *paths, "/");
+		*paths = ft_strjoin(&ms->leaks, *paths, cmd);
+		if (!access(*paths, X_OK))
+			return (*paths);
+		paths++;
+	}
+	return (NULL);
+}
+
+static void	command_execute(t_minishell *ms, t_tree *tree)
+{
+	pid_t	pid;
+	char	*path;
+	int		status;
+
+	pid = fork();
+	if (pid == -1)
+		(perror("fork"));
+	if (pid == 0)
+	{
+		if (redirection(ms, tree) == -1 || !tree->value)
+			exit(EXIT_FAILURE);
+		path = fetch_path(ms, ms->env, tree->value);
+		if (tree->dis_error)
+			exit(ms->exit_status);
+		if (execve(path, tree->args, change_linked_to_double(ms)) == -1)
+			execution_errors(ms, tree, path);
+	}
+	waitpid(pid, &status, 0);
+	// if (!ft_strncmp(tree->value, "./minishell", ft_strlen(tree->value)))
+	// 	ms->exit_status = WEXITSTATUS(status);
+	if (WIFSIGNALED(status))
+		ms->exit_status = g_catch_signals + 128;
+	else if (WIFEXITED(status))
+		ms->exit_status = WEXITSTATUS(status);
 }
 
 void	execution(t_minishell *ms, t_tree *tree)
@@ -46,7 +102,7 @@ void	execution(t_minishell *ms, t_tree *tree)
 	if (tree->type == CMD_T)
 	{
 		expanding(ms, tree);
-		update_env_values(ms, tree->args);
+		update_env_values(ms, tree);
 		if (check_if_builtins(tree->value))
 			built_in_execute(ms, tree);
 		else

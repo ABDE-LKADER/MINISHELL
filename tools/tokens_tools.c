@@ -1,26 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   tokens_tools.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/23 09:57:24 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/24 10:26:15 by abadouab         ###   ########.fr       */
+/*   Created: 2024/07/24 10:12:51 by abadouab          #+#    #+#             */
+/*   Updated: 2024/07/24 10:13:21 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_pwd(t_minishell *ms)
+int	check_par(char *s)
 {
-	char	*path;
+	int		i;
+	int		level;
+	int		quotes;
 
-	path = getcwd(NULL, 0);
-	if (path)
-		(ft_printf("%s\n", path), ms->exit_status = 0, free(path));
-	else if (ms->saved)
-		(ft_printf("%s\n", ms->saved), ms->exit_status = 0);
-	else if (!path)
-		(perror("getcwd"), ms->exit_status = 1);
+	(TRUE) && (i = -1, level = 0);
+	while (s[++i])
+	{
+		if (s[i] == '\'' || s[i] == '"')
+		{
+			(TRUE) && (quotes = s[i], i++);
+			while (s[i] && s[i] != quotes)
+				i++;
+		}
+		if (s[i] == '\0')
+			break ;
+		if (s[i] == '(')
+			level++;
+		if (s[i] == '(' && s[i + 1] == ')')
+			return (1);
+		if (s[i] == ')')
+			level--;
+	}
+	if (level)
+		return (1);
+	return (0);
 }

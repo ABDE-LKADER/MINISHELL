@@ -6,13 +6,13 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 14:45:58 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/20 14:58:00 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/24 10:39:55 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	update_here_doc(t_minishell *ms, pid_t pid, int fds[], int fd)
+static void	update_here_doc(t_minishell *ms, pid_t pid, int fds[], int fd)
 {
 	char	*line;
 

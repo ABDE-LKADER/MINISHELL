@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:24 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/07/22 19:31:57 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/24 06:53:03 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ typedef struct s_minishell
 	t_allocate		*leaks;
 	t_allocate		*alloc;
 	t_environ		*env;
+	char			*saved;
 	char			*prompt;
 	char			**tokens;
 	int				*current;

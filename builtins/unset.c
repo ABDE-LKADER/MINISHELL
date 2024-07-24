@@ -6,13 +6,13 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:55:24 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/07/23 09:57:18 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/24 10:27:57 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	env_unset_target(t_environ **env, char *to_find)
+static void	env_unset_target(t_environ **env, char *to_find)
 {
 	t_environ	*current;
 	t_environ	*previous;

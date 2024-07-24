@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:24 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/07/23 11:20:00 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/24 12:51:12 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,11 @@
 # define EXIT "\033[AMinishell >$ exit\n"
 # define INIT "\033[A\n>   \n"
 # define AMBG "ambiguous redirect"
+
+# define FAIL1 "cd: error retrieving current directory:"
+# define FAIL2 "getcwd: cannot access parent directories:"
+# define FAIL3 "No such file or directory\n"
+#define FAIL FAIL1 FAIL2 FAIL3
 
 # define TRUE 1
 # define FALSE 0

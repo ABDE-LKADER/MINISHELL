@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:24 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/07/23 16:11:55 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/24 13:58:16 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void	environment_init(t_minishell *ms, char **env);
 void	environment_add(t_minishell *ms, t_environ **env, void *var, void *val);
 char	*get_env_val(t_minishell *ms, char *s);
 void	modify_env_val(t_minishell *ms, char *env_var, char *val);
+bool	search_env_var(t_environ *env, char *to_find);
 
 ///////////////// ERROR PROTOTYPES /////////////////
 
@@ -93,7 +94,6 @@ bool	check_ambiguous_redir(t_minishell *ms, t_redirection redirection,
 
 char	**change_linked_to_double(t_minishell *ms);
 char	*fetch_path(t_minishell *ms, t_environ *env, char *cmd);
-void	command_execute(t_minishell *ms, t_tree *tree);
 void	execution(t_minishell *ms, t_tree *tree);
 void	built_in_execute(t_minishell *ms, t_tree *tree);
 
