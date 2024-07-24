@@ -6,13 +6,11 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:44:46 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/07/22 15:03:13 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/23 11:09:09 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	g_catch_signals;
 
 void	parser(t_minishell *ms)
 {
@@ -39,14 +37,15 @@ void	check_if_tty(void)
 		printf("Please use a tty :)\n");
 		exit(2);
 	}
-		
 }
 
 int	main(int ac, char **av, char **env)
 {
 	t_minishell		ms;
 
-	(sig_handler(), environment_init(&ms, env, ac, av), check_if_tty());
+	if (ac != 1 && av)
+		return (ft_putendl_fd("./minishell <empty>", 2), EXIT_FAILURE);
+	(sig_handler(), environment_init(&ms, env), check_if_tty());
 	while (1)
 	{
 		(TRUE) && (g_catch_signals = 0, ms.tree = NULL, ms.to_check = NULL,

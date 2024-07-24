@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:24 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/07/22 16:57:28 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/24 13:58:16 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,11 @@ void	sig_heredoc(void);
 
 ///////////////// ENVIRONMENT PROTOTYPES /////////////////
 
-void	environment_init(t_minishell *ms, char **env, int ac, char **av);
+void	environment_init(t_minishell *ms, char **env);
 void	environment_add(t_minishell *ms, t_environ **env, void *var, void *val);
 char	*get_env_val(t_minishell *ms, char *s);
 void	modify_env_val(t_minishell *ms, char *env_var, char *val);
+bool	search_env_var(t_environ *env, char *to_find);
 
 ///////////////// ERROR PROTOTYPES /////////////////
 
@@ -87,13 +88,12 @@ int		redirection(t_minishell *ms, t_tree *tree);
 int		redir_to_dev_null(t_minishell *ms);
 void	restore_fds(t_fds fds);
 bool	check_ambiguous_redir(t_minishell *ms, t_redirection redirection,
-	char *name);
+			char *name);
 
 ///////////////// EXEC PROTOTYPES /////////////////
 
 char	**change_linked_to_double(t_minishell *ms);
 char	*fetch_path(t_minishell *ms, t_environ *env, char *cmd);
-void	command_execute(t_minishell *ms, t_tree *tree);
 void	execution(t_minishell *ms, t_tree *tree);
 void	built_in_execute(t_minishell *ms, t_tree *tree);
 

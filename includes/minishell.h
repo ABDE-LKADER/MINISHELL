@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:24 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/07/20 19:10:20 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/24 12:51:12 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,11 @@
 # define INIT "\033[A\n>   \n"
 # define AMBG "ambiguous redirect"
 
+# define FAIL1 "cd: error retrieving current directory:"
+# define FAIL2 "getcwd: cannot access parent directories:"
+# define FAIL3 "No such file or directory\n"
+#define FAIL FAIL1 FAIL2 FAIL3
+
 # define TRUE 1
 # define FALSE 0
 # define ERROR -1
@@ -40,6 +45,6 @@
 # define REDCL "\033[1;31m"
 # define RESET "\033[0m"
 
-extern int	g_catch_signals;
+int	g_catch_signals;
 
 #endif

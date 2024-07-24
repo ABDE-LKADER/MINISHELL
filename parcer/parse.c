@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:11 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/07/17 14:18:44 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/07/23 10:47:45 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,9 @@ t_tree	*make_tree(t_minishell *ms, t_tree *left, t_tree *right, char *op)
 		&& ft_strlen(op) == ft_strlen("|"))
 	{
 		if (left->type == PIPE_T)
-		{
-			ft_treeadd_back(&left, right);
-			return (left);
-		}
-		node->value = op;
-		node->type = PIPE_T;
-		node->left = NULL;
-		node->right = NULL;
+			return (ft_treeadd_back(&left, right), left);
+		(TRUE) && (node->value = op, node->type = PIPE_T,
+			node->left = NULL, node->right = NULL);
 		ft_treeadd_back(&node, left);
 		ft_treeadd_back(&node, right);
 		return (node);
@@ -61,10 +56,8 @@ t_tree	*make_tree(t_minishell *ms, t_tree *left, t_tree *right, char *op)
 	if (ft_strncmp(op, "&&", ft_strlen(op)) == 0
 		&& ft_strlen(op) == ft_strlen("&&"))
 		node->type = AND_T;
-	node->value = op;
-	node->left = left;
-	node->right = right;
-	return (node);
+	return (node->value = op, node->left = left,
+		node->right = right, node);
 }
 
 int	check_if_prec(char *token)

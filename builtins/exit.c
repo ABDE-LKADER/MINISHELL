@@ -6,7 +6,7 @@
 /*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:55:24 by ||||||||          #+#    #+#             */
-/*   Updated: 2024/07/24 14:24:30 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/07/24 14:33:15 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,16 +55,11 @@ void	ft_exit(t_minishell *ms, t_tree *tree, char **args)
 	int	len;
 	int	exit_status;
 
-	(1) && (len = 0);
+	len = 0;
 	while (args[len])
 		len++;
 	(tree->no_print == 0) && (ft_putstr_fd("exit\n", 2), exit_status = 0);
-	(1) && (exit_status = 0);
-	// while (len > 1 && args[1][i])
-	// {
-	// 	check_numerical(ms, args, i);
-	// 	i++;
-	// }
+	exit_status = 0;
 	if (len > 1)
 		check_numerical(ms, args);
 	if (len > 2)
@@ -72,8 +67,8 @@ void	ft_exit(t_minishell *ms, t_tree *tree, char **args)
 	else if (len == 2)
 	{
 		if (len == 2 && (args[1] == NULL || *args[1] == '\0'))
-			(syntax_err(ms, args[1], "numeric argument required", 255)
-			, exit(255));
+			(syntax_err(ms, args[1], "numeric argument required", 255),
+				exit(255));
 		len = 0;
 		exit_status = ft_atoi(args[1]);
 	}

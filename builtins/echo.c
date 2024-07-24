@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/05 14:55:24 by ||||||||          #+#    #+#             */
-/*   Updated: 2024/07/20 17:11:33 by abbaraka         ###   ########.fr       */
+/*   Created: 2024/06/05 14:55:24 by abbaraka          #+#    #+#             */
+/*   Updated: 2024/07/24 10:23:03 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	check_options(char **args, int *i, int *option)
+static void	check_print_options(char **args, int *i, int *option)
 {
 	int		j;
 	int		found;
@@ -48,7 +48,7 @@ void	ft_echo(t_minishell *ms, char **args)
 
 	i = 1;
 	option = 0;
-	check_options(args, &i, &option);
+	check_print_options(args, &i, &option);
 	while (args[i])
 	{
 		ft_putstr_fd(args[i], 1);

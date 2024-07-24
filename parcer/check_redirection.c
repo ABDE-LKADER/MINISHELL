@@ -6,30 +6,11 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 14:18:54 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/22 16:58:00 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/23 16:12:00 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-bool	only_var(t_minishell *ms, char *arg)
-{
-	char	*hold;
-
-	if (*arg != '$')
-		return (TRUE);
-	arg++;
-	hold = arg;
-	while (*arg)
-	{
-		if (!ft_isalnum(*arg) && *arg != '_' && *arg != '$')
-			return (TRUE);
-		arg++;
-	}
-	if (get_env_val(ms, hold))
-		return (TRUE);
-	return (FALSE);
-}
 
 int	check_redirection_symbole(t_minishell *ms, int *i, int *redir_set)
 {

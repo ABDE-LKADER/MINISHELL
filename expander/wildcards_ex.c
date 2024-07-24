@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:55:24 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/22 17:30:04 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/24 10:43:12 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,10 +97,7 @@ char	**wildcards_expander(t_minishell *ms, char *arg)
 
 	(TRUE) && (expand = NULL, dir = opendir("."));
 	if (!dir)
-	{
-		perror("opendir");
-		return (NULL);
-	}
+		return (perror("opendir"), NULL);
 	entries = readdir(dir);
 	while (entries)
 	{

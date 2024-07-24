@@ -6,7 +6,7 @@
 #    By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/19 17:23:22 by abadouab          #+#    #+#              #
-#    Updated: 2024/07/24 14:19:01 by abbaraka         ###   ########.fr        #
+#    Updated: 2024/07/24 14:32:09 by abbaraka         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,16 +20,15 @@ SRCS		=	more/minishell.c more/signal_handler.c \
 				parcer/parse.c parcer/parse_simple_command.c \
 				parcer/parse_checkers.c  parcer/command_checkers.c \
 				parcer/check_redirection.c \
-				execution/execution.c execution/builtins_execution.c \
-				execution/command_execution.c execution/pipeline.c \
+				execution/execution.c execution/builtins.c execution/pipeline.c \
 				expander/expander.c expander/expanding.c expander/expand_val.c \
-				expander/expand_plus.c expander/here_doc_ex.c \
-				expander/wildcards_ex.c expander/split_args.c \
+				expander/expand_plus.c expander/here_doc_ex.c expander/wildcards_ex.c \
 				redirection/redirection.c redirection/restore_fds.c \
 				redirection/here_doc.c \
 				builtins/echo.c builtins/pwd.c builtins/exit.c \
 				builtins/env.c builtins/export.c builtins/unset.c \
 				builtins/cd.c \
+				tools/tokens_tools.c \
 
 OBJS		=	$(SRCS:.c=.o)
 HEADER		=	includes/minishell.h
