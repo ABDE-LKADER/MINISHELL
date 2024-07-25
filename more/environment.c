@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   environment.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 15:35:38 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/25 10:35:07 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/25 16:11:32 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,4 +87,6 @@ void	environment_init(t_minishell *ms, char **env)
 		create_environment(ms);
 	(ms->saved = get_env_val(ms, "PWD"), increase_shelvl(ms),
 		ms->tilde = get_env_val(ms, "HOME"));
+	if (!ms->tilde)
+		ms->tilde = "";
 }
