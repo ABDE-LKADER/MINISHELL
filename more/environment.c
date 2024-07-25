@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 15:35:38 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/24 10:19:54 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/25 10:35:07 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,5 +85,6 @@ void	environment_init(t_minishell *ms, char **env)
 		|| !search_env_var(ms->env, "SHLVL")
 		|| !search_env_var(ms->env, "OLDPWD"))
 		create_environment(ms);
-	(ms->saved = get_env_val(ms, "PWD"), increase_shelvl(ms));
+	(ms->saved = get_env_val(ms, "PWD"), increase_shelvl(ms),
+		ms->tilde = get_env_val(ms, "HOME"));
 }

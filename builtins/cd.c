@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:55:24 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/24 11:25:34 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/25 10:40:18 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ void	change_directory(t_minishell *ms, char *path)
 {
 	if (!path)
 		return ;
-	printf("|%s|\n", path);
 	if (ft_strncmp(path, "-", ft_strlen(path)) == 0)
 	{
 		path = get_env_val(ms, "OLDPWD");
