@@ -6,7 +6,7 @@
 #    By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/19 17:23:22 by abadouab          #+#    #+#              #
-#    Updated: 2024/07/24 20:41:08 by abbaraka         ###   ########.fr        #
+#    Updated: 2024/07/25 09:16:57 by abbaraka         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ MYLB		=	MYLIB
 MYAR		=	MYLIB/libar.a
 
 CC			=	cc
-FLAGS		=	-Wall -Wextra -g -fsanitize=address,undefined #-fsanitize=leak #Werror
+FLAGS		=	-Wall -Wextra -Werror # -g -fsanitize=address,undefined #-fsanitize=leak
 SHORT		=	-L$(MYLB) -lar -lreadline
 RM			=	rm -fr
 

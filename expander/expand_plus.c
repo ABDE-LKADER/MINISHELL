@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:55:24 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/23 11:11:49 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/25 06:25:23 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,11 @@ bool	split_expansion_checker(t_minishell *ms)
 	int		index;
 
 	if (!ms->to_check)
+		return (FALSE);
+	index = 0;
+	while (ms->to_check[index])
+		index++;
+	if (*ms->current >= index)
 		return (FALSE);
 	if ((ft_strncmp(*ms->to_check, "export", ft_strlen("export"))
 			&& ft_strlen(*ms->to_check) == ft_strlen("export"))

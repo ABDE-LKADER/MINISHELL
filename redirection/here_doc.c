@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 21:18:31 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/07/23 10:58:05 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/25 06:55:06 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,11 @@ int	ft_here_doc_in_child(t_minishell *ms, pid_t pid, char *delimiter, int fds[])
 			line = readline("> ");
 			if (!line || (ft_strncmp(line, delimiter, ft_strlen(line)) == 0
 					&& ft_strlen(line) == ft_strlen(delimiter)))
+			{
+				free(line);
 				break ;
-			else
-				(write(fds[0], line, ft_strlen(line)), write(fds[0], "\n", 1));
-			free(line);
+			}
+			(ft_putendl_fd(line, fds[0]), free(line));
 		}
 		if (close(fds[0]) < 0)
 			return (ft_putstr_fd(strerror(errno), 2), -1);
@@ -65,8 +66,7 @@ int	ft_here_doc_in_child(t_minishell *ms, pid_t pid, char *delimiter, int fds[])
 			return (ft_putstr_fd(strerror(errno), 2), -1);
 		exit(EXIT_SUCCESS);
 	}
-	if (!ms->tree->syntax_err)
-		ms->exit_status = 0;
+	(!ms->tree->syntax_err) && (ms->exit_status = 0);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 14:45:58 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/22 19:28:13 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/25 07:57:34 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,7 @@ bool	wildcards_ambiguous(t_minishell *ms, char *name)
 	return (TRUE);
 }
 
-bool	check_ambiguous_redir(t_minishell *ms, t_redirection redirection,
-	char *name)
+bool	check_ambiguous_redir(t_minishell *ms, char *name)
 {
 	int		find;
 	char	*hold;
@@ -86,7 +85,7 @@ bool	check_ambiguous_redir(t_minishell *ms, t_redirection redirection,
 		expand = splite_to_expand(ms, hold, FALSE));
 	if (wildcards_ambiguous(ms, expand))
 		return (TRUE);
-	if (redirection == HERE_DOC_T || !ft_strchr(name, '$'))
+	if (!ft_strchr(name, '$'))
 		return (FALSE);
 	while (*name && *name != '\'' && *name != '\"')
 		name++;

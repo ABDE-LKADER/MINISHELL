@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_val.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:55:24 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/24 16:09:33 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/07/25 08:08:34 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ bool	only_var(t_minishell *ms, char *arg)
 	hold = ft_split(&ms->leaks, arg, '$');
 	while (*arg == '$')
 		arg++;
-	if (!*arg)
+	if (!*arg || ft_isdigit(*arg))
 		return (TRUE);
 	while (*arg)
 	{

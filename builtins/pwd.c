@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 09:57:24 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/24 10:26:15 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/25 06:45:26 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ void	ft_pwd(t_minishell *ms)
 
 	path = getcwd(NULL, 0);
 	if (path)
-		(ft_printf("%s\n", path), ms->exit_status = 0, free(path));
+		return (ft_printf("%s\n", path), ms->exit_status = 0, free(path));
 	else if (ms->saved)
-		(ft_printf("%s\n", ms->saved), ms->exit_status = 0);
+		return (ms->exit_status = 0, (void)ft_printf("%s\n", ms->saved));
 	else if (!path)
-		(perror("getcwd"), ms->exit_status = 1);
+		return (ms->exit_status = 1, perror("getcwd"));
 }

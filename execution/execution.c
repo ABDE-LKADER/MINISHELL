@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:54:33 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/24 16:04:44 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/25 08:22:19 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,10 @@ static void	command_execute(t_minishell *ms, t_tree *tree)
 		(perror("fork"));
 	if (pid == 0)
 	{
-		if (redirection(ms, tree) == -1 || !tree->value)
+		if (redirection(ms, tree) == -1)
 			exit(EXIT_FAILURE);
-		if (!ft_strncmp(tree->value, "./minishell", ft_strlen(tree->value)))
-			(signal(SIGQUIT, SIG_IGN), signal(SIGINT, SIG_IGN));
+		if (!tree->value)
+			exit(EXIT_SUCCESS);
 		path = fetch_path(ms, ms->env, tree->value);
 		if (tree->dis_error)
 			exit(ms->exit_status);
