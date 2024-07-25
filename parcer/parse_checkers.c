@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_checkers.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:32 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/07/15 02:19:15 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/07/25 11:28:11 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,13 @@ int	check_token_op(char *token)
 
 void	set_op(t_tree *tree, char *token)
 {
-	if (ft_strncmp(token, "|", ft_strlen(token)) == 0)
+	if (!ft_strncmp(token, "|", ft_strlen(token)))
 		tree->type = PIPE_T;
-	else if (ft_strncmp(token, "&&", ft_strlen(token)) == 0)
+	else if (!ft_strncmp(token, "&&", ft_strlen(token))
+		&& ft_strlen(token) == ft_strlen("&&"))
 		tree->type = AND_T;
-	else if (ft_strncmp(token, "||", ft_strlen(token)) == 0)
+	else if (!ft_strncmp(token, "||", ft_strlen(token))
+		&& ft_strlen(token) == ft_strlen("||"))
 		tree->type = OR_T;
 }
 

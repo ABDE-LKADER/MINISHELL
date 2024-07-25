@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 09:56:53 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/24 10:27:26 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/25 11:14:40 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ void	modify_env_val(t_minishell *ms, char *env_var, char *val)
 		return ;
 	while (tmp)
 	{
-		if (ft_strncmp(tmp->var, env_var, ft_strlen(tmp->var)) == 0)
+		if (!ft_strncmp(tmp->var, env_var, ft_strlen(tmp->var))
+			&& ft_strlen(tmp->var) == ft_strlen(env_var))
 		{
 			tmp->val = ft_strdup(&ms->alloc, val);
 			return ;
@@ -64,7 +65,8 @@ char	*get_env_val(t_minishell *ms, char *s)
 	tmp = ms->env;
 	while (tmp)
 	{
-		if (ft_strncmp(tmp->var, s, ft_strlen(tmp->var)) == 0)
+		if (!ft_strncmp(tmp->var, s, ft_strlen(tmp->var))
+			&& ft_strlen(tmp->var) == ft_strlen(s))
 			return (tmp->val);
 		tmp = tmp->next;
 	}
