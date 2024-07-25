@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   inject_spaces.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:44:42 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/07/23 10:54:25 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/25 09:11:00 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	count_op(char *s)
 		}
 		else if (s[i] && s[i] == quotes)
 		{
-			if (cmp_operators(s[i + 1]))
+			if (cmp_operators(s[i + 1]) || s[i + 1] == '(' || s[i + 1] == ')')
 				space_counter++;
 			(1) && (quotes = -1, i++);
 		}
@@ -65,10 +65,10 @@ int	count_op(char *s)
 	return (space_counter);
 }
 
-void	copy_quotes(t_inject_data *data, char *s, char *str)
+int	copy_quotes(t_inject_data *data, char *s, char *str)
 {
-	if (!s)
-		return ;
+	if (!s || s[data->i] == '\0')
+		return (1);
 	if (s[data->i] && data->quotes == -1
 		&& (s[data->i] == '\"' || s[data->i] == '\''))
 	{
@@ -77,8 +77,16 @@ void	copy_quotes(t_inject_data *data, char *s, char *str)
 			(1) && (str[data->j] = s[data->i], data->i++, data->j++);
 	}
 	else if (s[data->i] && s[data->i] == data->quotes)
+	{
 		(1) && (data->quotes = -1, str[data->j] = s[data->i],
 		data->i++, data->j++);
+		if (data->quotes == -1 && (s[data->i - 1] == '\''
+				|| s[data->i - 1] == '\"') && (s[data->i] == '('
+				|| s[data->i] == ')'))
+			(1) && (str[data->j] = ' ', data->j++, str[data->j] = s[data->i],
+			data->i++, data->j++);
+	}
+	return (0);
 }
 
 int	inject_spaces_between_par(t_inject_data *data, char *s, char *str)
@@ -96,24 +104,25 @@ int	inject_spaces_between_par(t_inject_data *data, char *s, char *str)
 
 void	copy_and_inject_spaces(t_inject_data *data, char *s, char *str)
 {
-	copy_quotes(data, s, str);
-	if (!s || s[data->i] == '\0')
+	if (copy_quotes(data, s, str))
 		return ;
-	if (data->quotes == -1 && data->i != 0 && cmp_operators(s[data->i])
-		&& s[data->i - 1] && (!check_sep(s[data->i - 1])
-			&& !cmp_operators(s[data->i - 1])))
+	if (data->quotes == -1 && data->i != 0
+		&& cmp_operators(s[data->i]) && s[data->i - 1]
+		&& (!check_sep(s[data->i - 1]) && !cmp_operators(s[data->i - 1])))
 	{
 		(1) && (str[data->j] = ' ', data->j++,
-		str[data->j] = s[data->i], data->j++);
+			str[data->j] = s[data->i], data->j++);
 		if (cmp_operators(s[data->i]) && s[data->i + 1]
 			&& (!check_sep(s[data->i + 1]) && (!cmp_operators(s[data->i + 1])
-			|| (cmp_operators(s[data->i + 1]) && s[data->i] != s[data->i + 1]))))
+					|| (cmp_operators(s[data->i + 1])
+						&& s[data->i] != s[data->i + 1]))))
 			(1) && (str[data->j] = ' ', data->j++);
 		data->i++;
 	}
 	else if (data->quotes == -1 && cmp_operators(s[data->i]) && s[data->i + 1]
 		&& (!check_sep(s[data->i + 1]) && (!cmp_operators(s[data->i + 1])
-		|| (cmp_operators(s[data->i + 1]) && s[data->i] != s[data->i + 1]))))
+				|| (cmp_operators(s[data->i + 1])
+					&& s[data->i] != s[data->i + 1]))))
 		(1) && (str[data->j] = s[data->i], data->j++,
 		str[data->j] = ' ', data->j++, data->i++);
 	else if (inject_spaces_between_par(data, s, str))
