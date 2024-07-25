@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:24 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/07/24 13:58:16 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/25 07:58:18 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,7 @@ t_fds	save_fds(void);
 int		redirection(t_minishell *ms, t_tree *tree);
 int		redir_to_dev_null(t_minishell *ms);
 void	restore_fds(t_fds fds);
-bool	check_ambiguous_redir(t_minishell *ms, t_redirection redirection,
-			char *name);
+bool	check_ambiguous_redir(t_minishell *ms, char *name);
 
 ///////////////// EXEC PROTOTYPES /////////////////
 

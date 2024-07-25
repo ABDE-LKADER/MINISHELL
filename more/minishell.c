@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:44:46 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/07/23 11:09:09 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/25 08:16:44 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,9 @@ int	main(int ac, char **av, char **env)
 				cleanup(&ms.leaks), cleanup(&ms.alloc), ms.exit_status);
 		(g_catch_signals == SIGINT) && (ms.exit_status = 1,
 			g_catch_signals = 0);
-		if (!(*ms.prompt))
-		{
-			(free(ms.prompt));
-			continue ;
-		}
-		(parser(&ms), execution(&ms, ms.tree),
-			cleanup(&ms.leaks), free(ms.prompt));
+		if (*ms.prompt)
+			(parser(&ms), execution(&ms, ms.tree));
+		(cleanup(&ms.leaks), free(ms.prompt));
 	}
 	return (clear_history(), cleanup(&ms.leaks),
 		cleanup(&ms.alloc), EXIT_SUCCESS);
