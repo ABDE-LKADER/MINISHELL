@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:55:24 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/23 11:11:20 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/26 22:25:27 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,9 @@ void	expanding(t_minishell *ms, t_tree *tree)
 
 	if (!tree->value)
 		return ;
-	(TRUE) && (ms->to_check = tree->args, ms->current = &index,
-		index = -1);
+	while (*tree->args && !only_var(ms, *tree->args))
+		tree->args++;
+	(TRUE) && (ms->to_check = tree->args, ms->current = &index, index = -1);
 	while (tree->args[++index])
 	{
 		ms->wildcards = TRUE;

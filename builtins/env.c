@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 09:56:53 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/25 11:14:40 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/26 23:59:51 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ bool	valid_identifier(char *str, int len)
 	index = -1;
 	while (++index < len)
 	{
-		if (index + 1 == len && str[index] == '+')
+		if (str[index + 1] && str[index] == '+'
+			&& str[index + 1] == '=')
 			return (TRUE);
 		if (!ft_isalnum(str[index]) && str[index] != '_')
 			return (FALSE);

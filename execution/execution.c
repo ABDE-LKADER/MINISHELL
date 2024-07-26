@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:54:33 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/26 12:33:38 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/27 00:17:38 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ static void	command_execute(t_minishell *ms, t_tree *tree)
 		(perror("fork"));
 	if (pid == 0)
 	{
-		sig_childer();
 		if (redirection(ms, tree) == -1)
 			exit(EXIT_FAILURE);
 		if (!tree->value)

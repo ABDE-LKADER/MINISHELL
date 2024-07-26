@@ -6,27 +6,11 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 10:57:34 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/26 12:37:14 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/27 00:20:40 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static void	signal_int_quit(int sig)
-{
-	printf ("ENTRING CHILD\n");
-	if (sig == SIGINT)
-		exit (EXIT_FAILURE);
-	if (sig == SIGQUIT)
-		printf("Quit: %d", sig);
-}
-
-void	sig_childer(void)
-{
-	rl_catch_signals = 0;
-	signal(SIGQUIT, signal_int_quit);
-	signal(SIGINT, signal_int_quit);
-}
 
 static void	heredoc_int_quit(int sig)
 {

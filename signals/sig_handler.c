@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 20:40:18 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/26 12:21:05 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/27 00:20:49 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,10 @@
 
 static void	signal_int_quit(int sig)
 {
-	if (sig == SIGINT)
+	pid_t	pid;
+
+	pid = wait(NULL);
+	if (pid == -1 && sig == SIGINT)
 	{
 		printf("\n");
 		rl_replace_line("", 0);
@@ -22,8 +25,13 @@ static void	signal_int_quit(int sig)
 		rl_redisplay();
 		g_catch_signals = SIGINT;
 	}
-	if (sig == SIGQUIT)
+	else if (pid > 0 && sig == SIGQUIT)
+	{
 		g_catch_signals = SIGQUIT;
+		printf("Quit: %d\n", sig);
+	}
+	else if (sig == SIGINT)
+		g_catch_signals = SIGINT;
 }
 
 void	sig_handler(void)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:11 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/07/25 11:55:01 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/07/26 19:10:10 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,8 @@ t_tree	*make_tree(t_minishell *ms, t_tree *left, t_tree *right, char *op)
 			return (ft_treeadd_back(&left, right), left);
 		(TRUE) && (node->value = op, node->type = PIPE_T,
 			node->left = NULL, node->right = NULL);
-		ft_treeadd_back(&node, left);
-		ft_treeadd_back(&node, right);
-		return (node);
+		return (ft_treeadd_back(&node, left),
+			ft_treeadd_back(&node, right), node);
 	}
 	if (ft_strncmp(op, "||", ft_strlen(op)) == 0
 		&& ft_strlen(op) == ft_strlen("||"))

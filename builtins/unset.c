@@ -6,11 +6,22 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:55:24 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/07/24 10:27:57 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/27 00:05:01 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static bool	valid_identifier_unset(char *str)
+{
+	while (*str)
+	{
+		if (!ft_isalnum(*str) && *str != '_')
+			return (FALSE);
+		str++;
+	}
+	return (TRUE);
+}
 
 static void	env_unset_target(t_environ **env, char *to_find)
 {
@@ -39,10 +50,16 @@ static void	env_unset_target(t_environ **env, char *to_find)
 
 void	ft_unset(t_minishell *ms, char **args)
 {
-	int	index;
-
-	index = 0;
-	while (args[++index])
-		env_unset_target(&ms->env, args[index]);
+	while (*args)
+	{
+		if (((!ft_isalpha(**args) && **args != '_')
+				|| !valid_identifier_unset(*args)))
+		{
+			syntax_err(ms, *args, "not a valid identifier", 1);
+			ms->exit_status = 1;
+			return ;
+		}
+		env_unset_target(&ms->env, *args++);
+	}
 	ms->exit_status = 0;
 }

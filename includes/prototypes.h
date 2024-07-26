@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:24 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/07/26 10:52:18 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/27 00:16:08 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,14 @@ void	syntax_err(t_minishell *ms, char *option,
 void	set_redir(t_minishell *ms, int *i);
 int		check_if_operator(char *token);
 int		check_redirection(t_minishell *ms, int *i, int *redir_set);
-void	check_args(t_minishell *ms, t_tree *node, char **tokens, int len);
+void	check_args(t_tree *node, char **tokens, int len);
 int		check_redir_at_end(t_minishell *ms, int *i, int *redir_set);
 int		check_closed_quotes(t_minishell *ms, int i, int j);
 int		check_valid_op(char *token);
 void	set_op(t_tree *tree, char *token);
 int		check_op_syntax(char *token);
-t_tree	*ft_treelast(t_tree *lst);
 void	ft_treeadd_back(t_tree **lst, t_tree *new);
+t_tree	*ft_treelast(t_tree *lst);
 
 ///////////////// HERE_DOC /////////////////
 

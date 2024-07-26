@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:19 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/07/25 08:12:52 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/27 00:16:19 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	check_if_operator(char *token)
 	return (0);
 }
 
-void	check_args(t_minishell *ms, t_tree *node, char **tokens, int len)
+void	check_args(t_tree *node, char **tokens, int len)
 {
 	int	i;
 	int	j;
@@ -86,11 +86,8 @@ void	check_args(t_minishell *ms, t_tree *node, char **tokens, int len)
 		{
 			if (j < len && !check_if_operator(tokens[i]))
 			{
-				if (only_var(ms, tokens[i]))
-				{
-					node->args[j] = tokens[i];
-					j++;
-				}
+				node->args[j] = tokens[i];
+				j++;
 			}
 			i++;
 		}

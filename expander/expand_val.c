@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:55:24 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/25 08:08:34 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/27 00:13:19 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,27 +60,28 @@ char	*expand_doller(t_minishell *ms)
 		close(pipes[0]), close(pipes[1]), restore_fds(fds));
 	return (*ft_split(&ms->leaks, id, '\n'));
 }
- 
+
 bool	only_var(t_minishell *ms, char *arg)
 {
+	int		len;
 	char	**hold;
+	char	*value;
 
-	if (*arg != '$')
+	len = ft_strlen(arg);
+	if (*arg != '$' || arg[len - 1] == '$'
+		|| ft_strnstr(arg, "$$", len))
 		return (TRUE);
 	hold = ft_split(&ms->leaks, arg, '$');
-	while (*arg == '$')
-		arg++;
-	if (!*arg || ft_isdigit(*arg))
+	if (!*hold)
 		return (TRUE);
-	while (*arg)
-	{
-		if (!ft_isalnum(*arg) && *arg != '_' && *arg != '$')
-			return (TRUE);
-		arg++;
-	}
 	while (*hold)
 	{
-		if (get_env_val(ms, *hold))
+		if (ft_isdigit(**hold))
+			return (TRUE);
+		if (!ft_isalnum(**hold) && **hold != '_')
+			return (TRUE);
+		value = get_env_val(ms, *hold);
+		if (value && *value)
 			return (TRUE);
 		hold++;
 	}

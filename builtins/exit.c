@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:55:24 by ||||||||          #+#    #+#             */
-/*   Updated: 2024/07/24 14:33:15 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/07/26 19:09:13 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 char	*check_more_args_in_one(t_minishell *ms, char **args)
 {
-	char	**split;
 	int		len;
+	char	**split;
 
 	split = split_args(&ms->leaks, args[1], " \t\n\r\f\v");
 	len = 0;
@@ -28,22 +28,21 @@ char	*check_more_args_in_one(t_minishell *ms, char **args)
 
 static void	check_numerical(t_minishell *ms, char **args)
 {
+	int		i;
 	char	*str;
-	int	i;
 
 	str = check_more_args_in_one(ms, args);
 	i = 0;
 	if (!str)
 		(syntax_err(ms, str, "numeric argument required", 255),
-				exit(255));
+			exit(255));
 	while (str[i])
 	{
-		if (!((str[i] >= '0' && str[i] <= '9')
-		|| ((str[i] == '-' || str[i] == '+') && i == 0))
-		|| (ft_strlen(str) == 19
-			&& ft_strncmp(str, "9223372036854775807", ft_strlen(str)) > 0)
-		|| (ft_strlen(str) == 20
-			&& ft_strncmp(str, "-9223372036854775808", ft_strlen(str)) > 0))
+		if (!((str[i] >= '0' && str[i] <= '9') || ((str[i] == '-'
+						|| str[i] == '+') && i == 0)) || (ft_strlen(str) == 19
+				&& ft_strncmp(str, "9223372036854775807", ft_strlen(str)) > 0)
+			|| (ft_strlen(str) == 20
+				&& ft_strncmp(str, "-9223372036854775808", ft_strlen(str)) > 0))
 			(syntax_err(ms, str, "numeric argument required", 255),
 				exit(255));
 		i++;
@@ -52,8 +51,8 @@ static void	check_numerical(t_minishell *ms, char **args)
 
 void	ft_exit(t_minishell *ms, t_tree *tree, char **args)
 {
-	int	len;
-	int	exit_status;
+	int		len;
+	int		exit_status;
 
 	len = 0;
 	while (args[len])
