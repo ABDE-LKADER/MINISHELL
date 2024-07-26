@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:24 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/07/26 19:16:27 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/27 00:29:06 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,6 @@ cannot access parent directories:No such file or directory\n"
 # define REDCL "\033[1;31m"
 # define RESET "\033[0m"
 
-int	g_catch_signals;
+extern int	g_catch_signals;
 
 #endif

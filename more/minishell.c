@@ -6,11 +6,13 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:44:46 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/07/26 11:54:30 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/27 00:29:10 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	g_catch_signals;
 
 void	parser(t_minishell *ms)
 {

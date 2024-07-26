@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   environment.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 15:35:38 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/25 16:11:32 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/07/27 00:24:16 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void	increase_shelvl(t_minishell *ms)
 	shl = get_env_val(ms, "SHLVL");
 	if (!shl)
 		return (environment_add(ms, &ms->env,
-			ft_strdup(&ms->alloc, "SHLVL"), ft_strdup(&ms->alloc, "1")));
+				ft_strdup(&ms->alloc, "SHLVL"), ft_strdup(&ms->alloc, "1")));
 	num = ft_atoi(shl) + 1;
 	str = ft_itoa(&ms->alloc, num);
 	modify_env_val(ms, "SHLVL", str);
@@ -81,11 +81,11 @@ void	environment_init(t_minishell *ms, char **env)
 				ft_strlen(*env)));
 		env++;
 	}
-	if(!search_env_var(ms->env, "PWD")
+	if (!search_env_var(ms->env, "PWD")
 		|| !search_env_var(ms->env, "SHLVL")
 		|| !search_env_var(ms->env, "OLDPWD"))
 		create_environment(ms);
-	(ms->saved = get_env_val(ms, "PWD"), increase_shelvl(ms),
+	(TRUE) && (ms->saved = get_env_val(ms, "PWD"), increase_shelvl(ms),
 		ms->tilde = get_env_val(ms, "HOME"));
 	if (!ms->tilde)
 		ms->tilde = "";
