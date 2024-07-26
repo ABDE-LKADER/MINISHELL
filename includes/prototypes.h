@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:24 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/07/25 07:58:18 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/26 10:52:18 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ t_tree	*parse_tree(t_minishell *ms);
 
 void	sig_handler(void);
 void	sig_heredoc(void);
+void	sig_childer(void);
 
 ///////////////// ENVIRONMENT PROTOTYPES /////////////////
 
