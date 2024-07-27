@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:44:46 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/07/27 00:29:10 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/27 11:56:53 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,7 @@ void	parser(t_minishell *ms)
 void	check_if_tty(void)
 {
 	if (isatty(0) == 0 || isatty(1) == 0 || isatty(2) == 0)
-	{
-		printf("Please use a tty :)\n");
-		exit(2);
-	}
+		(printf("Please use a tty :)\n"), exit(2));
 }
 
 int	main(int ac, char **av, char **env)

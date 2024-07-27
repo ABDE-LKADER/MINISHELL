@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:24 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/07/27 00:16:08 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/27 11:36:01 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ int		redirection(t_minishell *ms, t_tree *tree);
 int		redir_to_dev_null(t_minishell *ms);
 void	restore_fds(t_fds fds);
 bool	check_ambiguous_redir(t_minishell *ms, char *name);
+void	clean_fds(t_tree *tree);
 
 ///////////////// EXEC PROTOTYPES /////////////////
 
@@ -104,7 +105,7 @@ char	*tilde_expander(t_minishell *ms, char *value);
 char	*expand_val(t_minishell *ms, char *arg);
 void	expand_add(t_minishell *ms, t_expand **expand, void *value);
 char	*splite_mult_args(t_minishell *ms, char *arg, bool status, bool option);
-void	expanding(t_minishell *ms, t_tree *tree);
+void	expanding(t_minishell *ms, t_tree *tree, int index);
 bool	expand_option(char *value, char *sp, int option);
 int		here_doc_expander(t_minishell *ms, int fd);
 char	**split_args(t_allocate **leaks, char *str, char *charset);
@@ -126,6 +127,7 @@ void	ft_pwd(t_minishell *ms);
 void	ft_cd(t_minishell *ms, char **args);
 void	ft_exit(t_minishell *ms, t_tree *tree, char **args);
 bool	valid_identifier(char *str, int len);
+bool	check_valid_identifier(char *str);
 
 ///////////////// OTHER PROTOTYPES /////////////////
 

@@ -6,23 +6,11 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:54:33 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/27 00:17:38 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/27 11:50:53 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static void	clean_fds(t_tree *tree)
-{
-	int		index;
-
-	index = -1;
-	while (++index < tree->redir_index)
-	{
-		if (tree->redir[index].fd != -1)
-			close(tree->redir[index].fd);
-	}
-}
 
 static void	update_env_values(t_minishell *ms, t_tree *tree)
 {
@@ -94,6 +82,8 @@ static void	command_execute(t_minishell *ms, t_tree *tree)
 
 void	execution(t_minishell *ms, t_tree *tree)
 {
+	int		len;
+
 	if (!tree || g_catch_signals == SIGINT)
 		return ;
 	if (tree->type == PIPE_T)
@@ -101,7 +91,10 @@ void	execution(t_minishell *ms, t_tree *tree)
 	execution(ms, tree->left);
 	if (tree->type == CMD_T)
 	{
-		expanding(ms, tree);
+		len = 0;
+		while (tree->args[len])
+			len++;
+		expanding(ms, tree, len);
 		update_env_values(ms, tree);
 		if (check_if_builtins(tree->value))
 			built_in_execute(ms, tree);

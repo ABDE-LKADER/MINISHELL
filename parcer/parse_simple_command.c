@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:37 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/07/27 00:16:16 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/27 12:14:07 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,22 @@ void	set_redir(t_minishell *ms, int *i)
 	char	**tokens;
 
 	(TRUE) && (node = ms->tree, tokens = ms->tokens, ms->tree->redir_ex = true,
-		node->redir[node->redir_index].set_expand = 0);
+		node->redir[node->redir_index].set_expand = 0,
+			node->redir[node->redir_index].fd = -1);
 	if (ft_strncmp(tokens[*i], ">", ft_strlen(tokens[*i])) == 0)
-		(TRUE) && (node->redir[node->redir_index].redirection = OUT_RED_T,
-			node->redir[node->redir_index].fd = -1);
+		(TRUE) && (node->redir[node->redir_index].redirection = OUT_RED_T);
 	else if (ft_strncmp(tokens[*i], "<", ft_strlen(tokens[*i])) == 0)
-		(TRUE) && (node->redir[node->redir_index].redirection = IN_RED_T,
-			node->redir[node->redir_index].fd = -1);
+		(TRUE) && (node->redir[node->redir_index].redirection = IN_RED_T);
 	else if (ft_strncmp(tokens[*i], ">>", ft_strlen(tokens[*i])) == 0)
 		(TRUE) && (node->redir[node->redir_index].redirection =
-			OUT_RED_APPEND_T, node->redir[node->redir_index].fd = -1);
+			OUT_RED_APPEND_T);
 	else if (ft_strncmp(tokens[*i], "<<", ft_strlen(tokens[*i])) == 0
 		&& g_catch_signals == 0)
 		(TRUE) && (node->redir[node->redir_index].redirection = HERE_DOC_T,
 		node->redir[node->redir_index].fd = ft_open_here_doc(ms,
 		tokens[*i + 1], node));
+	if (g_catch_signals == SIGINT)
+		clean_fds(node);
 }
 
 int	count_redir(char **tokens)

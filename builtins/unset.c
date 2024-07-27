@@ -6,13 +6,13 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:55:24 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/07/27 00:05:01 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/27 09:48:21 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static bool	valid_identifier_unset(char *str)
+bool	check_valid_identifier(char *str)
 {
 	while (*str)
 	{
@@ -53,7 +53,7 @@ void	ft_unset(t_minishell *ms, char **args)
 	while (*args)
 	{
 		if (((!ft_isalpha(**args) && **args != '_')
-				|| !valid_identifier_unset(*args)))
+				|| !check_valid_identifier(*args)))
 		{
 			syntax_err(ms, *args, "not a valid identifier", 1);
 			ms->exit_status = 1;

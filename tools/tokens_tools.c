@@ -6,11 +6,23 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 10:12:51 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/24 10:13:21 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/27 12:01:17 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	clean_fds(t_tree *tree)
+{
+	int		index;
+
+	index = -1;
+	while (++index < tree->redir_index)
+	{
+		if (tree->redir[index].fd != -1 && tree->redir[index].fd)
+			close(tree->redir[index].fd);
+	}
+}
 
 int	check_par(char *s)
 {

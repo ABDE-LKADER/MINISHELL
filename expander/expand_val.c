@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:55:24 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/27 00:13:19 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/27 09:51:41 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,8 @@ bool	only_var(t_minishell *ms, char *arg)
 		return (TRUE);
 	while (*hold)
 	{
-		if (ft_isdigit(**hold))
-			return (TRUE);
-		if (!ft_isalnum(**hold) && **hold != '_')
+		if ((!ft_isalpha(**hold) && **hold != '_')
+			|| !check_valid_identifier(*hold))
 			return (TRUE);
 		value = get_env_val(ms, *hold);
 		if (value && *value)
