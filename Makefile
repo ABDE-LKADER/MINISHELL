@@ -6,7 +6,7 @@
 #    By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/19 17:23:22 by abadouab          #+#    #+#              #
-#    Updated: 2024/07/26 10:57:12 by abadouab         ###   ########.fr        #
+#    Updated: 2024/07/27 17:19:35 by abadouab         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ SRCS		=	more/minishell.c more/errors.c more/environment.c \
 				builtins/env.c builtins/export.c builtins/unset.c \
 				builtins/cd.c \
 				signals/sig_handler.c signals/sig_childer.c \
-				tools/tokens_tools.c tools/split_args.c \
+				tools/tokens_tools.c tools/split_args.c tools/termios.c \
 
 OBJS		=	$(SRCS:.c=.o)
 HEADER		=	includes/minishell.h

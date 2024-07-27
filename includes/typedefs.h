@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:24 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/07/25 10:35:23 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/27 17:19:10 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define TYPEDEFS_H
 
 # include <stdbool.h>
+# include <termios.h>
 
 typedef struct s_fds
 {
@@ -101,6 +102,7 @@ typedef struct s_minishell
 	char			**to_check;
 	bool			wildcards;
 	int				exit_status;
+	struct termios	termios;
 }					t_minishell;
 
 #endif

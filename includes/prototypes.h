@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:24 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/07/27 11:36:01 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/27 17:16:58 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,5 +130,7 @@ bool	valid_identifier(char *str, int len);
 bool	check_valid_identifier(char *str);
 
 ///////////////// OTHER PROTOTYPES /////////////////
+
+void	save_termios_mode(t_minishell *ms, bool mode);
 
 #endif

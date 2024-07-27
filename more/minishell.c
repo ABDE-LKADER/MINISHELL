@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:44:46 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/07/27 11:56:53 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/27 17:17:45 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,19 +32,13 @@ void	parser(t_minishell *ms)
 		ms->tree = NULL;
 }
 
-void	check_if_tty(void)
-{
-	if (isatty(0) == 0 || isatty(1) == 0 || isatty(2) == 0)
-		(printf("Please use a tty :)\n"), exit(2));
-}
-
 int	main(int ac, char **av, char **env)
 {
 	t_minishell		ms;
 
 	if (ac != 1 && av)
 		return (ft_putendl_fd("./minishell <empty>", 2), EXIT_FAILURE);
-	(sig_handler(), environment_init(&ms, env), check_if_tty());
+	(sig_handler(), environment_init(&ms, env), save_termios_mode(&ms, FALSE));
 	while (1)
 	{
 		(TRUE) && (g_catch_signals = 0, ms.tree = NULL, ms.to_check = NULL,
@@ -56,7 +50,7 @@ int	main(int ac, char **av, char **env)
 			g_catch_signals = 0);
 		if (*ms.prompt)
 			(parser(&ms), execution(&ms, ms.tree));
-		(cleanup(&ms.leaks), free(ms.prompt));
+		(cleanup(&ms.leaks), free(ms.prompt), save_termios_mode(&ms, TRUE));
 	}
 	return (clear_history(), cleanup(&ms.leaks),
 		cleanup(&ms.alloc), EXIT_SUCCESS);
