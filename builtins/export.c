@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:55:24 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/07/23 13:42:42 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/27 18:35:53 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ bool	search_env(t_minishell *ms, t_environ *env, char *arg, int _len)
 	to_find = ft_substr(&ms->leaks, arg, 0, _len);
 	while (env)
 	{
-		if (!ft_strncmp(env->var, to_find, ft_strlen(to_find))
+		if (to_find && !ft_strncmp(env->var, to_find, ft_strlen(to_find))
 			&& ft_strlen(to_find) == ft_strlen(env->var))
 		{
 			if (ft_strchr(arg, '='))

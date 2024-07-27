@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:54:33 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/27 11:50:53 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/27 18:34:31 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*fetch_path(t_minishell *ms, t_environ *env, char *cmd)
 	if (!env || !env->val || !*env->val)
 		(syntax_err(ms, cmd, "No such file or directory", 127), exit(127));
 	paths = ft_split(&ms->leaks, env->val, ':');
-	while (*paths)
+	while (paths && *paths)
 	{
 		*paths = ft_strjoin(&ms->leaks, *paths, "/");
 		*paths = ft_strjoin(&ms->leaks, *paths, cmd);

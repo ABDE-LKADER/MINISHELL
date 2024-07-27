@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 15:35:38 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/27 07:30:20 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/27 18:57:38 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	environment_add(t_minishell *ms, t_environ **env, void *var, void *val)
 	t_environ	*node;
 
 	new = allocate(&ms->alloc, 1, sizeof(t_environ));
-	if (!new)
+	if (!new || !var)
 		cleanup_handler(ms);
 	new->var = var;
 	new->val = val;

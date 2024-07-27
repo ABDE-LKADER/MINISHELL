@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_args.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 15:43:00 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/07/24 15:43:35 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/07/27 18:22:46 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ static void	split_str(t_allocate **leaks, char **dest, char *str, char *charset)
 			while (sep_check(str[i + j], charset) == 0)
 				j++;
 			dest[w] = allocate(leaks, sizeof(char *), j + 1);
+			if (!dest[w])
+				return ;
 			set_word(dest[w], str + i, charset);
 			i += j;
 			w++;
@@ -90,6 +92,8 @@ char	**split_args(t_allocate **leaks, char *str, char *charset)
 
 	num = counter_words(str, charset);
 	dest = allocate(leaks, sizeof(char *), num + 1);
+	if (!dest)
+		return (NULL);
 	split_str(leaks, dest, str, charset);
 	dest[num] = 0;
 	return (dest);

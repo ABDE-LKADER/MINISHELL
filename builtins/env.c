@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 09:56:53 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/26 23:59:51 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/27 18:43:55 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ void	modify_env_val(t_minishell *ms, char *env_var, char *val)
 			&& ft_strlen(tmp->var) == ft_strlen(env_var))
 		{
 			tmp->val = ft_strdup(&ms->alloc, val);
+			if (!tmp->val)
+				cleanup_handler(ms);
 			return ;
 		}
 		tmp = tmp->next;

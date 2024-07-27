@@ -6,13 +6,13 @@
 #    By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/19 17:23:22 by abadouab          #+#    #+#              #
-#    Updated: 2024/07/27 17:19:35 by abadouab         ###   ########.fr        #
+#    Updated: 2024/07/27 19:02:59 by abadouab         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	minishell
 
-SRCS		=	more/minishell.c more/errors.c more/environment.c \
+SRCS		=	more/minishell.c more/environment.c \
 				tokinizer/inject_spaces.c tokinizer/check_tokens.c \
 				tokinizer/word_counter.c tokinizer/ft_split_op.c \
 				tokinizer/check_operate.c \
@@ -25,10 +25,9 @@ SRCS		=	more/minishell.c more/errors.c more/environment.c \
 				redirection/redirection.c redirection/restore_fds.c \
 				redirection/here_doc.c \
 				builtins/echo.c builtins/pwd.c builtins/exit.c \
-				builtins/env.c builtins/export.c builtins/unset.c \
-				builtins/cd.c \
+				builtins/env.c builtins/export.c builtins/unset.c builtins/cd.c \
 				signals/sig_handler.c signals/sig_childer.c \
-				tools/tokens_tools.c tools/split_args.c tools/termios.c \
+				tools/tokens_tools.c tools/split_args.c tools/termios.c tools/errors.c
 
 OBJS		=	$(SRCS:.c=.o)
 HEADER		=	includes/minishell.h
@@ -37,7 +36,7 @@ MYLB		=	MYLIB
 MYAR		=	MYLIB/libar.a
 
 CC			=	cc
-FLAGS		=	-Wall -Wextra -Werror # -g -fsanitize=address,undefined #-fsanitize=leak
+FLAGS		=	-Wall -Wextra -Werror
 SHORT		=	-L$(MYLB) -lar -lreadline
 RM			=	rm -fr
 

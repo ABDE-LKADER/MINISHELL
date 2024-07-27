@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:55:24 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/27 09:51:41 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/27 18:32:13 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ char	**change_linked_to_double(t_minishell *ms)
 		tmp = tmp->next;
 	}
 	env = allocate(&ms->leaks, len + 1, sizeof(char *));
+	if (!env)
+		cleanup_handler(ms);
 	tmp = ms->env;
 	i = 0;
 	while (tmp)
@@ -72,6 +74,8 @@ bool	only_var(t_minishell *ms, char *arg)
 		|| ft_strnstr(arg, "$$", len))
 		return (TRUE);
 	hold = ft_split(&ms->leaks, arg, '$');
+	if (!hold)
+		cleanup_handler(ms);
 	if (!*hold)
 		return (TRUE);
 	while (*hold)

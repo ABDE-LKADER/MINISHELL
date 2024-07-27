@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 14:45:58 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/27 12:24:46 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/27 18:13:07 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	here_doc_expander(t_minishell *ms, int fd)
 		return (ft_putstr_fd(strerror(errno), 2), -1);
 	(TRUE) && (unlink("here_doc"), pid = fork());
 	if (pid == -1)
-		return (perror("fork"), cleanup_handler(ms), -1);
+		return (perror("fork"), -1);
 	update_here_doc(ms, pid, fds, fd);
 	waitpid(pid, NULL, 0);
 	if (close(fds[0]) == -1 && close(fd) == -1)
