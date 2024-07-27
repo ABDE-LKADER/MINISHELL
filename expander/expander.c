@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:55:24 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/27 17:33:14 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/27 17:38:51 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char	*splite_mult_args(t_minishell *ms, char *arg, bool status, bool option)
 	t_expand	*expand;
 
 	(TRUE) && (new = NULL, op = FALSE, spex = FALSE,
-				expand = splite_use_qoutes(ms, arg));
+			expand = splite_use_qoutes(ms, arg));
 	while (expand)
 	{
 		(!option && (*expand->value == '\'' || *expand->value == '\"'))
