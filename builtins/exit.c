@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:55:24 by ||||||||          #+#    #+#             */
-/*   Updated: 2024/07/26 19:09:13 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/29 07:31:42 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	*check_more_args_in_one(t_minishell *ms, char **args)
 	char	**split;
 
 	split = split_args(&ms->leaks, args[1], " \t\n\r\f\v");
+	if (!split || !*split)
+		return (NULL);
 	len = 0;
 	while (split[len])
 		len++;

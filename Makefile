@@ -6,7 +6,7 @@
 #    By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/19 17:23:22 by abadouab          #+#    #+#              #
-#    Updated: 2024/07/27 19:02:59 by abadouab         ###   ########.fr        #
+#    Updated: 2024/07/29 07:31:54 by abadouab         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ SRCS		=	more/minishell.c more/environment.c \
 				tools/tokens_tools.c tools/split_args.c tools/termios.c tools/errors.c
 
 OBJS		=	$(SRCS:.c=.o)
-HEADER		=	includes/minishell.h
+HEADER		=	includes/minishell.h includes/prototypes.h includes/typedefs.h
 
 MYLB		=	MYLIB
 MYAR		=	MYLIB/libar.a
