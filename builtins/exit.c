@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:55:24 by ||||||||          #+#    #+#             */
-/*   Updated: 2024/07/29 07:31:42 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/30 17:10:36 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,9 @@ void	ft_exit(t_minishell *ms, t_tree *tree, char **args)
 	len = 0;
 	while (args[len])
 		len++;
-	(tree->no_print == 0) && (ft_putstr_fd("exit\n", 2), exit_status = 0);
-	exit_status = 0;
+	if (tree->no_print == 0)
+		ft_putstr_fd("exit\n", 2);
+	exit_status = ms->exit_status;
 	if (len > 1)
 		check_numerical(ms, args);
 	if (len > 2)

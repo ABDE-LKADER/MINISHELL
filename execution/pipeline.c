@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 16:30:49 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/27 09:52:51 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/07/30 17:10:42 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void	pipeline_handler(t_minishell *ms, t_tree *tree)
 			break ;
 		}
 		pid = create_process(ms, tmp);
-		tmp = tmp->next;
+		(TRUE) && (ms->exit_status = 0, tmp = tmp->next);
 	}
 	last_command(ms, tmp, fds);
 }
