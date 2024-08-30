@@ -61,6 +61,7 @@ t_tree	*parse_tree(t_minishell *ms);
 void	sig_handler(void);
 void	sig_heredoc(void);
 void	sig_childer(void);
+void	set_signals(int status);
 
 ///////////////// ENVIRONMENT PROTOTYPES /////////////////
 

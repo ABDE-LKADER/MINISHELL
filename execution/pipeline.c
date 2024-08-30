@@ -60,7 +60,7 @@ int	create_process(t_minishell *ms, t_tree *tree)
 	}
 	else
 		(dup2(pipefd[0], STDIN_FILENO), close(pipefd[1]), close(pipefd[0]));
-	return (1);
+	return (true);
 }
 
 void	last_command(t_minishell *ms, t_tree *tree, t_fds fds)
@@ -79,6 +79,7 @@ void	last_command(t_minishell *ms, t_tree *tree, t_fds fds)
 		waitpid(pid, &status, 0);
 		while (wait(NULL) != -1)
 			;
+		set_signals(status);
 		if (WIFSIGNALED(status))
 			ms->exit_status = g_catch_signals + 128;
 		else if (WIFEXITED(status))
@@ -92,14 +93,16 @@ void	pipeline_handler(t_minishell *ms, t_tree *tree)
 	t_fds	fds;
 	int		pid;
 
-	fds = save_fds();
-	tmp = tree->next;
 	pid = 0;
+	sig_childer();
+	tmp = tree->next;
+	fds = save_fds();
 	while (tmp->next)
 	{
 		if (pid == -1)
 		{
 			ms->exit_status = 1;
+			sig_handler();
 			break ;
 		}
 		pid = create_process(ms, tmp);

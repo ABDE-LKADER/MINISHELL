@@ -59,8 +59,8 @@ static void	command_execute(t_minishell *ms, t_tree *tree)
 	int		status;
 
 	pid = fork();
-	if (pid == -1)
-		(perror("fork"));
+	(pid == -1) && (perror("fork"), true);
+	sig_childer();
 	if (pid == 0)
 	{
 		if (redirection(ms, tree) == -1)
@@ -74,6 +74,7 @@ static void	command_execute(t_minishell *ms, t_tree *tree)
 			execution_errors(ms, tree, path);
 	}
 	waitpid(pid, &status, 0);
+	set_signals(status);
 	if (WIFSIGNALED(status))
 		ms->exit_status = g_catch_signals + 128;
 	else if (WIFEXITED(status))

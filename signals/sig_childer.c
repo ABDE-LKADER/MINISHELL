@@ -27,3 +27,15 @@ void	sig_heredoc(void)
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, heredoc_int_quit);
 }
+
+static void	signal_int_quit(int sig)
+{
+	g_catch_signals = sig;
+}
+
+void	sig_childer(void)
+{
+	rl_catch_signals = 0;
+	signal(SIGQUIT, signal_int_quit);
+	signal(SIGINT, signal_int_quit);
+}

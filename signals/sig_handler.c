@@ -12,12 +12,9 @@
 
 #include "minishell.h"
 
-static void	signal_int_quit(int sig)
+static void	signal_int(int sig)
 {
-	pid_t	pid;
-
-	pid = wait(NULL);
-	if (pid == -1 && sig == SIGINT)
+	if (sig == SIGINT)
 	{
 		printf("\n");
 		rl_replace_line("", 0);
@@ -25,18 +22,18 @@ static void	signal_int_quit(int sig)
 		rl_redisplay();
 		g_catch_signals = SIGINT;
 	}
-	else if (pid > 0 && sig == SIGQUIT)
-	{
-		g_catch_signals = SIGQUIT;
-		printf("Quit: %d\n", sig);
-	}
-	else if (sig == SIGINT)
-		g_catch_signals = SIGINT;
 }
 
 void	sig_handler(void)
 {
 	rl_catch_signals = 0;
-	signal(SIGQUIT, signal_int_quit);
-	signal(SIGINT, signal_int_quit);
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, signal_int);
+}
+
+void	set_signals(int status)
+{
+	sig_handler();
+	if (WIFSIGNALED(status) && g_catch_signals == SIGQUIT)
+		printf("Quit: %d\n", g_catch_signals);
 }

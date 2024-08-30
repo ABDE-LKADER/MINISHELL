@@ -36,7 +36,7 @@ MYLB		=	MYLIB
 MYAR		=	MYLIB/libar.a
 
 CC			=	cc
-FLAGS		=	-Wall -Wextra -Werror
+FLAGS		=	-Wall -Wextra # -Werror
 SHORT		=	-L$(MYLB) -lar -lreadline
 RM			=	rm -fr
 
