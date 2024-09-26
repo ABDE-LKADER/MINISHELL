@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 21:18:31 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/07/27 18:14:27 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/09/26 15:51:51 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int	ft_here_doc_in_child(t_minishell *ms, pid_t pid, char *delimiter, int fds[])
 {
 	char	*line;
 
+	signal(SIGINT, SIG_IGN);
 	if (pid == 0)
 	{
 		sig_heredoc();

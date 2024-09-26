@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:44:46 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/07/27 17:17:45 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/09/26 15:38:30 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	main(int ac, char **av, char **env)
 	(sig_handler(), environment_init(&ms, env), save_termios_mode(&ms, FALSE));
 	while (1)
 	{
+		save_termios_mode(&ms, TRUE);
 		(TRUE) && (g_catch_signals = 0, ms.tree = NULL, ms.to_check = NULL,
 		ms.prompt = readline("Minishell >$ "));
 		if (!ms.prompt)
@@ -50,7 +51,7 @@ int	main(int ac, char **av, char **env)
 			g_catch_signals = 0);
 		if (*ms.prompt)
 			(parser(&ms), execution(&ms, ms.tree));
-		(cleanup(&ms.leaks), free(ms.prompt), save_termios_mode(&ms, TRUE));
+		(cleanup(&ms.leaks), free(ms.prompt));
 	}
 	return (clear_history(), cleanup(&ms.leaks),
 		cleanup(&ms.alloc), EXIT_SUCCESS);

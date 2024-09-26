@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:24 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/07/27 17:19:10 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/09/26 15:41:14 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ typedef struct s_minishell
 	char			**to_check;
 	bool			wildcards;
 	int				exit_status;
+	int				status;
 	struct termios	termios;
 }					t_minishell;
 

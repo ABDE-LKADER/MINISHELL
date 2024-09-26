@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 09:39:24 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/07/27 00:29:06 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/09/26 15:23:41 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # include <sys/errno.h>
 
 # define EXIT "\033[AMinishell >$ exit\n"
-# define INIT "\033[A\n>   \n"
+# define INIT "\n"
 # define AMBG "ambiguous redirect"
 
 # define FAIL "cd: error retrieving current directory:getcwd: \

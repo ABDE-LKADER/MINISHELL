@@ -6,13 +6,13 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 10:57:34 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/27 00:20:40 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/09/26 15:50:30 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	heredoc_int_quit(int sig)
+static void	heredoc_int(int sig)
 {
 	if (sig == SIGINT)
 	{
@@ -23,9 +23,8 @@ static void	heredoc_int_quit(int sig)
 
 void	sig_heredoc(void)
 {
-	rl_catch_signals = 1;
 	signal(SIGQUIT, SIG_IGN);
-	signal(SIGINT, heredoc_int_quit);
+	signal(SIGINT, heredoc_int);
 }
 
 static void	signal_int_quit(int sig)
@@ -35,7 +34,6 @@ static void	signal_int_quit(int sig)
 
 void	sig_childer(void)
 {
-	rl_catch_signals = 0;
 	signal(SIGQUIT, signal_int_quit);
 	signal(SIGINT, signal_int_quit);
 }

@@ -6,7 +6,7 @@
 #    By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/19 17:23:22 by abadouab          #+#    #+#              #
-#    Updated: 2024/07/29 07:31:54 by abadouab         ###   ########.fr        #
+#    Updated: 2024/09/26 15:59:06 by abadouab         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,14 +29,15 @@ SRCS		=	more/minishell.c more/environment.c \
 				signals/sig_handler.c signals/sig_childer.c \
 				tools/tokens_tools.c tools/split_args.c tools/termios.c tools/errors.c
 
-OBJS		=	$(SRCS:.c=.o)
+OBJS_DIR	=	.Objects/
+OBJS		=	$(addprefix $(OBJS_DIR), $(SRCS:.c=.o))
 HEADER		=	includes/minishell.h includes/prototypes.h includes/typedefs.h
 
 MYLB		=	MYLIB
 MYAR		=	MYLIB/libar.a
 
 CC			=	cc
-FLAGS		=	-Wall -Wextra # -Werror
+FLAGS		=	-Wall -Wextra #-Werror
 SHORT		=	-L$(MYLB) -lar -lreadline
 RM			=	rm -fr
 
@@ -59,24 +60,23 @@ finish:
 	@printf "\n"
 
 $(MYLB):
-	@make -C $(MYLB) --no-print-directory
+	@make -sC $(MYLB) --no-print-directory
 
 $(NAME): $(OBJS)
 	@$(CC) $(FLAGS) $^ $(SHORT) -o $(NAME)
 
-$(OBJS): %.o: %.c $(HEADER) $(MYAR)
+$(OBJS): $(OBJS_DIR)%.o: %.c $(HEADER) $(MYAR)
+	@mkdir -p $(dir $@)
 	@$(CC) $(FLAGS) -c -I $(MYLB) -I includes $< -o $@
 	@printf $(GREEN)"."$(RESET)
 
 clean:
-	@$(RM) $(OBJS)
-	@$(RM) $(OBJS_BONUS)
+	@$(RM) $(OBJS_DIR)
 	@make clean -C $(MYLB) --no-print-directory
 	@echo $(YELOW)Cleaning up 🧹💫$(RESET)
 
 fclean: clean
 	@$(RM) $(NAME)
-	@$(RM) $(NAME_BONUS)
 	@make fclean -C $(MYLB) --no-print-directory
 	@echo $(REDCL)Purging all files 🗑️$(RESET)
 

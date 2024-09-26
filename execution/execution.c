@@ -6,7 +6,7 @@
 /*   By: abadouab <abadouab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:54:33 by abadouab          #+#    #+#             */
-/*   Updated: 2024/07/27 18:34:31 by abadouab         ###   ########.fr       */
+/*   Updated: 2024/09/26 15:51:53 by abadouab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,12 @@ static void	command_execute(t_minishell *ms, t_tree *tree)
 {
 	pid_t	pid;
 	char	*path;
-	int		status;
 
-	pid = fork();
-	(pid == -1) && (perror("fork"), true);
 	sig_childer();
-	if (pid == 0)
+	pid = fork();
+	if (pid == -1)
+		perror("fork");
+	else if (pid == 0)
 	{
 		if (redirection(ms, tree) == -1)
 			exit(EXIT_FAILURE);
@@ -73,12 +73,12 @@ static void	command_execute(t_minishell *ms, t_tree *tree)
 		if (execve(path, tree->args, change_linked_to_double(ms)) == -1)
 			execution_errors(ms, tree, path);
 	}
-	waitpid(pid, &status, 0);
-	set_signals(status);
-	if (WIFSIGNALED(status))
+	waitpid(pid, &ms->status, 0);
+	set_signals(ms->status);
+	if (WIFSIGNALED(ms->status))
 		ms->exit_status = g_catch_signals + 128;
-	else if (WIFEXITED(status))
-		ms->exit_status = WEXITSTATUS(status);
+	else if (WIFEXITED(ms->status))
+		ms->exit_status = WEXITSTATUS(ms->status);
 }
 
 void	execution(t_minishell *ms, t_tree *tree)
